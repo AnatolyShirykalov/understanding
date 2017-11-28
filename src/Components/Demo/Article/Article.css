@@ -1,0 +1,13 @@
+.Article {
+  text-align: left;
+  padding: 20px;
+}
+
+.Article p {
+  text-indent: 1.5em;
+}
+
+.Article h2,
+.Article h3 {
+  text-align: center;
+}
