@@ -1,0 +1,44 @@
+.Dialog {
+  position: fixed;
+  top: 100px;
+  left: 200px;
+  background-color: rgba(200,200,200, 0.6);
+  min-height: 300px;
+  min-width: 300px;
+  z-index: 100;
+}
+
+.Closer {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+.Closer:hover {
+  font-weight: bold;
+}
+
+
+.Expression {
+  background-color: #ede;
+  box-sizing: border-box;
+  height: 5ex;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.Expression:hover {
+  border: 1px solid black;
+}
+
+.Left {
+  background-color: #eed;
+}
+
+.Right {
+  background-color: #ede;
+}
+
+.Deep:hover {
+  border: 1px solid black;
+}

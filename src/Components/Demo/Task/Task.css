@@ -1,5 +1,19 @@
 .Task {
   padding: 20px;
   background-color: #eee;
-  text-align: left;
+  text-align: center;
+}
+
+.Current {
+  cursor: pointer;
+  background-color: #ded;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0px 15px;
+  box-sizing: border-box;
+  height: 7ex;
+}
+
+.Current:hover {
+  border: 1px solid black;
 }
