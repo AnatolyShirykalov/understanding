@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import classes from './App.css';
+import Layout from '../Containers/Layout/Layout';
+import routes from './Routes'
 
 class App extends Component {
   render() {
     return (
       <div className={classes.App}>
-        <h1>Работает</h1>
+        <Layout>
+          {routes}
+        </Layout>
       </div>
     );
   }
