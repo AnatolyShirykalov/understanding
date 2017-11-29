@@ -12,8 +12,10 @@ it('should compare f(x) and g(x)', ()=>{
   expect(new C('sin(x)', 'sin(x+2 * pi)').compare()).toBe(true);
   expect(new C('log(x)', 'tan(x)').compare()).toBe(false);
   expect(new C('log(x^2)', '2*log(x)').compare()).toBe(true);
+  expect(new C('csc(x)', '1/cos(x)').compare()).toBe(true);
+  expect(new C('diff(cot(e^x))', '-e^x*csc(e^x)^2').compare()).toBe(true);
 })
 
 it('sandbox', ()=>{
-  console.log(nerdamer('1/x*co').buildFunction()(2));
+  console.log(nerdamer.diff('cot(e^x)').text());
 })

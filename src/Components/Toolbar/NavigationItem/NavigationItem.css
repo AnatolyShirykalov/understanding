@@ -1,3 +1,14 @@
-.active {
-  background-color: red;
+.Item a.active {
+  background-color: #eeee1a;
+}
+
+.Item {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+.Item a {
+  background-color: #ffefef;
+  padding: 5px;
+  text-decoration: none;
 }
