@@ -1,11 +1,11 @@
 import React from 'react';
 import classes from './Demo.css';
-import Task from './Task/Example';
+import Task from './Calculus/Diff/Example';
 
 
 const demo = props => (
   <div className={classes.Demo}>
-    <Task />
+    <Task expression={'log(tan(x))'}/>
   </div>
 )
 
