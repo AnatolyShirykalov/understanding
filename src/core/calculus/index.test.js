@@ -13,3 +13,7 @@ it('should compare f(x) and g(x)', ()=>{
   expect(new C('log(x)', 'tan(x)').compare()).toBe(false);
   expect(new C('log(x^2)', '2*log(x)').compare()).toBe(true);
 })
+
+it('sandbox', ()=>{
+  console.log(nerdamer('1/x*co').buildFunction()(2));
+})

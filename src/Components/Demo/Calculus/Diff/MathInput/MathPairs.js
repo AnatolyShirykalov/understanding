@@ -1,11 +1,18 @@
 import React from 'react';
 import MathInput from './MathInput';
 import MathPreview from './MathPreview';
+import classes from './MathPairs.css';
 
-const mathPairs = props => props.keys.map(key => (
-  <div key={key}>
-    <MathInput label={key} inputId={key}/>
-    <MathPreview inputId={key}/>
+const mathPairs = props => props.keys.map((key, i) => (
+  <div className={classes.Pair} key={key}>
+    <MathInput
+      className={classes.InputWrap}
+      inputClassName={classes.Input}
+      label={key}
+      inputId={key}
+      autoFocus={i===0}
+    />
+    <MathPreview className={classes.Preview} inputId={key}/>
   </div>
 ));
 

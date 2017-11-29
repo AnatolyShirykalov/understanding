@@ -6,3 +6,7 @@ export const changeMathInput = (inputId, value) => ({
 export const calculusDiffToggleHint = () => ({
   type: actionTypes.CALCULUS_DIFF_TOGGLE_HINT
 })
+export const changeMathExpression = expression => ({
+  type: actionTypes.CHANGE_MATH_EXPRESSION,
+  expression
+})

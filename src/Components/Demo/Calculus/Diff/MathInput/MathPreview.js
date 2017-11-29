@@ -6,9 +6,9 @@ import nerdamer from 'nerdamer';
 const mathPreview = props => {
   const ex = props.expression(props.inputId);
   return(
-    <div>
-      <MathJax.Node inline>{ex.e}</MathJax.Node>
-      <div>{ex.er}</div>
+    <div className={props.className}>
+      {ex.er ? <div>{ex.er}</div> :
+      <MathJax.Node inline>{ex.e}</MathJax.Node>}
     </div>
   );
 };

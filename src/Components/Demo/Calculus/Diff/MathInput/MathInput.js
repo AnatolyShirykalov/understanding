@@ -1,13 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../../../store/actions';
+//import MathJax from '../../../../../vendor/react-mathjax/src';
 
 const mathInput = props => (
-  <div>
-    <label>{props.label}
+  <div className={props.className}>
+    <label>
+      {props.label + '='}
     </label>
-    <input onChange={props.change(props.inputId)}
+    <input
+      autoFocus={props.autoFocus}
+      className={props.inputClassName}
+      onChange={props.change(props.inputId)}
       type="text"
+      value={props.value(props.inputId)||''}
     />
   </div>
 )
@@ -18,4 +24,8 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(null, mapDispatchToProps)(mathInput);
+const mapStateToProps = state => ({
+  value: inputId => state[inputId]
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(mathInput);

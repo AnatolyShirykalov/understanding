@@ -16,12 +16,18 @@ class ComplexExample {
 
   compare() {
     let max = 0;
+    let bads = 0;
     const f = this.f.buildFunction();
     const g = this.g.buildFunction();
     for (let i = 0; i<200; i++) {
       const x = Math.random() * 100 - 50;
       try {
-        if (isNaN(f(x)) || isNaN(g(x))) continue;
+        if (isNaN(f(x)) || isNaN(g(x))) {
+          bads += 1;
+          if (bads > 20000) return false;
+          i-=1;
+          continue;
+        }
         const diff = Math.abs(f(x) - g(x));
         max = diff > max ? diff : max;
       } catch (e) {

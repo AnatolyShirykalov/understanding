@@ -1,3 +1,42 @@
 .Diff {
   background-color: #eee;
 }
+
+.Example {
+  display: inline-block;
+  margin: 0 10px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.Example:hover {
+  border: 1px solid black;
+}
+
+.Step {
+  border: 1px solid black;
+  box-shadow: 5px 5px 4px black;
+  width: 90%;
+  margin: 10px auto;
+}
+
+.Congs {
+  position: fixed;
+  top: 50%;
+  left: 20%;
+  width: 60%;
+  height: 10em;
+  font-size: 32pt;
+  font-weight: bold;
+  color: green;
+  animation-name: CongsFrame;
+  animation-duration: 500ms;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes CongsFrame {
+  from {transform: scale(1);}
+  to {transform: scale(1.5);}
+}
