@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions';
 import classes from './Example.css';
 import MathJax from '../../../../vendor/react-mathjax/src';
-import MathPairs from './MathInput/MathPairs.js'
 import nerdamer from 'nerdamer';
 import 'nerdamer/all';
 import C from '../../../../core/calculus';
 import examples from '../../../../core/calculus/examples';
+import Step from './Step';
 
 
 class Example extends Component {
@@ -90,13 +90,16 @@ class Example extends Component {
   }
 
   render(){
+    const step1 = 'Первый шаг: делим функцию на композицию более простых';
+    const step2 = 'Второй шаг: находим производные более простых функций';
+    const step3 = 'Применяем формулу для производной произведения';
     return (
       <MathJax.Context>
         <div className={classes.Diff}>
-          <h2>Дифференцирование сложной функции (либо пиши, либо жми)</h2>
+          <h2>Дифференцирование сложной функции (Chain rule)</h2>
           <div>
             <h3>Примеры (жми)</h3>
-            {examples.map((example, i)=>(
+            {examples.slice(0, 3).map((example, i)=>(
               <div
                 className={classes.Example}
                 key={i}
@@ -105,10 +108,10 @@ class Example extends Component {
                 <MathJax.Node inline>{nerdamer(example).toTeX()}</MathJax.Node>
               </div>
             ))}
-          </div>
-          <div>
-            <h3>Задать свою функцию (пиши)</h3>
-            <MathPairs keys={["expression"]} />
+            <div
+              className={classes.Example}
+              onClick={this.props.setRandomExpression}
+            >Ещё</div>
           </div>
           {
             this.validExpression() ?
@@ -120,45 +123,15 @@ class Example extends Component {
                     {'g\\big(f(x)\\big) = ' + this.exTex()}
                   </MathJax.Node>
                 </div>
-                <div className={classes.Step}>
-                  <h4>Первый шаг: делим функцию на композицию более простых</h4>
-                  <MathPairs keys={['f(x)', 'g(y)']}/>
-                  {this.props.showHint ?
-                      [...this.errorsFunc().map((er, i)=>(
-                        <div key={i}>{er}</div>
-                      ))]
-                      :
-                      null
-                  }
-                </div>
-                {
-                  this.canShowDiffForm() ?
-                    <div className={classes.Step}>
-                      <h4>Второй шаг: находим производные более простых функций</h4>
-                      <MathPairs keys={["f'(x)", "g'(y)"]} />
-                    </div>
-                    : null
-                }
-                {
-                  this.validDiffs() ?
-                    <div className={classes.Step}>
-                      <h4>Применяем формулу для производной произведения</h4>
-                      <MathPairs keys={["f'(x)*g'(f(x))"]} />
-                    </div>
-                    : null
-                }
-                {
-                  this.rightAnswer() ?
-                    <div className={classes.Congs}>
-                      <div>Ура!!! Всё верно</div></div> : null
-                }
-                {
-                  !this.validDiffs() || !this.canShowDiffForm() || !this.rightAnswer()?
-                    <div>Подумай ещё</div> : null
-                }
-                <button onClick={this.props.toggleHint}>
-                  {this.props.showHint ? 'Скрыть подсказку' : 'Открыть подсказку'}
-                </button>
+                <Step keys={['f(x)', 'g(y)']} title={step1} />
+                { this.canShowDiffForm() ?
+                    <Step keys={["f'(x)", "g'(y)"]} title={step2} /> : null }
+                { this.validDiffs() ?
+                    <Step keys={["f'(x)*g'(f(x))"]} title={step3}/> : null }
+                { this.rightAnswer() ?
+                    <div className={classes.Congs}> Ура! Всё верно</div> : null }
+                { !this.validDiffs() || !this.canShowDiffForm() || !this.rightAnswer() ?
+                    <div>Подумай ещё</div> : null }
               </div>
             : null
           }
@@ -174,15 +147,14 @@ const mapStateToProps = state => ({
   df: state["f'(x)"],
   dg: state["g'(y)"],
   answer: state["f'(x)*g'(f(x))"],
-  showHint: state.showHint,
   expression: state.expression
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleHint: () => dispatch(actions.calculusDiffToggleHint()),
+  setRandomExpression: () => dispatch(actions.setRandomMathExpression()),
   setExpression: expression => () => {
     dispatch(actions.changeMathExpression(expression))
-  }
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Example);
