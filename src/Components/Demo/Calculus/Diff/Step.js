@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Example.css';
 import MathPairs from './MathInput/MathPairs';
-import NewChainRule from './NewChainRule';
+import NewTask from './NewTask';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 const step = props => (
   <div className={classes.Step}>
@@ -16,11 +16,16 @@ const step = props => (
         <MathPairs taskId={props.taskId} keys={props.keys} />
       </TabPanel>
       <TabPanel>
-        <NewChainRule
-          taskId={props.taskId}
-          inputId={props.inputId}
-          parentInputId={props.keys[0]}
-        />
+        {props.methods.map(kind => (
+          <NewTask
+            taskId={props.taskId}
+            inputId={props.inputId}
+            parentInputId={props.keys[0]}
+            parentInputKind={props.kind}
+            kind={kind}
+            key={kind}
+          />
+        ))}
       </TabPanel>
       {props.children}
     </Tabs> :

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions';
 import classes from './Example.css';
@@ -7,14 +7,10 @@ import nerdamer from 'nerdamer';
 import 'nerdamer/all';
 import C from '../../../../core/calculus';
 import Step from './Step';
+import Base, {mDTP, mSTP, withTIC} from './Base';
 
 
-class Example extends Component {
-  withTaskId = prop => this.props[prop](this.taskId());
-
-  taskId = () => this.props.taskId ||
-    (this.props.match && this.props.match.params.taskId);
-
+class Example extends Base {
   validFunc = (prop, v) => {
     try {
       const ex = nerdamer(this.withTaskId(prop));
@@ -65,7 +61,7 @@ class Example extends Component {
   }
 
   expression = () => {
-    return nerdamer(this.withTaskId('expression'));
+    return nerdamer(this.withTaskId('expression'), {y: 'x'});
   }
 
   exTex = () =>{
@@ -86,32 +82,32 @@ class Example extends Component {
     }
   }
 
-  validExpression = () => {
-    try {
-      if(typeof(this.withTaskId('expression')) !== 'string' ||
-        this.withTaskId('expression').length === 0) return false;
-      nerdamer(this.withTaskId('expression'))
-      return true;
-    } catch(er) {
-      return false;
-    }
-  }
 
   componentDidUpdate() {
     const parentId = this.withTaskId('parentId');
+    const parentInputId = this.withTaskId('parentInputId');
     if (this.props.history && parentId && this.rightAnswer())
       this.props.goToParent(
         parentId,
-        this.withTaskId('parentInputId'),
-        this.withTaskId('answer'),
-        this.props.history
+        parentInputId,
+        this.setProperVariable(this.withTaskId('expression'), this.withTaskId('answer')),
+        this.props.history,
+        this.withTaskId('parentKind'),
       );
       //this.props.history.push(`/math/tasks/${this.withTaskId('parentId')}`);
   }
 
-  back = () => {
-    this.props.history.push(this.withTaskId('parentId'));
-  }
+  step = (inputId, keys, methods, key, title) => (
+    <Step
+      taskId={this.taskId()}
+      inputId={inputId}
+      key={key}
+      methods={methods}
+      keys={keys}
+      kind='chain'
+      title={title}
+    />
+  );
 
   render(){
     const step1 = 'Первый шаг: делим функцию на композицию более простых';
@@ -132,11 +128,7 @@ class Example extends Component {
                   >{t}</button>
                 ))}
               </div> :
-              <div>
-                <p>Как только это подзадание будет сделано, вас вернут к основному заданию</p>
-                <button onClick={this.back}>
-                  Вернуться сейчас</button>
-              </div>
+              this.backRender()
           }
           {
             this.validExpression() ?
@@ -150,8 +142,8 @@ class Example extends Component {
                 </div>
                 <Step taskId={this.taskId()} keys={['f(x)', 'g(y)']} title={step1} />
                 { this.canShowDiffForm() ?
-                    [ <Step taskId={this.taskId()} inputId={'f(x)'} key="1" methods={['CHAIN_RULE']} keys={["f'(x)"]} title={step2} />,
-                      <Step taskId={this.taskId()} inputId={'g(y)'} key="2" methods={[]} keys={["g'(y)"]} title={step3} />]
+                    [  this.step('f(x)', ["f'(x)"], ['chain', 'table'], 1, step2),
+                      this.step('g(y)', ["g'(y)"], ['chain', 'table'], 2, step3)]
                       : null }
                 { this.validDiffs() ?
                     <Step taskId={this.taskId()} keys={["f'(x)*g'(f(x))"]} title={step4}/> : null }
@@ -169,28 +161,23 @@ class Example extends Component {
 }
 
 const mapStateToProps = ({calculus}) => {
-  const withTI = prop => taskId => calculus[taskId] && calculus[taskId][prop];
+  const withTI = withTIC(calculus);
   return {
+    ...mSTP(calculus),
     f: withTI('f(x)'),
     g: withTI('g(y)'),
     df: withTI("f'(x)"),
     dg: withTI("g'(y)"),
     answer: withTI("f'(x)*g'(f(x))"),
-    expression: withTI('expression'),
-    parentId: withTI('parentId'),
-    parentInputId: withTI('parentInputId'),
   };
 }
 
 const mapDispatchToProps = dispatch => ({
+  ...mDTP(dispatch),
   setRandomExpression: (taskId, depth) => () => dispatch(actions.setRandomMathExpression(taskId, depth)),
   setExpression: (taskId, expression) => () => {
     dispatch(actions.changeMathExpression(taskId, expression))
   },
-  goToParent: (parentId, parentInputId, expression, history) =>
-    dispatch(actions.setMathExpressionToParentTaskAndRedirect(
-      parentId, parentInputId, expression, history
-    )),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Example);

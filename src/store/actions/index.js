@@ -17,16 +17,16 @@ export const setRandomMathExpression = (taskId, depth) => ({
   expression: generate(depth), taskId
 });
 
-export const createChildMathTask = (parentId, parentInputId, expression) => ({
+export const createChildMathTask = (parentId, parentInputId, parentKind, expression) => ({
   type: actionTypes.CREATE_CHILD_MATH_TASK,
-  parentId, expression, parentInputId,
-  key: hash({expression, parentId})
+  parentId, expression, parentInputId, parentKind,
+  key: hash({expression, parentId, parentKind})
 })
 
 export const createChildMathTaskAndRedirect =
-  (parentId, parentInputId, expression, history) => dispatch => {
-    dispatch(createChildMathTask(parentId, parentInputId, expression));
-    history.push(`/math/tasks/${hash({expression, parentId})}`);
+  (parentId, parentInputId, parentKind, expression, history, kind) => dispatch => {
+    dispatch(createChildMathTask(parentId, parentInputId, parentKind, expression));
+    history.push(`/math/tasks/${kind}/${hash({expression, parentId, parentKind})}`);
 };
 
 export const setMathExpressionToParentTask =
@@ -35,7 +35,12 @@ export const setMathExpressionToParentTask =
     parentId, parentInputId, expression,
   });
 export const setMathExpressionToParentTaskAndRedirect =
-  (parentId, parentInputId, expression, history) => dispatch => {
+  (parentId, parentInputId, expression, history, kind) => dispatch => {
     dispatch(setMathExpressionToParentTask(parentId, parentInputId, expression));
-    history.push(`/math/tasks/${parentId}`);
+    history.push(`/math/tasks/${kind}/${parentId}`);
   };
+
+export const selectDiffTableItem = (taskId, fun) => ({
+  type: actionTypes.SELECT_DIFF_TABLE_ITEM,
+  taskId, fun,
+})

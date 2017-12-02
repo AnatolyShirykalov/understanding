@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Demo.css';
-import Task from './Calculus/Diff/Example';
+import Task from './Calculus/Diff/Table/Table';
 
 
 const demo = props => (

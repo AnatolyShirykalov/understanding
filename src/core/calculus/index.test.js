@@ -17,5 +17,7 @@ it('should compare f(x) and g(x)', ()=>{
 })
 
 it('sandbox', ()=>{
-  console.log(nerdamer.diff('cot(e^x)').text());
+  //console.log(nerdamer.diff('cot(e^x)').text());
+  //console.log(nerdamer.diff('cos(cot(cot(log(x))))').text())
+  console.log(nerdamer.diff('cot(x)').sub('x', 'x').text());
 })

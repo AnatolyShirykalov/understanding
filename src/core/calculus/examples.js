@@ -1,4 +1,7 @@
 import C from './index';
+import nerdamer from 'nerdamer';
+import 'nerdamer/all';
+
 const examples = [
   'log(tan(x))',
   'log(sin(x))',
@@ -11,7 +14,7 @@ const examples = [
   'cos(x^2)'
 ];
 
-const sE = [
+export const sE = [
   'sin(x)',
   'cos(x)',
   'tan(x)',
@@ -20,6 +23,20 @@ const sE = [
   'log(x)',
   'x^2',
 ]
+
+const SEP = [
+  'sin(x)',
+  'cos(x)',
+  'tan(x)',
+  'cot(x)',
+  'e^x',
+  'log(x)',
+  'x^a',
+]
+
+export const table = SEP.map(fun=>({
+  fun, diff: nerdamer.diff(fun, 'x').text()
+}));
 
 export const generate = (depth = 2) => {
   const l = sE.length;

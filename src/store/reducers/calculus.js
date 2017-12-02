@@ -17,6 +17,7 @@ const reducer = (state = {}, action) => {
         [action.key]: {
           expression: action.expression,
           parentId: action.parentId,
+          parentKind: action.parentKind,
           parentInputId: action.parentInputId
         }
       };
@@ -27,6 +28,10 @@ const reducer = (state = {}, action) => {
           [action.parentInputId]: action.expression,
         }
       }
+    case actionTypes.SELECT_DIFF_TABLE_ITEM:
+      return {...state,
+        [action.taskId]: {...state[action.taskId], fun: action.fun},
+      };
     default: return state;
   }
 }
