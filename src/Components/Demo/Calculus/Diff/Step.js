@@ -6,7 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 const step = props => (
   <div className={classes.Step}>
     <h4>{props.title}</h4>
-    {props.methods && props.methods.length > 0 ?
+    {props.keys.length === 1 && props.methods && props.methods.length > 0 ?
     <Tabs selectedTabClassName={classes.Active}>
       <TabList>
         <Tab>Руками</Tab>
@@ -19,6 +19,7 @@ const step = props => (
         <NewChainRule
           taskId={props.taskId}
           inputId={props.inputId}
+          parentInputId={props.keys[0]}
         />
       </TabPanel>
       {props.children}

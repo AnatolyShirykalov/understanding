@@ -14,3 +14,7 @@ it('should generate', () => {
     expect(!nerdamer(generate()).text()).toBe(false);
   }
 })
+
+it('should generate with depth', () => {
+  console.log('depth4:', generate(4));
+})

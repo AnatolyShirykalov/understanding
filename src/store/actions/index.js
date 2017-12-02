@@ -12,18 +12,30 @@ export const changeMathExpression = (taskId, expression) => ({
   taskId, expression
 });
 
-export const setRandomMathExpression = taskId => ({
+export const setRandomMathExpression = (taskId, depth) => ({
   type: actionTypes.SET_RANDOM_MATH_EXPRESSION,
-  expression: generate(), taskId
+  expression: generate(depth), taskId
 });
 
-export const createChildMathTask = (parentId, expression) => ({
+export const createChildMathTask = (parentId, parentInputId, expression) => ({
   type: actionTypes.CREATE_CHILD_MATH_TASK,
-  parentId, expression,
+  parentId, expression, parentInputId,
   key: hash({expression, parentId})
 })
 
-export const createChildMathTaskAndRedirect = (parentId, expression, history) => dispatch => {
-  dispatch(createChildMathTask(parentId, expression));
-  history.push(`/math/tasks/${hash({expression, parentId})}`);
+export const createChildMathTaskAndRedirect =
+  (parentId, parentInputId, expression, history) => dispatch => {
+    dispatch(createChildMathTask(parentId, parentInputId, expression));
+    history.push(`/math/tasks/${hash({expression, parentId})}`);
 };
+
+export const setMathExpressionToParentTask =
+  (parentId, parentInputId, expression) =>({
+    type: actionTypes.SET_MATH_EXPRESSION_TO_PARENT_TASK,
+    parentId, parentInputId, expression,
+  });
+export const setMathExpressionToParentTaskAndRedirect =
+  (parentId, parentInputId, expression, history) => dispatch => {
+    dispatch(setMathExpressionToParentTask(parentId, parentInputId, expression));
+    history.push(`/math/tasks/${parentId}`);
+  };

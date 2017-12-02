@@ -6,7 +6,6 @@ import MathJax from '../../../../vendor/react-mathjax/src';
 import nerdamer from 'nerdamer';
 import 'nerdamer/all';
 import C from '../../../../core/calculus';
-import examples from '../../../../core/calculus/examples';
 import Step from './Step';
 
 
@@ -98,6 +97,18 @@ class Example extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const parentId = this.withTaskId('parentId');
+    if (this.props.history && parentId && this.rightAnswer())
+      this.props.goToParent(
+        parentId,
+        this.withTaskId('parentInputId'),
+        this.withTaskId('answer'),
+        this.props.history
+      );
+      //this.props.history.push(`/math/tasks/${this.withTaskId('parentId')}`);
+  }
+
   render(){
     const step1 = 'Первый шаг: делим функцию на композицию более простых';
     const step2 = 'Второй шаг: находим производную f(x)';
@@ -107,22 +118,22 @@ class Example extends Component {
       <MathJax.Context>
         <div className={classes.Diff}>
           <h2>Дифференцирование сложной функции (Chain rule)</h2>
-          <div>
-            <h3>Примеры (жми)</h3>
-            {examples.slice(0, 3).map((example, i)=>(
-              <div
-                className={classes.Example}
-                key={i}
-                onClick={this.props.setExpression(this.taskId(), example)}
-              >
-                <MathJax.Node inline>{nerdamer(example).toTeX()}</MathJax.Node>
-              </div>
-            ))}
-            <div
-              className={classes.Example}
-              onClick={this.props.setRandomExpression(this.taskId())}
-            >Ещё</div>
-          </div>
+          { !this.withTaskId('parentId') ?
+              <div>
+                <div
+                  className={classes.Example}
+                  onClick={this.props.setRandomExpression(this.taskId())}
+                >Тренироваться</div>
+                <div
+                  className={classes.Example}
+                  onClick={this.props.setRandomExpression(this.taskId(), 3)}
+                >Сложнee</div>
+                <div
+                  className={classes.Example}
+                  onClick={this.props.setRandomExpression(this.taskId(), 4)}
+                >Очень сложно</div>
+              </div> : null
+          }
           {
             this.validExpression() ?
               <div>
@@ -135,8 +146,8 @@ class Example extends Component {
                 </div>
                 <Step taskId={this.taskId()} keys={['f(x)', 'g(y)']} title={step1} />
                 { this.canShowDiffForm() ?
-                    [<Step taskId={this.taskId()} inputId={'f(x)'} key="1" methods={[1]} keys={["f'(x)"]} title={step2} />,
-                      <Step taskId={this.taskId()} inputId={'g(x)'} key="2" methods={[2]} keys={["g'(y)"]} title={step3} />]
+                    [ <Step taskId={this.taskId()} inputId={'f(x)'} key="1" methods={['CHAIN_RULE']} keys={["f'(x)"]} title={step2} />,
+                      <Step taskId={this.taskId()} inputId={'g(y)'} key="2" methods={[]} keys={["g'(y)"]} title={step3} />]
                       : null }
                 { this.validDiffs() ?
                     <Step taskId={this.taskId()} keys={["f'(x)*g'(f(x))"]} title={step4}/> : null }
@@ -162,15 +173,20 @@ const mapStateToProps = ({calculus}) => {
     dg: withTI("g'(y)"),
     answer: withTI("f'(x)*g'(f(x))"),
     expression: withTI('expression'),
-    parent: withTI('parent')
+    parentId: withTI('parentId'),
+    parentInputId: withTI('parentInputId'),
   };
 }
 
 const mapDispatchToProps = dispatch => ({
-  setRandomExpression: taskId => () => dispatch(actions.setRandomMathExpression(taskId)),
+  setRandomExpression: (taskId, depth) => () => dispatch(actions.setRandomMathExpression(taskId, depth)),
   setExpression: (taskId, expression) => () => {
     dispatch(actions.changeMathExpression(taskId, expression))
   },
+  goToParent: (parentId, parentInputId, expression, history) =>
+    dispatch(actions.setMathExpressionToParentTaskAndRedirect(
+      parentId, parentInputId, expression, history
+    )),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Example);

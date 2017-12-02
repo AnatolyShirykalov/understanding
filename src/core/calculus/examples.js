@@ -21,11 +21,13 @@ const sE = [
   'x^2',
 ]
 
-export const generate = () => {
+export const generate = (depth = 2) => {
   const l = sE.length;
-  const i = Math.floor(Math.random() * l);
-  const j = Math.floor(Math.random() * l);
-  return new C(sE[i], sE[j]).combine().text();
+  const rand = () => Math.floor(Math.random() * l);
+  let ret = sE[rand()];
+  for (let k = 1; k < depth; k++ )
+    ret = new C(sE[rand()], ret).combine().text();
+  return ret;
 };
 
 export default examples;

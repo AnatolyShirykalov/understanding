@@ -16,9 +16,17 @@ const reducer = (state = {}, action) => {
       return {...state,
         [action.key]: {
           expression: action.expression,
-          parentId: action.parentId
+          parentId: action.parentId,
+          parentInputId: action.parentInputId
         }
       };
+    case actionTypes.SET_MATH_EXPRESSION_TO_PARENT_TASK:
+      return {...state,
+        [action.parentId]: {
+          ...state[action.parentId],
+          [action.parentInputId]: action.expression,
+        }
+      }
     default: return state;
   }
 }
