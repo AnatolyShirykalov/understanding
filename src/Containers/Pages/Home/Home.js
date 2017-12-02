@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import Demo from '../../../Components/Demo/Demo';
+import {Redirect} from 'react-router-dom';
 
 class Home extends Component {
   render() {
     return (
       <div>
-        <Demo />
+        <Redirect to="/math/tasks/chain/kaka" />
       </div>
     );
   }
