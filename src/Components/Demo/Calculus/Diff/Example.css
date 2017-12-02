@@ -4,14 +4,14 @@
 
 .Example {
   display: inline-block;
-  margin: 0 10px;
-  box-sizing: border-box;
-  border: 1px solid transparent;
+  margin: 5px 10px;
+  border: 2px solid transparent;
   cursor: pointer;
+  padding: 5px 10px;
 }
 
 .Example:hover {
-  border: 1px solid black;
+  border: 2px solid black;
 }
 
 .Step {

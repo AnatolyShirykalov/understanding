@@ -125,18 +125,17 @@ class Example extends Component {
           { !this.withTaskId('parentId') ?
               <div>
                 {['Тренироваться', 'Сложнее', 'Очень сложно'].map((t, i)=>(
-                  <div
+                  <button
                     className={classes.Example}
                     onClick={this.props.setRandomExpression(this.taskId(), i+2)}
                     key={t}
-                  >{t}</div>
+                  >{t}</button>
                 ))}
               </div> :
               <div>
                 <p>Как только это подзадание будет сделано, вас вернут к основному заданию</p>
                 <button onClick={this.back}>
                   Вернуться сейчас</button>
-                
               </div>
           }
           {
