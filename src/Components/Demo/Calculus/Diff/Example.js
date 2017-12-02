@@ -109,6 +109,10 @@ class Example extends Component {
       //this.props.history.push(`/math/tasks/${this.withTaskId('parentId')}`);
   }
 
+  back = () => {
+    this.props.history.push(this.withTaskId('parentId'));
+  }
+
   render(){
     const step1 = 'Первый шаг: делим функцию на композицию более простых';
     const step2 = 'Второй шаг: находим производную f(x)';
@@ -120,19 +124,20 @@ class Example extends Component {
           <h2>Дифференцирование сложной функции (Chain rule)</h2>
           { !this.withTaskId('parentId') ?
               <div>
-                <div
-                  className={classes.Example}
-                  onClick={this.props.setRandomExpression(this.taskId())}
-                >Тренироваться</div>
-                <div
-                  className={classes.Example}
-                  onClick={this.props.setRandomExpression(this.taskId(), 3)}
-                >Сложнee</div>
-                <div
-                  className={classes.Example}
-                  onClick={this.props.setRandomExpression(this.taskId(), 4)}
-                >Очень сложно</div>
-              </div> : null
+                {['Тренироваться', 'Сложнее', 'Очень сложно'].map((t, i)=>(
+                  <div
+                    className={classes.Example}
+                    onClick={this.props.setRandomExpression(this.taskId(), i+2)}
+                    key={t}
+                  >{t}</div>
+                ))}
+              </div> :
+              <div>
+                <p>Как только это подзадание будет сделано, вас вернут к основному заданию</p>
+                <button onClick={this.back}>
+                  Вернуться сейчас</button>
+                
+              </div>
           }
           {
             this.validExpression() ?
