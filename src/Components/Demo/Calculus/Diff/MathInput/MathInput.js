@@ -11,21 +11,21 @@ const mathInput = props => (
     <input
       autoFocus={props.autoFocus}
       className={props.inputClassName}
-      onChange={props.change(props.inputId)}
+      onChange={props.change(props.taskId, props.inputId)}
       type="text"
-      value={props.value(props.inputId)||''}
+      value={props.value(props.taskId, props.inputId)||''}
     />
   </div>
 )
 
 const mapDispatchToProps = dispatch => ({
-  change: inputId => event => {
-    dispatch(actions.changeMathInput(inputId, event.target.value))
+  change: (taskId, inputId) => event => {
+    dispatch(actions.changeMathInput(taskId, inputId, event.target.value))
   }
 });
 
-const mapStateToProps = state => ({
-  value: inputId => state[inputId]
+const mapStateToProps = ({calculus}) => ({
+  value: (taskId, inputId) => calculus[taskId][inputId]
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(mathInput);

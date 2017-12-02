@@ -5,7 +5,7 @@ import Task from './Calculus/Diff/Example';
 
 const demo = props => (
   <div className={classes.Demo}>
-    <Task/>
+    <Task taskId={'kaka'}/>
   </div>
 )
 

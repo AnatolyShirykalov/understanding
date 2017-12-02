@@ -21,6 +21,22 @@
   margin: 10px auto;
 }
 
+.Step ul {
+  list-style: none;
+}
+
+.Step ul li {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.Step .Active {
+  background-color: black;
+  color: #ddd;
+}
+
 .Congs {
   position: fixed;
   top: 50%;

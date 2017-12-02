@@ -11,8 +11,12 @@ const mathPairs = props => props.keys.map((key, i) => (
       label={key}
       inputId={key}
       autoFocus={i===0}
+      taskId={props.taskId}
     />
-    <MathPreview className={classes.Preview} inputId={key}/>
+    <MathPreview
+      taskId={props.taskId}
+      className={classes.Preview}
+      inputId={key}/>
   </div>
 ));
 
