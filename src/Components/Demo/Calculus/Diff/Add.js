@@ -7,6 +7,7 @@ import ToDo from './ToDo';
 import Step from './Step';
 import Congs from './Congs';
 import * as actions from '../../../../store/actions';
+import classes from './Add.css';
 
 class Add extends Base {
   kind = () => 'add';
@@ -21,7 +22,7 @@ class Add extends Base {
   render() {
     return (
       <MathJax.Context>
-        <div>
+        <div className={classes.Add}>
           <h2>Аддитивность производной</h2>
           <GenTask
             levels={['Тренироваться']}
