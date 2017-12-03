@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions';
-import classes from './Example.css';
+import classes from './Chain.css';
 import MathJax from '../../../../vendor/react-mathjax/src';
 import Step from './Step';
 import Base, {mDTP, mSTP, withTIC} from './Base';

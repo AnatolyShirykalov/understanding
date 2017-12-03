@@ -5,7 +5,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Redirect to="/math/tasks/chain/kaka" />
+        <Redirect to="/math/tasks/common/kaka" />
       </div>
     );
   }

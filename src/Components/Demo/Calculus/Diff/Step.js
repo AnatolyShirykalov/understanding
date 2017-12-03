@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Example.css';
+import classes from './Step.css';
 import MathPairs from './MathInput/MathPairs';
 import NewTask from './NewTask';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';

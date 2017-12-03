@@ -9,6 +9,7 @@ const reducer = (state = {}, action) => {
     case actionTypes.CHANGE_MATH_EXPRESSION:
     case actionTypes.SET_RANDOM_MATH_CHAIN_EXPRESSION:
     case actionTypes.SET_RANDOM_MATH_ADD_EXPRESSION:
+    case actionTypes.SET_RANDOM_MATH_COMMON_EXPRESSION:
       return {
         ...state,
         [action.taskId]: {expression: action.expression}

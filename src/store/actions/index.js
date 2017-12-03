@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import {add, chain} from '../../core/calculus/examples';
+import {add, chain, common} from '../../core/calculus/examples';
 import hash from 'object-hash';
 
 export const changeMathInput = (taskId, inputId, value) => ({
@@ -20,6 +20,11 @@ export const setRandomMathChainExpression = (taskId, depth) => ({
 export const setRandomMathAddExpression = (taskId, depth) => ({
   type: actionTypes.SET_RANDOM_MATH_ADD_EXPRESSION,
   expression: add(depth), taskId
+});
+
+export const setRandomMathCommonExpression = (taskId, depth) => ({
+  type: actionTypes.SET_RANDOM_MATH_COMMON_EXPRESSION,
+  expression: common(depth), taskId
 });
 
 export const createChildMathTask = (parentId, parentInputId, parentKind, expression) => ({

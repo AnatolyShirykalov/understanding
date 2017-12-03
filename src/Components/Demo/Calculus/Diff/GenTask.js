@@ -1,12 +1,12 @@
 import React from 'react';
-import classes from './Example.css';
+import classes from './GenTask.css';
 
 
 const genTask = props => {
   if (props.parentId) return props.back;
   return (
     <div>{props.levels.map((level, i) => (
-      <button className={classes.Example} onClick={props.newTask(i)} key={level}>
+      <button className={classes.Button} onClick={props.newTask(i)} key={level}>
         {level}
       </button>
     ))}</div>

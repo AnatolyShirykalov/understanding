@@ -1,0 +1,11 @@
+.Button {
+  display: inline-block;
+  margin: 5px 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.Button:hover {
+  border: 2px solid black;
+}

@@ -50,5 +50,6 @@ const generate = (depth, combiners=['chain']) => {
 
 export const chain = (depth = 2) => generate(depth, ['chain']);
 export const add   = (depth = 2) => generate(depth, ['add']);
+export const common = (depth = 2) => generate(depth, ['chain', 'add']);
 
 export default examples;
