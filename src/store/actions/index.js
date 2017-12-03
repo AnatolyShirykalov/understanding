@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import {generate} from '../../core/calculus/examples';
+import {add, chain} from '../../core/calculus/examples';
 import hash from 'object-hash';
 
 export const changeMathInput = (taskId, inputId, value) => ({
@@ -12,9 +12,14 @@ export const changeMathExpression = (taskId, expression) => ({
   taskId, expression
 });
 
-export const setRandomMathExpression = (taskId, depth) => ({
-  type: actionTypes.SET_RANDOM_MATH_EXPRESSION,
-  expression: generate(depth), taskId
+export const setRandomMathChainExpression = (taskId, depth) => ({
+  type: actionTypes.SET_RANDOM_MATH_CHAIN_EXPRESSION,
+  expression: chain(depth), taskId
+});
+
+export const setRandomMathAddExpression = (taskId, depth) => ({
+  type: actionTypes.SET_RANDOM_MATH_ADD_EXPRESSION,
+  expression: add(depth), taskId
 });
 
 export const createChildMathTask = (parentId, parentInputId, parentKind, expression) => ({
@@ -34,6 +39,7 @@ export const setMathExpressionToParentTask =
     type: actionTypes.SET_MATH_EXPRESSION_TO_PARENT_TASK,
     parentId, parentInputId, expression,
   });
+
 export const setMathExpressionToParentTaskAndRedirect =
   (parentId, parentInputId, expression, history, kind) => dispatch => {
     dispatch(setMathExpressionToParentTask(parentId, parentInputId, expression));

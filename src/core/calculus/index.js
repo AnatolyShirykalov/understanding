@@ -7,11 +7,24 @@ class ComplexExample {
     this.g = nerdamer(g);
   }
 
-  combine() {
-    const vs = this.g.variables();
-    if(vs.length !== 1) return null;
-    const v = vs[0];
-    return nerdamer(this.g.text(), {[v]: this.f.text()});
+  combine(combiner='chain') {
+    const gvs = this.g.variables();
+    const fvs = this.f.variables();
+    if(gvs.length !== 1) return null;
+    if(fvs.length !== 1) return null;
+    const gv = gvs[0];
+    const fv = gvs[0];
+    switch(combiner) {
+      case 'chain':
+        return nerdamer(this.g.text(), {[gv]: this.f.text()});
+      case 'add':
+        return nerdamer(`${this.f.text()} + ${this.g.text()}`, {
+          [fv]: 'x',
+          [gv]: 'x',
+        });
+      default:
+        return null;
+    }
   }
 
   compare() {

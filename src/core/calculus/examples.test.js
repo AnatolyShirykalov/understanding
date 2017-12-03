@@ -1,4 +1,4 @@
-import examples, {generate} from './examples';
+import examples, {chain} from './examples';
 import nerdamer from 'nerdamer';
 import 'nerdamer/all';
 
@@ -10,11 +10,11 @@ it ('should differentiate all examples', () => {
 
 it('should generate', () => {
   for (let i = 0; i< 2000; i++) {
-    expect(generate() === 'undefined').toBe(false);
-    expect(!nerdamer(generate()).text()).toBe(false);
+    expect(chain() === 'undefined').toBe(false);
+    expect(!nerdamer(chain()).text()).toBe(false);
   }
 })
 
 it('should generate with depth', () => {
-  console.log('depth4:', generate(4));
+  console.log('depth4:', chain(4));
 })

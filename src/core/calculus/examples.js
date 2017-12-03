@@ -38,13 +38,17 @@ export const table = SEP.map(fun=>({
   fun, diff: nerdamer.diff(fun, 'x').text()
 }));
 
-export const generate = (depth = 2) => {
+const generate = (depth, combiners=['chain']) => {
   const l = sE.length;
-  const rand = () => Math.floor(Math.random() * l);
+  const rand = (s = l) => Math.floor(Math.random() * s);
+  const comb = () => combiners[rand(combiners.length)];
   let ret = sE[rand()];
   for (let k = 1; k < depth; k++ )
-    ret = new C(sE[rand()], ret).combine().text();
+    ret = new C(sE[rand()], ret).combine(comb()).text();
   return ret;
 };
+
+export const chain = (depth = 2) => generate(depth, ['chain']);
+export const add   = (depth = 2) => generate(depth, ['add']);
 
 export default examples;

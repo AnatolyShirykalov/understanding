@@ -1,0 +1,18 @@
+.TableItem {
+  cursor: pointer;
+  border: 2px solid black;
+  background-color: #eee;
+  width: 90%;
+  display: inline-block;
+  margin-bottom: 5px;
+  box-shadow: 2px 2px 0 #aaa;
+}
+
+.TableItem:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.Table {
+  text-align: center;
+}

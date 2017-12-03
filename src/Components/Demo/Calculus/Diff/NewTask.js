@@ -8,6 +8,7 @@ import classes from './NewTask.css';
 const labels = {
   chain: 'Сложная функция',
   table: 'Таблица',
+  add: 'Аддитивность',
 };
 
 class NewTask extends Component {

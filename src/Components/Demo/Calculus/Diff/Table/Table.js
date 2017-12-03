@@ -8,6 +8,8 @@ import {table} from '../../../../../core/calculus/examples';
 import C from '../../../../../core/calculus';
 import MathPairs from '../MathInput/MathPairs';
 import Base, {mDTP, mSTP, withTIC} from '../Base';
+import classes from './Table.css';
+import ToDo from '../ToDo';
 
 class Table extends Base {
   isDegree = () => {
@@ -31,18 +33,8 @@ class Table extends Base {
 
   componentDidUpdate() {
     const a = this.withTaskId('a');
-    const parentId = this.withTaskId('parentId');
-    const parentInputId = this.withTaskId('parentInputId');
-    const expression = this.withTaskId('expression');
-    if (this.validExpression() && parentId && (
-      !this.isDegree() || (!isNaN(+a) && (+a)+'' === a)
-    ) && this.rightAnswer() ) this.props.goToParent(
-      parentId,
-      parentInputId,
-      this.setProperVariable(expression, nerdamer.diff(this.answer()).text()),
-      this.props.history,
-      this.withTaskId('parentKind')
-    )
+    if (( !this.isDegree() || (!isNaN(+a) && (+a)+'' === a)) && this.rightAnswer())
+      this.baseGoToParent(nerdamer.diff(this.answer()).text());
   }
 
   render () {
@@ -50,19 +42,19 @@ class Table extends Base {
       <MathJax.Context>
         <div>
           <h3>Таблица производных</h3>
-          {this.validExpression() ? <div>
-            <h4>Вот выражение, от которого надо взять производную</h4>
-            <MathJax.Node>{nerdamer(this.withTaskId('expression'), {y: 'x'}).toTeX()}</MathJax.Node>
-          </div> : <div>Здесь могло бы быть ваше выражение</div>}
+          {this.validExpression() ?
+              <ToDo tex={nerdamer(this.withTaskId('expression'), {y: 'x'}).toTeX()} />
+          : <div>Здесь могло бы быть ваше выражение</div>}
           {this.withTaskId('parentId') ? this.backRender() : null}
-          <div>
+          <div className={classes.Table}>
             <h4>Вот таблица производных</h4>
             {table.map(({fun, diff})=>(
               <div
                 key={fun}
+                className={classes.TableItem}
                 onClick={this.props.selectTableItem(this.taskId(), fun)}>
                 <MathJax.Node>
-                    {nerdamer(fun).toTeX() + '=' + nerdamer(diff).toTeX()}
+                    {`\\left(${nerdamer(fun).toTeX()}\\right)' = ${nerdamer(diff).toTeX()}`}
                 </MathJax.Node>
               </div>
           ))}</div>

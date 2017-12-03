@@ -6,6 +6,7 @@ import Article from '../Components/Demo/Article/Example';
 import Task from '../Components/Demo/Task/Example';
 import Chain from '../Components/Demo/Calculus/Diff/Example';
 import DiffTable from '../Components/Demo/Calculus/Diff/Table/Table';
+import DiffAdd from '../Components/Demo/Calculus/Diff/Add';
 
 const routes = (
   <Switch>
@@ -15,6 +16,7 @@ const routes = (
     <Route path="/about" component={About} />
     <Route path="/math/tasks/chain/:taskId/" component={Chain} />
     <Route path="/math/tasks/table/:taskId/" component={DiffTable} />
+    <Route path="/math/tasks/add/:taskId/" component={DiffAdd} />
   </Switch>
 )
 
