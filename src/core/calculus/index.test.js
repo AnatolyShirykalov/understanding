@@ -14,11 +14,9 @@ it('should compare f(x) and g(x)', ()=>{
   expect(new C('log(x)', 'tan(x)').compare()).toBe(false);
   expect(new C('log(x^2)', '2*log(x)').compare()).toBe(true);
   expect(new C('sec(x)', '1/cos(x)').compare()).toBe(true);
-  //const pt = -37.583693115139916;
-  //console.log('diff', nerdamer('-e^x/(sin(e^x))^2').buildFunction()(pt));
-  //console.log('diff', nerdamer.diff('cot(e^x)').buildFunction()(pt));
   expect(new C('diff(cot(e^x))', '-e^x/(sin(e^x))^2').compare()).toBe(true);
-  //new C('diff(cot(e^x))', '-e^x/(sin(e^x))^2').compare();
+  expect(new C('diff(log(cot(cot(cot(cot(x^2))))))', '2x * tan(cot(cot(cot(x^2))))/sin(cot(cot(cot(x^2))))^2 / sin(cot(cot(x^2)))^2 / sin(cot(x^2))^2 / sin(x^2)^2').compare()).toBe(true);
+  new C('diff(cot(e^x))', '-e^x/(sin(e^x))^2').compare();
 });
 
 it('sandbox', ()=>{

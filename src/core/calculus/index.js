@@ -52,7 +52,7 @@ class ComplexExample {
         i-=1;
       }
     }
-    //console.log(this.f.text(), 'bads:', bads, 'max:', max, 'maxPoint:', maxPoint)
+    //console.log(this.g.text(), 'bads:', bads, 'max:', max, 'maxPoint:', maxPoint)
     return max < eps;
   }
 }
