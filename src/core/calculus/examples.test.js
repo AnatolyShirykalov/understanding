@@ -16,5 +16,5 @@ it('should generate', () => {
 })
 
 it('should generate with depth', () => {
-  console.log('depth4:', chain(4));
+  //console.log('depth4:', chain(4));
 })

@@ -29,24 +29,30 @@ class ComplexExample {
 
   compare() {
     let max = 0;
+    //let maxPoint = null;
     let bads = 0;
     const f = this.f.buildFunction();
     const g = this.g.buildFunction();
     for (let i = 0; i<200; i++) {
-      const x = Math.random() * 100 - 50;
+      const x = Math.random() * 1000 - 500;
       try {
-        if (isNaN(f(x)) || isNaN(g(x))) {
+        if (isNaN(f(x)) || isNaN(g(x)) || !isFinite(f(x)) || !isFinite(g(x))) {
           bads += 1;
-          if (bads > 20000) return false;
+          if (bads > 200000) return false;
           i-=1;
           continue;
         }
-        const diff = Math.abs(f(x) - g(x));
-        max = diff > max ? diff : max;
+        const diff = Math.abs((f(x) - g(x))/(f(x)+g(x)));
+        if (diff > max) {
+          max = diff;
+          //maxPoint = x;
+          //console.log(this.f.text(), 'x,diff:', x, diff);
+        }
       } catch (e) {
         i-=1;
       }
     }
+    //console.log(this.f.text(), 'bads:', bads, 'max:', max, 'maxPoint:', maxPoint)
     return max < eps;
   }
 }

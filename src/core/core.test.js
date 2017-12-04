@@ -1,13 +1,13 @@
 import {example} from './example';
 
 it('showld correctly prepare text from exporession', ()=>{
-  console.log(example.text());
-  console.log(example.definition().text());
-  console.log(example.definition().left.definition().text());
-  console.log(example.left.definition().text());
-  console.log(example.left.definition().definition().text());
-  console.log(example.left.definition().definition().left.definition().text());
-  console.log(example.leftPart('A', 'B'));
+  //console.log(example.text());
+  //console.log(example.definition().text());
+  //console.log(example.definition().left.definition().text());
+  //console.log(example.left.definition().text());
+  //console.log(example.left.definition().definition().text());
+  //console.log(example.left.definition().definition().left.definition().text());
+  //console.log(example.leftPart('A', 'B'));
 })
 
 it('should show me available variables', ()=>{
