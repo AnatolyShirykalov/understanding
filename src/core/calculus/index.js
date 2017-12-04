@@ -36,13 +36,16 @@ class ComplexExample {
     for (let i = 0; i<200; i++) {
       const x = Math.random() * 1000 - 500;
       try {
-        if (isNaN(f(x)) || isNaN(g(x)) || !isFinite(f(x)) || !isFinite(g(x))) {
+        const fx = f(x);
+        const gx = g(x);
+        if (isNaN(fx) || isNaN(gx) || !isFinite(fx) || !isFinite(gx)) {
           bads += 1;
           if (bads > 200000) return false;
           i-=1;
           continue;
         }
-        const diff = Math.abs((f(x) - g(x))/(f(x)+g(x)));
+        const denom = Math.min(Math.abs(fx), Math.abs(gx));
+        const diff = fx === gx ? 0 : Math.abs((fx - gx)/denom);
         if (diff > max) {
           max = diff;
           //maxPoint = x;
