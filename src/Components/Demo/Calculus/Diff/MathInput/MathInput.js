@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../../../store/actions';
+import {DebounceInput} from 'react-debounce-input';
 //import MathJax from '../../../../../vendor/react-mathjax/src';
 
 const mathInput = props => (
@@ -8,7 +9,8 @@ const mathInput = props => (
     <label>
       {props.label + '='}
     </label>
-    <input
+    <DebounceInput
+      debounceTimeout={500}
       autoFocus={props.autoFocus}
       className={props.inputClassName}
       onChange={props.change(props.taskId, props.inputId)}

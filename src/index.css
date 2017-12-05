@@ -3,3 +3,11 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+/*span[class="MathJax_Preview"]{
+  display: none;
+}
+
+div[class^="MathPairs_Preview"] > span > span[id] > span[id]:not(:first-of-type) {
+  display: none;
+}*/
