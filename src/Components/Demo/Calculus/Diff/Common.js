@@ -28,7 +28,7 @@ class Common extends Base {
             this.validExpression() ?
               <div>
                 <ToDo tex={'f(x) = ' + this.exTex()}/>
-                {this.step('expression', ["f'(x)"], ['chain', 'table', 'add'], 1, 'Берём производную')}
+                {this.step('expression', ["f'(x)"], this.methods(), 1, 'Берём производную')}
               </div>
               : null
           }

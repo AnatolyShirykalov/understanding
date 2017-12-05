@@ -9,6 +9,7 @@ const labels = {
   chain: 'Сложная функция',
   table: 'Таблица',
   add: 'Аддитивность',
+  prod: 'Лейбниц',
 };
 
 class NewTask extends Component {

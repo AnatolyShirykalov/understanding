@@ -25,6 +25,7 @@ class Example extends Base {
   newTask = (i) => this.props.setRandomExpression(this.taskId(), i+2);
 
   render(){
+    const methods = this.methods();
     const step1 = 'Первый шаг: делим функцию на композицию более простых';
     const step2 = 'Второй шаг: находим производную f(x)';
     const step3 = 'Второй шаг: находим производную g(y)';
@@ -45,8 +46,8 @@ class Example extends Base {
                 <ToDo tex={'g\\big(f(x)\\big) = ' + this.exTex()} />
                 <Step taskId={this.taskId()} keys={['f(x)', 'g(y)']} title={step1} />
                 { this.decomposed('chain') ?
-                    [  this.step('f(x)', ["f'(x)"], ['chain', 'table', 'add'], 1, step2),
-                      this.step('g(y)', ["g'(y)"], ['chain', 'table', 'add'], 2, step3)]
+                    [  this.step('f(x)', ["f'(x)"], methods, 1, step2),
+                      this.step('g(y)', ["g'(y)"], methods, 2, step3)]
                       : null }
                 { this.validDiffs() ?
                     <Step taskId={this.taskId()} keys={["f'(x)*g'(f(x))"]} title={step4}/> : null }

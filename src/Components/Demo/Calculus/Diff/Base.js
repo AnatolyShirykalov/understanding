@@ -8,6 +8,7 @@ import C from '../../../../core/calculus';
 
 class Base extends Component {
   withTaskId = prop => this.props[prop](this.taskId());
+  methods = () => ['chain', 'table', 'add', 'prod'];
 
   taskId = () => this.props.taskId ||
     (this.props.match && this.props.match.params.taskId);

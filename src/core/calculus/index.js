@@ -14,14 +14,15 @@ class ComplexExample {
     if(fvs.length !== 1) return null;
     const gv = gvs[0];
     const fv = gvs[0];
+    const bin = op => nerdamer(`${this.f.text()} ${op} ${this.g.text()}`, {
+      [fv]: 'x',
+      [gv]: 'x',
+    });
     switch(combiner) {
       case 'chain':
         return nerdamer(this.g.text(), {[gv]: this.f.text()});
-      case 'add':
-        return nerdamer(`${this.f.text()} + ${this.g.text()}`, {
-          [fv]: 'x',
-          [gv]: 'x',
-        });
+      case 'add': return bin('+');
+      case 'prod': return bin('*');
       default:
         return null;
     }

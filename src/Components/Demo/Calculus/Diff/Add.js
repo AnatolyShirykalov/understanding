@@ -20,6 +20,7 @@ class Add extends Base {
   }
 
   render() {
+    const methods = this.methods();
     return (
       <MathJax.Context>
         <div className={classes.Add}>
@@ -33,10 +34,9 @@ class Add extends Base {
           { this.validExpression() ? <div>
             <ToDo tex={`f(x) + g(x) = ${this.exTex()}`} />
             <Step taskId={this.taskId()} keys={['f(x)', 'g(x)']} title="Делим на слагаемые" />
-            {this.decomposed('add') ?
-                [this.step('f(x)', ["f'(x)"], ['chain', 'table', 'add'], 1, 'Ищем производную'),
-                this.step('g(x)', ["g'(x)"], ['chain', 'table', 'add'], 2, 'Ищем производную')]
-            : null}
+            {this.decomposed('add') ? ['f','g'].map(f=>(
+                this.step(`${f}(x)`, [`${f}'(x)`], methods, f, 'Ищем производную')
+            )): null}
             {this.diffed('f', 'df') && this.diffed('g', 'dg') ?
                 <Step taskId={this.taskId()} keys={["f'(x)+g'(x)"]} title="Складываем" /> : null}
             {this.diffed('expression', 'answer') ? <Congs /> : null}

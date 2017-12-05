@@ -48,8 +48,9 @@ const generate = (depth, combiners=['chain']) => {
   return ret;
 };
 
-export const chain = (depth = 2) => generate(depth, ['chain']);
-export const add   = (depth = 2) => generate(depth, ['add']);
-export const common = (depth = 2) => generate(depth, ['chain', 'add']);
+export const chain  = (depth = 2) => generate(depth, ['chain']);
+export const add    = (depth = 2) => generate(depth, ['add']);
+export const prod   = (depth = 2) => generate(depth, ['prod']);
+export const common = (depth = 2) => generate(depth, ['chain', 'add', 'prod']);
 
 export default examples;
