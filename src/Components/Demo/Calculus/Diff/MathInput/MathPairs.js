@@ -13,7 +13,7 @@ class MathPairs extends Component {
           inputClassName={classes.Input}
           label={key}
           inputId={key}
-          autoFocus={i===0}
+          autoFocus={!this.props.noAutoFocus && i===0}
           taskId={this.props.taskId}
         />
         <MathPreview

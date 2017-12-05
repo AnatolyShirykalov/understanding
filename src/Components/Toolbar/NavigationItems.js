@@ -7,6 +7,7 @@ const navigationItems = props => (
     <NavigationItem link="/math/tasks/common/commoninit" exact>Производная</NavigationItem>
     <NavigationItem link="/math/tasks/chain/chaininit" exact>Chain</NavigationItem>
     <NavigationItem link="/math/tasks/prod/prodinit" exact>Лейбниц</NavigationItem>
+    <NavigationItem link="/math/tasks/inverse/inverseinit" exact>Обратная</NavigationItem>
     <NavigationItem link="/examples/task">Sets</NavigationItem>
   </ul>
 );

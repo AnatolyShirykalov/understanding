@@ -8,6 +8,7 @@ import Chain from '../Components/Demo/Calculus/Diff/Chain';
 import DiffTable from '../Components/Demo/Calculus/Diff/Table/Table';
 import DiffAdd from '../Components/Demo/Calculus/Diff/Add';
 import DiffProd from '../Components/Demo/Calculus/Diff/Prod';
+import DiffInverse from '../Components/Demo/Calculus/Diff/Inverse';
 import DiffCommon from '../Components/Demo/Calculus/Diff/Common';
 
 const routes = (
@@ -20,6 +21,7 @@ const routes = (
     <Route path="/math/tasks/table/:taskId/" component={DiffTable} />
     <Route path="/math/tasks/add/:taskId/" component={DiffAdd} />
     <Route path="/math/tasks/prod/:taskId/" component={DiffProd} />
+    <Route path="/math/tasks/inverse/:taskId/" component={DiffInverse} />
     <Route path="/math/tasks/common/:taskId/" component={DiffCommon} />
   </Switch>
 )

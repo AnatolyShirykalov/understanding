@@ -10,6 +10,7 @@ const reducer = (state = {}, action) => {
     case actionTypes.SET_RANDOM_MATH_CHAIN_EXPRESSION:
     case actionTypes.SET_RANDOM_MATH_ADD_EXPRESSION:
     case actionTypes.SET_RANDOM_MATH_PROD_EXPRESSION:
+    case actionTypes.SET_RANDOM_MATH_INVERSE_EXPRESSION:
     case actionTypes.SET_RANDOM_MATH_COMMON_EXPRESSION:
       return {
         ...state,

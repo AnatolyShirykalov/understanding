@@ -12,7 +12,10 @@ const DEFAULT_OPTIONS = {
         inlineMath: []
     },
     showMathMenu: false,
-    showMathMenuMSIE: false
+    showMathMenuMSIE: false,
+    menuSettings: {
+        inTabOrder: false,
+    },
 };
 
 /**

@@ -8,7 +8,7 @@ import C from '../../../../core/calculus';
 
 class Base extends Component {
   withTaskId = prop => this.props[prop](this.taskId());
-  methods = () => ['chain', 'table', 'add', 'prod'];
+  methods = () => ['chain', 'table', 'add', 'prod', 'inverse'];
 
   taskId = () => this.props.taskId ||
     (this.props.match && this.props.match.params.taskId);
@@ -46,7 +46,7 @@ class Base extends Component {
 
   back = () => this.props.history.push(`/math/tasks/${this.withTaskId('parentKind')}/${this.withTaskId('parentId')}`);
 
-  step = (inputId, keys, methods, key, title) => (
+  step = (inputId, keys, methods, key, title, noAutoFocus) => (
     <Step
       taskId={this.taskId()}
       inputId={inputId}
@@ -55,6 +55,7 @@ class Base extends Component {
       keys={keys}
       kind={this.kind()}
       title={title}
+      noAutoFocus={noAutoFocus}
     />
   );
 

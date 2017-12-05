@@ -10,6 +10,7 @@ const labels = {
   table: 'Таблица',
   add: 'Аддитивность',
   prod: 'Лейбниц',
+  inverse: 'Обратная',
 };
 
 class NewTask extends Component {

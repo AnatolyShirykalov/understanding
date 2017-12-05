@@ -16,7 +16,9 @@ it('should compare f(x) and g(x)', ()=>{
   expect(new C('sec(x)', '1/cos(x)').compare()).toBe(true);
   expect(new C('diff(cot(e^x))', '-e^x/(sin(e^x))^2').compare()).toBe(true);
   expect(new C('diff(log(cot(cot(cot(cot(x^2))))))', '2x * tan(cot(cot(cot(x^2))))/sin(cot(cot(cot(x^2))))^2 / sin(cot(cot(x^2)))^2 / sin(cot(x^2))^2 / sin(x^2)^2').compare()).toBe(true);
-  new C('diff(cot(e^x))', '-e^x/(sin(e^x))^2').compare();
+  expect(new C('diff(cot(e^x))', '-e^x/(sin(e^x))^2').compare()).toBe(true);
+  expect(new C('diff(atan(e^x))', 'e^x/(1+e^(2x))').compare()).toBe(true);
+  expect(new C('x^x', 'e^(x log(x))').compare()).toBe(true);
 });
 
 it('sandbox', ()=>{
@@ -25,4 +27,7 @@ it('sandbox', ()=>{
   //console.log(nerdamer.diff('cot(x)').sub('x', 'x').text());
   //console.log(nerdamer('cot(1)').symbol);
   //console.log(nerdamer('cot(x)').buildFunction()(0));
+  //console.log(nerdamer.diff('e^x').text());
+  //console.log(nerdamer.diff('atan(x)').text());
+  //console.log(nerdamer.diff('atan(e^x)').text());
 });

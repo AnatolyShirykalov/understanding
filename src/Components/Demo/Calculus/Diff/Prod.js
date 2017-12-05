@@ -31,7 +31,7 @@ class Prod extends Base {
               <ToDo tex={'f(x)g(x) = ' + this.exTex() } />
               <Step taskId={this.taskId()} keys={['f(x)', 'g(x)']} title="Разделяй и властвуй" />
               {this.decomposed('prod') ? ['f','g'].map(f=>(
-                this.step(`${f}(x)`, [`${f}'(x)`], methods, f, 'Ищем производную')
+                this.step(`${f}(x)`, [`${f}'(x)`], methods, f, 'Ищем производную', f==='g')
               )) : null}
               {this.diffed('f', 'df') && this.diffed('g', 'dg') ?
                   <Step taskId={this.taskId()} keys={["f'(x)g(x)+f(x)g'(x)"]} title="Перемножаем" />

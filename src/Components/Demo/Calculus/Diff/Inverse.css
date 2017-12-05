@@ -1,0 +1,9 @@
+.Inverse {
+  background-color: #eee;
+}
+
+.Hint {
+  display: inline-block;
+  min-height: 100px;
+  width: 90%;
+}

@@ -13,7 +13,7 @@ const step = props => (
         <Tab>Методом</Tab>
       </TabList>
       <TabPanel>
-        <MathPairs taskId={props.taskId} keys={props.keys} />
+        <MathPairs taskId={props.taskId} keys={props.keys} noAutoFocus={props.noAutoFocus}/>
       </TabPanel>
       <TabPanel>
         {props.methods.map(kind => (
@@ -29,7 +29,7 @@ const step = props => (
       </TabPanel>
       {props.children}
     </Tabs> :
-        <MathPairs taskId={props.taskId} keys={props.keys} />
+        <MathPairs taskId={props.taskId} keys={props.keys} noAutoFocus={props.noAutoFocus}/>
     }
   </div>
 );

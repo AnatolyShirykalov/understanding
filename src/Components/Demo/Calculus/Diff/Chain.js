@@ -22,7 +22,10 @@ class Example extends Base {
     if (this.rightAnswer()) this.baseGoToParent();
   }
 
-  newTask = (i) => this.props.setRandomExpression(this.taskId(), i+2);
+  newTask = (i) => {
+    if (i===3) return this.props.setExpression(this.taskId(), 'x^x');
+    return this.props.setRandomExpression(this.taskId(), i+2);
+  }
 
   render(){
     const methods = this.methods();
@@ -35,7 +38,7 @@ class Example extends Base {
         <div className={classes.Diff}>
           <h2>Дифференцирование сложной функции (Chain rule)</h2>
           <GenTask
-            levels={['Тренироваться', 'Сложнее', 'Очень сложно']}
+            levels={['Тренироваться', 'Сложнее', 'Очень сложно', 'Особые случаи']}
             parentId={this.withTaskId('parentId')}
             newTask={this.newTask}
             back={this.backRender()}
@@ -47,7 +50,7 @@ class Example extends Base {
                 <Step taskId={this.taskId()} keys={['f(x)', 'g(y)']} title={step1} />
                 { this.decomposed('chain') ?
                     [  this.step('f(x)', ["f'(x)"], methods, 1, step2),
-                      this.step('g(y)', ["g'(y)"], methods, 2, step3)]
+                      this.step('g(y)', ["g'(y)"], methods, 2, step3, true)]
                       : null }
                 { this.validDiffs() ?
                     <Step taskId={this.taskId()} keys={["f'(x)g'(f(x))"]} title={step4}/> : null }

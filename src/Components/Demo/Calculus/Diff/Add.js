@@ -35,7 +35,7 @@ class Add extends Base {
             <ToDo tex={`f(x) + g(x) = ${this.exTex()}`} />
             <Step taskId={this.taskId()} keys={['f(x)', 'g(x)']} title="Делим на слагаемые" />
             {this.decomposed('add') ? ['f','g'].map(f=>(
-                this.step(`${f}(x)`, [`${f}'(x)`], methods, f, 'Ищем производную')
+                this.step(`${f}(x)`, [`${f}'(x)`], methods, f, 'Ищем производную', f==='g')
             )): null}
             {this.diffed('f', 'df') && this.diffed('g', 'dg') ?
                 <Step taskId={this.taskId()} keys={["f'(x)+g'(x)"]} title="Складываем" /> : null}

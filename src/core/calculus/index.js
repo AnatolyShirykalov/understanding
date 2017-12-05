@@ -1,10 +1,13 @@
 import nerdamer from 'nerdamer';
-const eps = 1e-7;
+const eps = 1e-5;
 
 class ComplexExample {
   constructor(f, g) {
-    this.f = nerdamer(f);
-    this.g = nerdamer(g);
+    this.f = f;
+    this.g = g;
+    ['f','g'].forEach(k=>{
+      if(typeof(this[k])==='string') this[k] = nerdamer(this[k]);
+    })
   }
 
   combine(combiner='chain') {
@@ -45,7 +48,8 @@ class ComplexExample {
           i-=1;
           continue;
         }
-        const denom = Math.min(Math.abs(fx), Math.abs(gx));
+        let denom = Math.min(Math.abs(fx), Math.abs(gx));
+        if (denom === 0) denom=1;
         const diff = fx === gx ? 0 : Math.abs((fx - gx)/denom);
         if (diff > max) {
           max = diff;
