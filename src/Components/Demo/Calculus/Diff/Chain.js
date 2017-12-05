@@ -50,7 +50,7 @@ class Example extends Base {
                       this.step('g(y)', ["g'(y)"], methods, 2, step3)]
                       : null }
                 { this.validDiffs() ?
-                    <Step taskId={this.taskId()} keys={["f'(x)*g'(f(x))"]} title={step4}/> : null }
+                    <Step taskId={this.taskId()} keys={["f'(x)g'(f(x))"]} title={step4}/> : null }
                     { this.rightAnswer() ? <Congs /> : null}
               </div>
             : null
@@ -69,7 +69,7 @@ const mapStateToProps = ({calculus}) => {
     g: withTI('g(y)'),
     df: withTI("f'(x)"),
     dg: withTI("g'(y)"),
-    answer: withTI("f'(x)*g'(f(x))"),
+    answer: withTI("f'(x)g'(f(x))"),
   };
 }
 

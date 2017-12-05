@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../../../store/actions';
 import {DebounceInput} from 'react-debounce-input';
-//import MathJax from '../../../../../vendor/react-mathjax/src';
+import MathJax from '../../../../../vendor/react-mathjax/src';
 
 const mathInput = props => (
   <div className={props.className}>
     <label>
-      {props.label + '='}
+      <MathJax.Node inline>
+        {props.label + '='}
+      </MathJax.Node>
     </label>
     <DebounceInput
       debounceTimeout={500}
