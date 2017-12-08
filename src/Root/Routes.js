@@ -10,6 +10,7 @@ import DiffAdd from '../Components/Demo/Calculus/Diff/Add';
 import DiffProd from '../Components/Demo/Calculus/Diff/Prod';
 import DiffInverse from '../Components/Demo/Calculus/Diff/Inverse';
 import DiffCommon from '../Components/Demo/Calculus/Diff/Common';
+import BoolTable from '../Components/Demo/Bool/Table';
 
 const routes = (
   <Switch>
@@ -23,6 +24,7 @@ const routes = (
     <Route path="/math/tasks/prod/:taskId/" component={DiffProd} />
     <Route path="/math/tasks/inverse/:taskId/" component={DiffInverse} />
     <Route path="/math/tasks/common/:taskId/" component={DiffCommon} />
+    <Route path="/math/tasks/booltable/:taskId/" component={BoolTable} />
   </Switch>
 )
 

@@ -1,17 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 import nerdamer from 'nerdamer';
 import * as actions from '../../../../store/actions';
 import 'nerdamer/all';
 import classes from './Base.css';
 import Step from './Step';
 import C from '../../../../core/calculus';
+import DemoBase, {withTIC} from '../../Base';
 
-class Base extends Component {
-  withTaskId = prop => this.props[prop](this.taskId());
+class Base extends DemoBase {
   methods = () => ['chain', 'table', 'add', 'prod', 'inverse'];
 
-  taskId = () => this.props.taskId ||
-    (this.props.match && this.props.match.params.taskId);
 
   decomposed = combiner => {
     try {
@@ -106,9 +104,6 @@ class Base extends Component {
   }
 }
 
-export const withTIC = calculus => prop => taskId =>
-  calculus[taskId] && calculus[taskId][prop];
-
 export const mSTP = calculus => {
   const withTI = withTIC(calculus);
   return {
@@ -126,5 +121,6 @@ export const mDTP = dispatch => ({
     ))
 });
 
+export {withTIC};
 
 export default Base;

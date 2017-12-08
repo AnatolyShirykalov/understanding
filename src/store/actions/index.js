@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import {add, chain, common, prod, inverse} from '../../core/calculus/examples';
+import {makeFormula} from '../../core/bool';
 import hash from 'object-hash';
 
 export const changeMathInput = (taskId, inputId, value) => ({
@@ -64,4 +65,16 @@ export const setMathExpressionToParentTaskAndRedirect =
 export const selectDiffTableItem = (taskId, fun) => ({
   type: actionTypes.SELECT_DIFF_TABLE_ITEM,
   taskId, fun,
-})
+});
+
+
+export const setRandomBoolTableFormula = (taskId, depth, vars=['x','y']) => ({
+  type: actionTypes.SET_RANDOM_BOOL_TABLE_FORMULA,
+  taskId,
+  formula: makeFormula(vars, depth),
+});
+
+export const updateBoolTableAnswer = (taskId, index, value) => ({
+  type: actionTypes.UPDATE_BOOL_TABLE_ANSWER,
+  taskId, index, value,
+});
