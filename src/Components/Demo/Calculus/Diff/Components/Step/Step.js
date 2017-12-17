@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Step.css';
-import MathPairs from './MathInput/MathPairs';
-import NewTask from './NewTask';
+import MathPairs from '../MathInput/MathPairs';
+import NewTask from '../NewTask/NewTask';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 const step = props => (
   <div className={classes.Step}>

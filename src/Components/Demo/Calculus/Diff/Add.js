@@ -1,50 +1,43 @@
-import React from 'react';
 import {connect} from 'react-redux';
-import MathJax from '../../../../vendor/react-mathjax/src';
 import Base, {mSTP, mDTP, withTIC} from './Base';
-import GenTask from './GenTask';
-import ToDo from './ToDo';
-import Step from './Step';
-import Congs from './Congs';
 import * as actions from '../../../../store/actions';
-import classes from './Add.css';
+
+
+
+const params = {
+  kind: 'add',
+  title: 'Аддитивность производной',
+  levels: ['Тренироваться'],
+  newTask: {method: 'setRandomExpression', args: i=>[i+2]},
+  toDoTex: ex => `f(x)+g(x) = ${ex}`,
+  congCondition: { method: 'diffed', args: ['expression', 'answer']},
+  steps: [
+    {props: {title: 'Делим на слагаемые', keys: ['f(x)', 'g(x)']}},
+    ...['f','g'].map(f=>({
+      conditions: [{method: 'decomposed', args: ['add']}],
+      props: {
+        inputId: `${f}(x)`,
+        keys: [`${f}'(x)`],
+        methods: ['chain', 'table', 'add', 'prod', 'inverse'],
+        key: f,
+        title: 'Ищем производную',
+        noAutoFocus: f === 'g',
+      },
+    })),
+    {
+      conditions: ['f','g'].map(f=>({method: 'diffed', args: [f, 'd'+f]})),
+      props: {title: 'Складываем', keys: ["f'(x)+g'(x)"]},
+    },
+  ],
+};
 
 class Add extends Base {
-  kind = () => 'add';
-
-  newTask = i => this.props.setRandomExpression(this.taskId(), i+2);
-
+  kind = () => params.kind;
   componentDidUpdate() {
     if(this.diffed('expression', 'answer'))
       this.baseGoToParent();
   }
-
-  render() {
-    const methods = this.methods();
-    return (
-      <MathJax.Context>
-        <div className={classes.Add}>
-          <h2>Аддитивность производной</h2>
-          <GenTask
-            levels={['Тренироваться']}
-            parentId={this.withTaskId('parentId')}
-            newTask={this.newTask}
-            back={this.backRender()}
-          />
-          { this.validExpression() ? <div>
-            <ToDo tex={`f(x) + g(x) = ${this.exTex()}`} />
-            <Step taskId={this.taskId()} keys={['f(x)', 'g(x)']} title="Делим на слагаемые" />
-            {this.decomposed('add') ? ['f','g'].map(f=>(
-                this.step(`${f}(x)`, [`${f}'(x)`], methods, f, 'Ищем производную', f==='g')
-            )): null}
-            {this.diffed('f', 'df') && this.diffed('g', 'dg') ?
-                <Step taskId={this.taskId()} keys={["f'(x)+g'(x)"]} title="Складываем" /> : null}
-            {this.diffed('expression', 'answer') ? <Congs /> : null}
-          </div> : null}
-        </div>
-      </MathJax.Context>
-    );
-  }
+  params = () => params;
 }
 
 const mapStateToProps = ({calculus}) => {

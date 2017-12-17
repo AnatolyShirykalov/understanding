@@ -1,0 +1,12 @@
+.Back {
+  border: 1px solid black;
+  box-shadow: 2px 2px 0 black;
+  width: 90%;
+  display: inline-block;
+}
+
+.Back button {
+  padding: 5px 10px;
+  font-size: large;
+  margin-bottom: 5px;
+}

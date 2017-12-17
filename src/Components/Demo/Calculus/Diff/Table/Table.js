@@ -6,10 +6,9 @@ import 'nerdamer/all';
 import MathJax from '../../../../../vendor/react-mathjax/src';
 import {table} from '../../../../../core/calculus/examples';
 import C from '../../../../../core/calculus';
-import MathPairs from '../MathInput/MathPairs';
 import Base, {mDTP, mSTP, withTIC} from '../Base';
 import classes from './Table.css';
-import ToDo from '../ToDo';
+import {ToDo, MathPairs} from '../Components';
 
 class Table extends Base {
   isDegree = () => {

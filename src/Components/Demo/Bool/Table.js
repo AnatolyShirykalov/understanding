@@ -1,32 +1,52 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions';
-import Base, {withTIC} from '../Base';
-import GenTask from '../Calculus/Diff/GenTask';
+import Base, {withTIC, mDTP, baseMSTP} from '../Base';
 import MathJax from '../../../vendor/react-mathjax/src';
 import ToDo from '../ToDo';
-import Congs from '../Calculus/Diff/Congs';
+import {Congs, GenTask} from '../Calculus/Diff/Components';
+import BoolInput from './Input';
 
 class Table extends Base {
   newTask = i => this.props.setFormula(this.taskId(), i+3);
 
+  inputValue = key => {
+    const v = (this.withTaskId('answer') || [] )[key];
+    if (typeof(v) !== 'number') return '';
+    return v;
+  }
+
+  row = (varCount, key) => {
+    return Array(varCount).fill(0).map((v,i,vars)=>(
+      key < 2**(vars.length - i -1) ? 0 :
+            key.toString(2)[key.toString(2).length - vars.length + i]
+    ));
+  }
+
   zeroOnes = varCount => Array(2**varCount).fill(0).map((a, key)=>(
     <tr key={key}>
-      {Array(varCount).fill(0).map((v,i,vars)=>(
-        <td key={i}>{
-          key < 2**(vars.length - i -1) ? 0 :
-            key.toString(2)[key.toString(2).length - vars.length + i]
-        }</td>
+      { this.row(varCount, key).map((v, i)=>(
+        <td key={i}>{v}</td>
       ))}
       <td>
-        <input
-          type="number"
-          min="0"
-          max="1"
+        <BoolInput
           onChange={this.props.updateAnswer(this.taskId(), key)}
-          value={this.withTaskId('answer')[key]}
+          value={ this.inputValue(key)}
+        />
+      </td>
+      <td>
+        <button
+          onClick={
+            this.props.childClick(
+              this.taskId(),
+              key,
+              this.withTaskId('formula').at(this.row(varCount, key)),
+              this.props.history
+            )
+          }
         >
-        </input>
+          Отдельно
+        </button>
       </td>
     </tr>));
 
@@ -42,6 +62,7 @@ class Table extends Base {
     try {
       const v = this.validFormula().toVector();
       const ans = this.withTaskId('answer');
+      console.log(v, ans);
       for (let i = 0; i< v.length; i++) {
         if (v[i] !== ans[i]) return false;
       }
@@ -51,6 +72,20 @@ class Table extends Base {
     }
   }
 
+  componentDidMount() {
+    if(this.amIRight())
+      this.baseGoToParent();
+  }
+
+  componentDidUpdate() {
+    console.log('update');
+    if(this.amIRight()) {
+      this.baseGoToParent();
+      console.log('I am right');
+    }
+  }
+
+
   render (){
     return (
       <MathJax.Context>
@@ -58,6 +93,8 @@ class Table extends Base {
           <GenTask
             levels={['Тренироваться']}
             newTask={this.newTask}
+            parentId={this.withTaskId('parentId')}
+            back={this.backRender()}
           />
           {this.validFormula() ?
             <div>
@@ -82,16 +119,21 @@ class Table extends Base {
 const mapStateToProps = ({bool}) => {
   const withTI = withTIC(bool);
   return {
+    ...baseMSTP(bool),
     formula: withTI('formula'),
-    answer: withTI('answer'),
   }
 };
 
 const mapDispatchToProps = dispatch => ({
+  ...mDTP(dispatch),
+  updateAnswer: (taskId, index) => ({target: {value}}) =>{
+    if(value !== '1' && value !== '0' && value.length !== 0) return;
+    dispatch(actions.updateBoolTableAnswer(taskId, index, value))
+  },
   setFormula: (taskId, depth) => () =>
     dispatch(actions.setRandomBoolTableFormula(taskId, depth, ['x', 'y'])),
-  updateAnswer: (taskId, index) => ({target: {value}}) =>
-    value === '1' || value === '0' ? dispatch(actions.updateBoolTableAnswer(taskId, index, value)) : null,
+  childClick: (taskId, key, formula, history) => () =>
+    dispatch(actions.setBoolChildTaskAndRedirect(taskId, key, 'booltable', formula, history, 'booleval')),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

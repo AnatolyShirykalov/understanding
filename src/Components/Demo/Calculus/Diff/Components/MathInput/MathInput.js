@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../../../../store/actions';
+import * as actions from '../../../../../../store/actions';
 import {DebounceInput} from 'react-debounce-input';
-import MathJax from '../../../../../vendor/react-mathjax/src';
+import MathJax from '../../../../../../vendor/react-mathjax/src';
 
 const mathInput = props => (
   <div className={props.className}>
@@ -32,4 +32,5 @@ const mapStateToProps = ({calculus}) => ({
   value: (taskId, inputId) => calculus[taskId][inputId]
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(mathInput);
+export const MathInput = connect(mapStateToProps, mapDispatchToProps)(mathInput);
+export default MathInput;

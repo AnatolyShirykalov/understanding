@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Congs.css';
 
-const congs = props => (
+export const congs = props => (
   <div className={classes.Congs}><div>Ура! Всё верно</div></div>
 );
 

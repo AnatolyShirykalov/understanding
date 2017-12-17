@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import MathJax from '../../../../../vendor/react-mathjax/src';
+import MathJax from '../../../../../../vendor/react-mathjax/src';
 import nerdamer from 'nerdamer';
 
 const mathPreview = props => {

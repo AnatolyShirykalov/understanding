@@ -3,18 +3,49 @@ import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions';
 import classes from './Inverse.css';
 import MathJax from '../../../../vendor/react-mathjax/src';
-import Step from './Step';
 import Base, {mDTP, mSTP, withTIC} from './Base';
-import ToDo from './ToDo';
-import GenTask from './GenTask';
-import Congs from './Congs';
 import C from '../../../../core/calculus';
 import {INV, CLEAR_INV, trigConnections} from '../../../../core/calculus/examples';
 import scrollToComponent from 'react-scroll-to-component';
 
+const params = {
+  kind: 'inverse',
+  title: 'Производная обратной функции',
+  levels: ['Тренироваться'],
+  newTask: {method: 'setRandomExpression', args: i=>[]},
+  toDoTex: ex => `y = f(x) = ${ex} \\qquad x = g(y)`,
+  congCondition: { method: 'canShowCongs', args: []},
+  extra: {
+    condition: {method: 'needBeauty', args: []},
+    render: {method: 'beauty', args: []},
+  },
+  steps: [
+    {props: {title: 'Находим обратную', keys: ["x=g(y)"]}},
+    {
+      conditions: [{method: 'inversed', args: []}],
+      props: {
+        inputId: `x=g(y)`,
+        keys: [`g'(y)`],
+        methods: ['chain', 'table', 'add', 'prod', 'inverse'],
+        key: 'g',
+        title: 'Ищем производную',
+      },
+    },
+    {
+      conditions: [{method: 'diffed', args: ['g', 'dg']}],
+      props: {title: 'Делим', keys: ["\\frac1{g'(y)}"]},
+    },
+    {
+      conditions: [{method: 'fraced', args: []}],
+      props: {title: 'Подставляем', keys: ["\\frac1{g'\\big(f(x)\\big))}"]},
+    },
+  ],
+}
+
 class Inverse extends Base {
   kind = () => 'inverse';
-  newTask = (i) => this.props.setRandomExpression(this.taskId());
+  params = ()=> params;
+  //newTask = (i) => this.props.setRandomExpression(this.taskId());
   inversed = () => {
     try {
       return new C(
@@ -35,6 +66,7 @@ class Inverse extends Base {
   }
 
   needBeauty = () => {
+    if(!this.diffed('expression', 'answer')) return false;
     const ex = this.withTaskId('expression');
     const an = this.withTaskId('answer');
     if (typeof(an)!=='string') return true;
@@ -42,6 +74,8 @@ class Inverse extends Base {
       (INV.indexOf(ex) !== -1) && CLEAR_INV.filter(i=>an.match(i)).length > 0
     );
   }
+
+  canShowCongs = () => this.diffed('expression', 'answer') && !this.needBeauty();
 
   beauty = () => {
     const g = this.withTaskId('g');
@@ -57,39 +91,6 @@ class Inverse extends Base {
   componentDidUpdate() {
     if (this.diffed('expression', 'answer')) this.baseGoToParent();
     if (this.needBeauty) scrollToComponent(this.Hint, {offset: 100});
-  }
-  render () {
-    const methods = this.methods();
-    return (
-      <MathJax.Context>
-        <div className={classes.Inverse}>
-          <h2>Правило Лейбница</h2>
-          <GenTask
-            levels={['Тренироваться']}
-            parentId={this.withTaskId('parentId')}
-            newTask={this.newTask}
-            back={this.backRender()}
-          />
-          {this.validExpression() ? <div>
-              <ToDo tex={'y = f(x) = ' + this.exTex() + '\\qquad x = g(y)' } />
-              <Step taskId={this.taskId()} keys={['x=g(y)']} title="Находим обратную" />
-              {this.inversed() ?
-                this.step(`x=g(y)`, [`g'(y)`], methods, 1, 'Ищем производную')
-               : null}
-              {this.diffed('g', 'dg') ?
-                  <Step taskId={this.taskId()} keys={["\\frac1{g'(y)}"]} title="Делим" />
-                  : null }
-              {this.fraced() ?
-                  <Step taskId={this.taskId()} keys={["\\frac1{g'\\big(f(x)\\big))}"]} title="Подставляем" />
-                  : null}
-                  {this.diffed('expression', 'answer') ?
-                      ( this.needBeauty() ? this.beauty() : <Congs />)
-                   : null}
-            </div> : null
-          }
-        </div>
-      </MathJax.Context>
-    );
   }
 }
 

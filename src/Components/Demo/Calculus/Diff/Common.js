@@ -1,9 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Base, {mDTP, mSTP, withTIC} from './Base';
-import ToDo from './ToDo';
-import GenTask from './GenTask';
-import Congs from './Congs';
+import {ToDo, GenTask, Congs} from './Components';
 import classes from './Common.css';
 import MathJax from '../../../../vendor/react-mathjax/src';
 import * as actions from '../../../../store/actions';

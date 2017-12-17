@@ -25,8 +25,9 @@ export class Formula {
     this.vars = [];
     ['l','r'].forEach(k=>{
       if (typeof(this[k]) === 'string')
-        this.vars = [...new Set(this.vars).add(this[k])];
-      else if (this[k] !== undefined) this.vars = [...new Set([...this.vars, ...this[k].vars])];
+        this.vars = [...new Set(this.vars).add(this[k])].sort();
+      else if (this[k] !== undefined)
+        this.vars = [...new Set([...this.vars, ...this[k].vars])].sort();
     });
   }
 
@@ -43,6 +44,22 @@ export class Formula {
   maybesurround = ex => {
     if(ex.op !== operators.OR) return this.child(ex);
     return this.surround(ex);
+  }
+
+  at(args) {
+    if(!Array.isArray(args)) {
+      let r = this.r;
+      let l = this.l;
+      if(typeof(r) === 'string') r = args[this.r];
+      else r = r && r.at(args);
+      if(typeof(l) === 'string') l = args[this.r];
+      else l = l && l.at(args);
+      return new Formula({...(this.op===operators.NEG ? {} :{l}), op: this.op, r});
+    }
+    if(args.length < this.vars.length) throw new Error('arguments are not enough');
+    let r = {};
+    this.vars.forEach((v,i)=>r[v]=args[i]+'');
+    return this.at(r);
   }
 
   toTeX() {
@@ -84,6 +101,32 @@ export class Formula {
     });
     return ret.map(k=>k==='1' || k === 1 || k===true?1:0);
   }
+
+  eChild = ex => {
+    if(typeof(ex) === 'string') {
+      switch(ex) {
+        case '0':
+          return 'false';
+        case '1':
+          return 'true';
+        default:
+          throw new Error(`Cannot eval Formula with variable ${ex}; Only 1 and 0 are supported`);
+      }
+    }
+    return ex.eval();
+  }
+
+  eval() {
+    switch(this.op){
+      case operators.NEG:
+        return `!(${this.eChild(this.r)})`;
+      case operators.OR:
+        return `(${this.eChild(this.l)} || ${this.eChild(this.r)})`;
+      case operators.AND:
+        return `(${this.eChild(this.l)}) && (${this.eChild(this.r)})`;
+      default: return '';
+    }
+  }
 };
 
 const rand = (n=1) => Math.floor(Math.random()*n);
@@ -101,3 +144,16 @@ export const makeFormula = (vars, depth = 1) => {
   const l = op === operators.NEG ? undefined : makeFormula(vars, depth - 1);
   return new Formula({r, l, op});
 }
+
+export const makeEquality = (vars, depth = 1) => {
+  const l = makeFormula(vars, depth);
+  let i = 0;
+  while(i<200000) {
+    const r = makeFormula(vars, depth);
+    if(
+      l.toVector().join()===r.toVector().join() &&
+      r.toTeX() !== l.toTeX()
+    ) return [l, r];
+  }
+  throw new Error('cannot create equality');
+};

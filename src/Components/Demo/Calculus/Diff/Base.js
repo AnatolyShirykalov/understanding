@@ -1,15 +1,28 @@
 import React from 'react';
+import {ToDo, GenTask, Congs, Step} from './Components';
+import MathJax from '../../../../vendor/react-mathjax/src';
+import classes from './Base.css';
 import nerdamer from 'nerdamer';
 import * as actions from '../../../../store/actions';
 import 'nerdamer/all';
-import classes from './Base.css';
-import Step from './Step';
 import C from '../../../../core/calculus';
-import DemoBase, {withTIC} from '../../Base';
+import DemoBase, {withTIC, baseMSTP} from '../../Base';
 
 class Base extends DemoBase {
   methods = () => ['chain', 'table', 'add', 'prod', 'inverse'];
 
+  newTask = (arg) => {
+    if(typeof(arg) === 'function')
+      return i => arg(this, i);
+    const {method, args} = arg;
+    try{
+      const tid = this.taskId();
+      return i => this.props[method](tid, ...args(i));
+    } catch(er) {
+      console.error(method, args);
+      throw er;
+    }
+  }
 
   decomposed = combiner => {
     try {
@@ -42,7 +55,10 @@ class Base extends DemoBase {
     return ex.sub(from, to).text();
   }
 
-  back = () => this.props.history.push(`/math/tasks/${this.withTaskId('parentKind')}/${this.withTaskId('parentId')}`);
+  done = ({method, args}) => this[method](...args);
+
+  newStep = ({inputId, keys, methods, key, title, noAutoFocus}) =>
+    this.step(inputId, keys, methods, key, title, noAutoFocus);
 
   step = (inputId, keys, methods, key, title, noAutoFocus) => (
     <Step
@@ -81,14 +97,6 @@ class Base extends DemoBase {
     }
   }
 
-  backRender = () => (
-    <div className={classes.Back}>
-      <p>Как только это подзадание будет сделано, вас вернут к основному заданию</p>
-      <button onClick={this.back}>
-        Вернуться сейчас</button>
-    </div>
-  );
-
   baseGoToParent = (answer=this.withTaskId("answer")) => {
     const parentId = this.withTaskId('parentId');
     const parentInputId = this.withTaskId('parentInputId');
@@ -101,6 +109,42 @@ class Base extends DemoBase {
       this.props.history,
       this.withTaskId('parentKind')
     );
+  };
+
+  render() {
+    const params = this.params();
+    return (
+      <MathJax.Context>
+        <div className={classes.Diff}>
+          <h2>{params.title}</h2>
+          <GenTask
+            levels={params.levels}
+            parentId={this.withTaskId('parentId')}
+            newTask={this.newTask(params.newTask)}
+            back={this.backRender()}
+          />
+          { this.validExpression() ? <div>
+            <ToDo tex={params.toDoTex(this.exTex())} />
+            {
+              params.steps.map((step, k)=>{
+                if(step.conditions) {
+                  const good = step.conditions.reduce((res, cond)=>{
+                    return res && this.done(cond);
+                  }, true);
+                  if(!good) return null;
+                }
+                if (step.props.methods) return this.newStep(step.props);
+                return (<Step key={k} taskId={this.taskId()} {...step.props} />);
+              })
+            }
+            {this.done(params.congCondition) ? <Congs /> : null}
+            {params.extra && this.done(params.extra.condition) ?
+                this.done(params.extra.render)
+                : null}
+          </div> : null}
+        </div>
+      </MathJax.Context>
+    );
   }
 }
 
@@ -108,9 +152,7 @@ export const mSTP = calculus => {
   const withTI = withTIC(calculus);
   return {
     expression: withTI('expression'),
-    parentId: withTI('parentId'),
-    parentInputId: withTI('parentInputId'),
-    parentKind: withTI('parentKind'),
+    ...baseMSTP(calculus),
   };
 }
 
