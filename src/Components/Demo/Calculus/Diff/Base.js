@@ -153,6 +153,7 @@ export const mSTP = calculus => {
   return {
     expression: withTI('expression'),
     ...baseMSTP(calculus),
+    parentInputId: withTI('parentInputId'),
   };
 }
 
