@@ -25,7 +25,7 @@ class Lesson extends Base {
           {pairs.map((pair, key)=>(
             <Step
               key={key}
-              title='Очередное выражение'
+              title='Докажите, что'
               formula={pair.map(toTeX).join(' = ')}
               done={this.done(key)}
               onClick={this.props.childClick(

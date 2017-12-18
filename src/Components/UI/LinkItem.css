@@ -1,0 +1,35 @@
+.Item {
+  box-sizing: border-box;
+  vertical-align: top;
+  width: 90%;
+  height: 230px;
+  border: 1px solid black;
+  box-shadow: 5px 5px 3px black;
+  display: inline-block;
+  margin: auto;
+  margin-bottom: 25px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+@media(min-width: 430px) {
+  .Item {
+    width: 380px;
+  }
+}
+
+.Item a {
+  text-decoration: none;
+  color: green;
+}
+
+.Item h3 {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.Item:hover {
+  background-color: #eee;
+}
+

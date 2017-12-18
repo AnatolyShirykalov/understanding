@@ -4,13 +4,8 @@ import classes from './NavigationItems.css';
 
 const navigationItems = props => (
   <ul className={classes.NavItems}>
-    <NavigationItem link="/math/tasks/boolequal/boolequalinit" exact>Bool</NavigationItem>
-    <NavigationItem link="/math/tasks/common/commoninit" exact>Производная</NavigationItem>
-    <NavigationItem link="/math/tasks/chain/chaininit" exact>Chain</NavigationItem>
-    <NavigationItem link="/math/tasks/prod/prodinit" exact>Лейбниц</NavigationItem>
-    <NavigationItem link="/math/tasks/inverse/inverseinit" exact>Обратная</NavigationItem>
-    <NavigationItem link="/math/tasks/lesson/lessoninit" exact>Урок</NavigationItem>
-    <NavigationItem link="/examples/task">Sets</NavigationItem>
+    <NavigationItem link="/lessons" exact>Уроки</NavigationItem>
+    <NavigationItem link="/trainers" exact>Тренажёры</NavigationItem>
   </ul>
 );
 

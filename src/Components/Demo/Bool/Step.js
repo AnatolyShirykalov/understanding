@@ -9,7 +9,7 @@ const step = props => (
       {props.formula}
     </MathJax.Node>
     <div>{props.answer ? props.answer.map((a,k)=><span key={k}>{a}</span>): null}</div>
-    {props.done ? <span>Сделано</span> : <button onClick={props.onClick}>Считать</button>}
+    {props.done ? <i className={classes.Done}></i> : <button onClick={props.onClick}>Считать</button>}
   </div>
 );
 
