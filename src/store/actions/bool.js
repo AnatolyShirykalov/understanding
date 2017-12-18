@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import {makeFormula, makeEquality} from '../../core/bool';
+import {makeFormula, makeEquality} from '../../core/bool/mjs';
 import hash from 'object-hash';
 
 export const setRandomBoolTableFormula = (taskId, depth, vars=['x','y']) => ({

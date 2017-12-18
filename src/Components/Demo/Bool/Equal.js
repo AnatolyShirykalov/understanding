@@ -6,32 +6,47 @@ import {connect} from 'react-redux';
 import * as actions from '../../../store/actions';
 import MathJax from '../../../vendor/react-mathjax/src';
 import {GenTask, Congs} from '../Calculus/Diff/Components';
+import {toVector, toTeX} from '../../../core/bool/mjs';
+import classes from '../Base.css';
 
 class Equal extends Base {
   newTask = i => this.props.setFormula(this.taskId(), i+3);
 
   validFormula = () => {
-    try {
-      const f = this.withTaskId('formula');
-      if (f.length === 2) return f;
-    } catch(er) {
-      return null;
-    }
+    const f = this.withTaskId('formula');
+    if (!Array.isArray(f) || f.length !== 2) return null;
+    return f;
   }
 
   canShowCongs = () => {
-    const answer = this.withTaskId('answer');
-    if(!answer || answer.length < 2) return false;
-    const formula = this.withTaskId('formula');
-    return answer.filter((ans, key)=>{
-      return ans.join() !== formula[key].toVector().join()
-    }).length === 0;
+    try{
+      const answer = this.withTaskId('answer');
+      if(!answer || answer.length < 2) return false;
+      const formula = this.withTaskId('formula');
+      return answer.filter((ans, key)=>{
+        return ans.join() !== toVector(formula[key]).join()
+      }).length === 0;
+    } catch(er) {
+      return false;
+    }
+  }
+
+  mu = () => {
+    if(this.canShowCongs()) this.baseGoToParent();
+  }
+
+  componentDidMount() {
+    this.mu();
+  }
+
+  componentDidUpdate(){
+    this.mu();
   }
 
   render(){
     return(
       <MathJax.Context>
-        <div>
+        <div className={classes.Base}>
           <h2>Сравнение</h2>
           <GenTask
             levels={['Тренироваться']}
@@ -41,13 +56,13 @@ class Equal extends Base {
           />
           {this.validFormula() ?
               <div>
-                <ToDo tex={this.validFormula().map(f=>f.toTeX()).join('=')} header="Докажите"/>
+                <ToDo tex={this.validFormula().map(toTeX).join('=')} header="Докажите"/>
                 {this.validFormula().map((f, key)=>(
                   <Step
                     key={key}
                     title={`Считаем значение ${key+1}-го выражения`}
                     answer={this.withTaskId('answer')[key]}
-                    formula={f.toTeX()}
+                    formula={toTeX(f)}
                     onClick={this.props.childClick(
                       this.taskId(), key, f, this.props.history)}
                   />

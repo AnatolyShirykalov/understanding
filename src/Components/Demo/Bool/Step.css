@@ -1,0 +1,15 @@
+.Step {
+  border: 1px solid black;
+  box-shadow: 5px 5px 4px black;
+  width: 90%;
+  margin: 10px auto;
+}
+
+.Step button {
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  font-size: large;
+  background-color: white;
+  border: 2px solid #EDD;
+  cursor: pointer;
+}

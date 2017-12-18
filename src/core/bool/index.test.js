@@ -1,5 +1,4 @@
 import {makeFormula, Formula, operators} from '.';
-
 it('should make Formula', () => {
   const f = makeFormula(['x', 'y', 'z'], 3);
   expect(f).toBeInstanceOf(Formula);

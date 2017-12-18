@@ -13,6 +13,7 @@ import DiffCommon from '../Components/Demo/Calculus/Diff/Common';
 import BoolTable from '../Components/Demo/Bool/Table';
 import BoolEval from '../Components/Demo/Bool/Eval';
 import BoolEqual from '../Components/Demo/Bool/Equal';
+import Lesson from '../Components/Demo/Lesson/Lesson';
 
 const routes = (
   <Switch>
@@ -29,6 +30,7 @@ const routes = (
     <Route path="/math/tasks/booltable/:taskId/" component={BoolTable} />
     <Route path="/math/tasks/booleval/:taskId/" component={BoolEval} />
     <Route path="/math/tasks/boolequal/:taskId/" component={BoolEqual} />
+    <Route path="/math/tasks/lesson/:taskId/" component={Lesson} />
   </Switch>
 )
 

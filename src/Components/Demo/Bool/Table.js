@@ -6,6 +6,7 @@ import MathJax from '../../../vendor/react-mathjax/src';
 import ToDo from '../ToDo';
 import {Congs, GenTask} from '../Calculus/Diff/Components';
 import BoolInput from './Input';
+import {getVars, toVector, toTeX, at, makeArg} from '../../../core/bool/mjs';
 
 class Table extends Base {
   newTask = i => this.props.setFormula(this.taskId(), i+3);
@@ -17,9 +18,10 @@ class Table extends Base {
   }
 
   row = (varCount, key) => {
-    return Array(varCount).fill(0).map((v,i,vars)=>(
-      key < 2**(vars.length - i -1) ? 0 :
-            key.toString(2)[key.toString(2).length - vars.length + i]
+    return Array(varCount).fill(0).map((v, i)=>(
+      //key < 2**(vars.length - i -1) ? 0 :
+        //key.toString(2)[key.toString(2).length - vars.length + i]
+      makeArg(varCount, key, i)
     ));
   }
 
@@ -40,7 +42,7 @@ class Table extends Base {
             this.props.childClick(
               this.taskId(),
               key,
-              this.withTaskId('formula').at(this.row(varCount, key)),
+              at(this.withTaskId('formula'), this.row(varCount, key)),
               this.props.history
             )
           }
@@ -51,22 +53,17 @@ class Table extends Base {
     </tr>));
 
   validFormula = () => {
-    try {
-      return this.withTaskId('formula');
-    } catch(er) {
-      return null;
-    }
+    const f = this.withTaskId('formula');
+    if (typeof(f) !== 'string' || f.length === 0) return null;
+    return f;
   }
 
   amIRight = () => {
     try {
-      const v = this.validFormula().toVector();
+      const v = toVector(this.validFormula());
       const ans = this.withTaskId('answer');
-      console.log(v, ans);
-      for (let i = 0; i< v.length; i++) {
-        if (v[i] !== ans[i]) return false;
-      }
-      return true;
+      //console.log(v, ans);
+      return v.join() === ans.join();
     } catch (er) {
       return false;
     }
@@ -81,7 +78,7 @@ class Table extends Base {
     console.log('update');
     if(this.amIRight()) {
       this.baseGoToParent();
-      console.log('I am right');
+      //console.log('I am right');
     }
   }
 
@@ -98,13 +95,13 @@ class Table extends Base {
           />
           {this.validFormula() ?
             <div>
-              <ToDo tex={this.validFormula().toTeX()} header="Формула"/>
+              <ToDo tex={toTeX(this.validFormula())} header="Формула"/>
               <table>
                 <thead><tr>
-                    {this.validFormula().vars.map(v=><th key={v}>{v}</th>)}
+                    {getVars(this.validFormula()).map(v=><th key={v}>{v}</th>)}
                 </tr></thead>
                 <tbody>
-                  {this.zeroOnes(this.validFormula().vars.length)}
+                  {this.zeroOnes(getVars(this.validFormula()).length)}
                 </tbody>
               </table>
               { this.amIRight() ? <Congs /> : null}

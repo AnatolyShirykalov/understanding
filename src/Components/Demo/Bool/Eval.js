@@ -6,23 +6,23 @@ import {GenTask, Congs} from '../Calculus/Diff/Components';
 import MathJax from '../../../vendor/react-mathjax/src';
 import ToDo from '../ToDo';
 import BoolInput from './Input';
+import {evaluate, toTeX} from '../../../core/bool/mjs';
+import classes from '../Base.css';
 
 class Eval extends Base {
   newTask = i => this.props.setFormula(this.taskId(), i+3);
 
   validFormula = () => {
-    try {
-      return this.withTaskId('formula');
-    } catch(er) {
-      return null;
-    }
+    const f = this.withTaskId('formula');
+    if (typeof(f) !== 'string' || f.length === 0) return null;
+    return f;
   }
 
   amIRight = () => {
     try {
-      const v = eval(this.validFormula().eval());
+      const v = evaluate(this.validFormula());
       const ans = this.withTaskId('answer');
-      return v === (ans === 1 ? true : ans === 0 ? false : '');
+      return ans === v;
     } catch (er) {
       return false;
     }
@@ -35,14 +35,16 @@ class Eval extends Base {
   }
 
   componentDidUpdate() {
-    if(this.amIRight()) this.baseGoToParent();
+    if(this.amIRight()) {
+      this.baseGoToParent();
+    }
   }
 
 
   render (){
     return (
       <MathJax.Context>
-        <div>
+        <div className={classes.Base}>
           <GenTask
             levels={['Тренироваться']}
             newTask={this.newTask}
@@ -51,7 +53,7 @@ class Eval extends Base {
           />
           {this.validFormula() ?
             <div>
-              <ToDo tex={this.validFormula().toTeX()} header="Формула"/>
+              <ToDo tex={toTeX(this.validFormula())} header="Формула"/>
               { this.amIRight() ? <Congs /> : null}
               <BoolInput
                 onChange={this.props.updateAnswer(this.taskId())}
