@@ -1,0 +1,40 @@
+.Subexpr {
+}
+
+.Subexpr button {
+  height: 10vh;
+  width: 10vh;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+
+.Subexpr button:disabled {
+  opacity: 0.2;
+}
+
+.ButtonWrap {
+  display: inline-block;
+}
+
+.ButtonWrap:first-of-type {
+  display: block;
+}
+
+.Subexpr .up {
+  background-image: url('./img/cursor-up.svg');
+}
+
+.down {
+  background-image: url('./img/cursor-down.svg');
+}
+
+.left {
+  background-image: url('./img/cursor-left.svg');
+}
+
+.right {
+  background-image: url('./img/cursor-right.svg');
+}

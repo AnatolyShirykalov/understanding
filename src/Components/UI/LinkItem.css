@@ -2,7 +2,7 @@
   box-sizing: border-box;
   vertical-align: top;
   width: 90%;
-  height: 230px;
+  min-height: 230px;
   border: 1px solid black;
   box-shadow: 5px 5px 3px black;
   display: inline-block;
@@ -16,10 +16,11 @@
 @media(min-width: 430px) {
   .Item {
     width: 380px;
+    height: 300px;
   }
 }
 
-.Item a {
+.Link {
   text-decoration: none;
   color: green;
 }

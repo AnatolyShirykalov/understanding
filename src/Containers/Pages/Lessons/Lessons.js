@@ -1,9 +1,10 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import LinkItem from '../../../Components/UI/LinkItem';
 
 const lessons = props => (
   <div>
-    <NavLink to="/math/tasks/lesson/lessoninit" exact>Базовые булевы равенства</NavLink>
+    <LinkItem to="/math/tasks/lesson/lessoninit" title="Базовые булевы равенства"/>
+    <LinkItem to="/lessons/2" title="Базовые знания об операциях над множествами"/>
   </div>
 )
 

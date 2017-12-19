@@ -3,12 +3,12 @@ import {NavLink} from 'react-router-dom';
 import classes from './LinkItem.css';
 
 const linkItem = props => (
-  <div className={classes.Item}>
-    <NavLink to={props.to} exact>
+  <NavLink to={props.to} className={classes.Link} exact>
+    <div className={classes.Item}>
       <h3>{props.title}</h3>
       <p>{props.description}</p>
-    </NavLink>
-  </div>
+    </div>
+  </NavLink>
 );
 
 export default linkItem;
