@@ -16,7 +16,10 @@ export const setToLaTeX = (node, options) => {
     case 'cup': return fun(' \\cup ');
     case 'cap': return fun(' \\cap ');
     case 'sdd': return fun(' \\setminus ' );
+    case 'and': return fun(' \\wedge ' );
+    case 'or': return fun(' \\vee ' );
     case 'IN': return fun(' \\in ');
+    case 'not': return `\\neg ${node.args[0].toTex(options)}`
     default: {
       return node.toTex();
     }
@@ -59,6 +62,12 @@ export const moves = src => {
   }
 };
 
+const moveToIndex = {
+  'down': 1,
+  'left': 0,
+  'right': 2,
+};
+
 export const subExp = (ex, mvs = []) => {
   let ret = ex;
   mvs.forEach(move=>{
@@ -71,3 +80,46 @@ export const subExp = (ex, mvs = []) => {
   });
   return ret;
 };
+
+export const transformSub = (ex, sub, mvs=[]) => {
+  if(mvs.length === 0) return sub;
+  const mi = moveToIndex[mvs[0]];
+  return ex.map((a,i)=>i===mi ? transformSub(a, sub, mvs.slice(1)) : a);
+}
+
+class NoDefError extends Error {
+  constructor(src) {
+    super(`no definition for ${src}`);
+  }
+}
+
+export const definition = src => {
+  if(src.length !== 3 || src[1] !== 'IN') throw new NoDefError(src);
+  return inDefinition(src)
+};
+
+const inDefinition = src => {
+  switch(src[2].length) {
+    case 3:
+      switch(src[2][1]) {
+        case 'cap': return [[src[0], 'IN', src[2][0]], 'and' ,[src[0], 'IN', src[2][2]]];
+        case 'cup': return [[src[0], 'IN', src[2][0]], 'or' ,[src[0], 'IN', src[2][2]]];
+        case 'sdd': return [[src[0], 'IN', src[2][0]], 'and' , ['not',[src[0], 'IN', src[2][2]]]];
+        default: throw new NoDefError(src);
+      }
+    default: throw new NoDefError(src);
+  }
+};
+/*
+export const match = (src, ptrn) => {
+  if (typeof(ptrn) === 'string') return true;
+  const [sl, pl] = [src.length, ptrn.length];
+  if (sl !== pl) return false;
+  switch(sl){
+    case 2:
+      return src[0]===ptrn[0] && match(src[1], ptrn[1]);
+    case 3:
+      return src[1]===ptrn[1] && match(src[0], ptrn[0]) && match(src[2], ptrn[2]);
+    default: return false;
+  };
+};*/

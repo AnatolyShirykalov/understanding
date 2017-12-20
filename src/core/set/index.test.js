@@ -1,9 +1,16 @@
-import {schemas, makeEx, toTeX} from './';
+import {schemas, makeEx, toTeX, definition} from './';
 
 
 
 it('should understard schema', () => {
-  schemas.forEach(schema => console.log(toTeX(makeEx(schema))));
+  schemas.forEach(schema => console.log(toTeX(schema)));
+});
+
+it('should understand definitions', () => {
+  schemas.slice(0,2).forEach(schema=>{
+    const ex = ['x', 'IN', schema];
+    console.log(toTeX(definition(ex)));
+  });
 });
 
 it('sandbox', ()=> {

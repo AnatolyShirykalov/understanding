@@ -6,7 +6,7 @@ import classes from './Subexpr.css';
 
 class Subexpr extends Base {
   state = {
-    ex: schemas[0],
+    ex: this.props.ex || schemas[0],
     moves: [],
   };
 
@@ -26,16 +26,32 @@ class Subexpr extends Base {
     return(
       <MathJax.Context>
         <div className={classes.Subexpr}>
-          <h2>Выделяем подвыражение</h2>
+          <h4>{this.props.title}</h4>
           <MathJax.Node>{toTeX(this.state.ex)}</MathJax.Node>
-          <MathJax.Node>{toTeX(cex)}</MathJax.Node>
+          <div className={classes.Preview}>
+            <MathJax.Node>{toTeX(cex)}</MathJax.Node>
+          </div>
           {allMoves.map(move=>(
-            <div key={move} className={classes.ButtonWrap}><button
+            <div key={move} className={classes.ButtonWrap + ' ' + classes['button'+move]}><button
               className={classes[move]}
               onClick={moves[move] ? this.addMove(move) : null}
               disabled={!moves[move]}
             ></button></div>
           ))}
+          <div className={classes.Done}>
+            <button
+              onClick={() => this.props.done(this.state.moves)}
+              disabled={!this.props.done}
+            >
+              Done
+            </button>
+            <button
+              onClick={this.props.cancel}
+              disabled={!this.props.cancel}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </MathJax.Context>
     );

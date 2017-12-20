@@ -15,6 +15,8 @@
   opacity: 0.2;
 }
 
+.Subexpr .Done {display: block;}
+
 .ButtonWrap {
   display: inline-block;
 }
@@ -37,4 +39,16 @@
 
 .right {
   background-image: url('./img/cursor-right.svg');
+}
+
+.Preview {
+  height: 10ex;
+}
+
+.Done button {
+  min-width: 6em;
+}
+
+.buttonup{
+  display: block;
 }
