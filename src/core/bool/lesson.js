@@ -10,7 +10,8 @@ export const pairs = [
   ['x or y', 'y or x'],
   ['x or (y and z)', '(x or y) and (x or z)'],
   ['x and not x', '0'],
-  ['0 or x', 'x']
+  ['0 or x', 'x'],
+  ['not (not x)', 'x'],
 ];
 
 const opts = {
