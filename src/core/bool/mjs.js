@@ -1,7 +1,7 @@
 import math from 'mathjs';
 import {pairs, toVector as toV, compare as cmp} from './lesson';
 
-const opts = {
+export const opts = {
   parser: ex => math.parse(ex),
   variables: ex => [...new Set(
     ex.filter(node=>node.isSymbolNode).map(n=>n.name))].sort(),

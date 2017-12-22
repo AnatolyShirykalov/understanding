@@ -1,10 +1,25 @@
 import math from 'mathjs';
+import hash from 'object-hash';
+import {pairs} from '../bool/mjs';
 
 export const schemas = [
   ['A', 'sdd', ['B','cup', 'C']],
   [['A', 'sdd', 'B'], 'cap', ['A', 'sdd', 'C']],
-  ['a', 'IN', ['A', 'cup', 'B']]
 ];
+
+export const ubd = [
+  [ [['A', 'cup', 'B'], 'cap', 'C'], [['A', 'cap', 'C'], 'cup', ['B', 'cap', 'C']] ],
+  [ [['A', 'cap', 'B'], 'cup', 'C'], [['A', 'cup', 'C'], 'cap', ['B', 'cup', 'C']] ],
+  [ ['A', 'cap', 'B'], ['A', 'sdd', ['A', 'sdd', 'B']] ],
+  [ ['A', 'sdd', ['B', 'sdd', 'C']], [['A', 'sdd', 'B'], 'cup', ['A', 'cap', 'C']] ],
+  [ [['A', 'sdd', 'B'], 'sdd', 'C'], ['A', 'sdd', ['B', 'cup', 'C']] ],
+  [ [['A', 'sdd', 'B'], 'sdd', 'C'], [['A', 'sdd', 'C'], 'sdd', ['B', 'sdd', 'C']] ],
+  [ ['A', 'sdd', ['B','cup', 'C']],  [['A', 'sdd', 'B'], 'cap', ['A', 'sdd', 'C']] ],
+  [ ['A', 'sdd', ['B','cap', 'C']],  [['A', 'sdd', 'B'], 'cup', ['A', 'sdd', 'C']] ],
+  [ [['A', 'cup', 'B'], 'sdd', 'C'], [['A', 'sdd', 'C'], 'cup', ['B', 'sdd', 'C']] ],
+  [ [['A', 'cap', 'B'], 'sdd', 'C'], [['A', 'sdd', 'C'], 'cap', ['B', 'sdd', 'C']] ],
+];
+
 export const setToLaTeX = (node, options) => {
   const fun = op => [0, 1].map(i=>node.args[i].toTex(options)).join(op);
   if(node.type === 'ParenthesisNode')
@@ -26,6 +41,46 @@ export const setToLaTeX = (node, options) => {
   }
 };
 
+const toBoolDict = {
+  cap: 'and',
+  cup: 'or',
+  sdd: 'and',
+}
+
+export const toArrays = (node, toBool) => {
+  switch(node.type) {
+    case 'SymbolNode': return node.name;
+    case 'ConstantNode': return node.value;
+    case 'ParenthesisNode': return toArrays(node.content, toBool);
+    case 'OperatorNode':
+      switch(node.fn) {
+        case 'not': return ['not', toArrays(node.args[0], toBool)];
+        default:
+          const exs = node.args.map(n=>toArrays(n, toBool));
+          if (toBool===true && toBoolDict.hasOwnProperty(node.fn)) {
+            let r = exs[1];
+            if (node.fn === 'sdd') r = ['not', r];
+            return [exs[0], toBoolDict[node.fn], r];
+          }
+          return [exs[0], node.fn, exs[1]];
+      }
+    default: throw new Error(`unknown case ${node.type}`);
+  }
+}
+
+
+export const bools = pairs.map(pair=>{
+  return pair.map(ex=>math.parse(ex)).map(toArrays);
+});
+
+export const expandedBools = bools.reduce((bs, pair)=>{
+  return [...bs, pair, [pair[1], pair[0]]];
+}, []);
+
+export const boolMethods = ex => {
+  return expandedBools.filter(pair=>match(ex, pair[0]));
+}
+
 export const makeEx = schema => {
   if(typeof(schema)==='string') {
     return new math.expression.node.SymbolNode(schema);
@@ -34,8 +89,10 @@ export const makeEx = schema => {
     throw new Error(`schema is not string or array. It is ${schema}`);
   const parenthesis = node => new math.expression.node.ParenthesisNode(node);
   if(schema.length === 2) {
-    if(typeof(schema[0]) !== 'string')
-      throw Error('first element of schema array is not a string');
+    if(typeof(schema[0]) !== 'string'){
+      console.log(schema);
+      throw Error(`first element of schema array is not a string ${schema[0]}`);
+    }
     return parenthesis(new math.expression.node.OperatorNode(
       schema[0], schema[0], [makeEx(schema[1])]
     ));
@@ -110,16 +167,42 @@ const inDefinition = src => {
     default: throw new NoDefError(src);
   }
 };
-/*
+
 export const match = (src, ptrn) => {
-  if (typeof(ptrn) === 'string') return true;
+  if (typeof(ptrn) === 'string') return {[ptrn]: src};
   const [sl, pl] = [src.length, ptrn.length];
   if (sl !== pl) return false;
   switch(sl){
     case 2:
-      return src[0]===ptrn[0] && match(src[1], ptrn[1]);
+      return src[0]===ptrn[0] ? match(src[1], ptrn[1]) : false;
     case 3:
-      return src[1]===ptrn[1] && match(src[0], ptrn[0]) && match(src[2], ptrn[2]);
+      if (src[1] !== ptrn[1]) return false;
+      const ms = [0, 2].map(i=>match(src[i], ptrn[i]));
+      if(!ms[0] || !ms[1]) return false;
+      const keys = ms.map(Object.keys);
+      const sk1 = new Set(keys[0]);
+      const intrs = keys[1].filter(k=>sk1.has(k));
+      for (let i in intrs) {
+        const hs = ms.map(m=>hash({k: m[intrs[i]]}));
+        //console.log(ms.map(m=>m[intrs[i]]));
+        if (hs[0] !== hs[1]) return false;
+      }
+      return {...ms[0], ...ms[1]};
     default: return false;
-  };
-};*/
+  }
+};
+
+export const at = (src, m) => {
+  if(typeof(src) === 'string') {
+    if(m.hasOwnProperty(src)) return m[src];
+    return src;
+  }
+  return src.map(s=>at(s,m));
+}
+
+export const subst = (src, from, to) => {
+  //console.log(src, from ,to);
+  const m = match(src, from);
+  if(!m) throw new Error('subst on not match');
+  return at(to, m);
+};

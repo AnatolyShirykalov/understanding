@@ -1,0 +1,19 @@
+.Equal {
+  background-color: #dde;
+}
+
+
+.Subexpr {
+  vertical-align: top;
+  display: inline-block;
+  border: 1px solid black;
+  padding: 15px;
+}
+
+.MethodBtn {
+  display: block;
+  margin-bottom: 1ex;
+  padding: 5px;
+  background-color: #3d4;
+  width: 100%;
+}

@@ -11,9 +11,16 @@ const toDo = props => (
           : null}
       {props.textPostfix ? <span>{props.textPostfix}</span>: null}
     </h4>
+    {Array.isArray(props.tex) ? <div>{props.tex.map((tex, key)=>(
+      <span className={classes.TeX} key={key}>
+        <MathJax.Node inline>
+          {tex}
+        </MathJax.Node>
+      </span>
+      )) }</div>:
     <MathJax.Node>
       {props.tex}
-    </MathJax.Node>
+    </MathJax.Node>}
   </div>
 );
 

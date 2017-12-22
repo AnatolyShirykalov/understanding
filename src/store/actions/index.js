@@ -24,3 +24,6 @@ export {
   setBoolFormulaToParentTaskAndRedirect,
 } from './bool';
 
+export {
+  setDoneEqual,
+} from './set';

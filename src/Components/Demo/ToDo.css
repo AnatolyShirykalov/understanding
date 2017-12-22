@@ -2,3 +2,10 @@
   width: 90%;
   margin: 10px auto;
 }
+
+.TeX:not(:last-child)::after {
+  display: inline-block;
+  content: ', ';
+  text-align: left;
+  width: 4em;
+}
