@@ -111,7 +111,7 @@ class Equal extends Component {
                       header={`Применив «${step.method}`}
                       texPostfix={step.texPostfix}
                       textPostfix='», имеем'
-                      tex={step.exs.map(toTeX).join(' ,\\quad ')}
+                      tex={step.exs.map(toTeX)}
                     />
                     {this.state.steps.length === i + 1 ?
                         <button

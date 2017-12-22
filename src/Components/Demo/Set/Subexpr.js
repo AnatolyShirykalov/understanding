@@ -27,7 +27,7 @@ class Subexpr extends Base {
       <MathJax.Context>
         <div className={classes.Subexpr}>
           <h4>{this.props.title}</h4>
-          <MathJax.Node>{toTeX(this.state.ex)}</MathJax.Node>
+          {/*<MathJax.Node>{toTeX(this.state.ex)}</MathJax.Node>*/}
           <div className={classes.Preview}>
             <MathJax.Node>{toTeX(cex)}</MathJax.Node>
           </div>
