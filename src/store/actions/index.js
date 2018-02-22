@@ -27,3 +27,10 @@ export {
 export {
   setDoneEqual,
 } from './set';
+
+export {
+  loadMoreTests,
+  testStart,
+  testNextQuestion,
+  testAnswer,
+} from './tests';

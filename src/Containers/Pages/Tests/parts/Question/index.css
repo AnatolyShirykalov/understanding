@@ -1,0 +1,19 @@
+.question {
+  display: block;
+  height: 50vh;
+  text-align: center;
+  font-size: 3vh;
+}
+
+.question > .questionText {
+  margin: 5em 0;
+  display: inline-block;
+}
+
+.question > img {
+  display: inline-block;
+  max-height: 50vh;
+  min-height: 35vh;
+  border: 2px solid black;
+  box-sizing: border-box;
+}

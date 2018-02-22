@@ -1,0 +1,14 @@
+.nextQuestion {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 4vh;
+  color: white;
+  padding: 1.0ex;
+  margin-top: 1.0ex;
+  background: #4CAF50;
+  border: 0;
+}
+
+.nextQuestion:disabled {
+  background: gray;
+}

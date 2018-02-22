@@ -1,0 +1,27 @@
+.wrap {
+  display: block;
+  text-align: center;
+}
+.resultBar {
+  display: inline-block;
+  width: 90%;
+  box-sizing: border-box;
+  font-size: 4vh;
+  padding: 1.0ex;
+  margin: 0;
+}
+
+.resultBar > .right {
+  color: green;
+}
+
+.resultBar > .right:after,
+.resultBar > .wrong:after {
+  display: inline;
+  content: ':';
+  color: black;
+}
+
+.resultBar > .wrong {
+  color: red;
+}

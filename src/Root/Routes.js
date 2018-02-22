@@ -16,6 +16,8 @@ import BoolEqual from '../Components/Demo/Bool/Equal';
 import Lesson from '../Components/Demo/Lesson/Lesson';
 import SetLesson from '../Components/Demo/Lesson/Set';
 import Lessons from '../Containers/Pages/Lessons/Lessons';
+import Tests from '../Containers/Pages/Tests/Tests';
+import Test from '../Containers/Pages/Tests/Test';
 import Trainers from '../Containers/Pages/Trainers/Trainers';
 import Subexpr from '../Components/Demo/Set/Subexpr';
 
@@ -37,6 +39,8 @@ const routes = (
     <Route path="/math/tasks/lesson/:taskId/" component={Lesson} />
     <Route path="/lessons/2" component={SetLesson} />
     <Route path="/lessons" component={Lessons} />
+    <Route path="/tests" exact component={Tests} />
+    <Route path="/tests/:id" component={Test} />
     <Route path="/trainers/subexpr" component={Subexpr} exact/>
     <Route path="/trainers" component={Trainers} />
   </Switch>
