@@ -17,6 +17,14 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+const wrap = f => (req, res) => {
+  f(ret, res).catch(er => {
+    console.error(er.stack);
+    res.status(500);
+    res.json({error: er});
+  });
+}
+
 const connect = async (name) => {
   const db = await MongoClient.connect(url);
   const dbo = db.db("understanding");
@@ -86,10 +94,10 @@ const deleter = name => async (req, res) => {
   res.json({ok: true});
 };
 
-app.get('/api/tests',         indexGetter('tests'));
-app.get('/api/tests?/:id',    showGetter('tests'));
-app.post('/api/tests?',       poster('tests'));
-app.delete('/api/tests?/:id', deleter('tests'));
+app.get('/api/tests',         wrap(indexGetter('tests')));
+app.get('/api/tests?/:id',    wrap(showGetter('tests')));
+app.post('/api/tests?',       wrap(poster('tests')));
+app.delete('/api/tests?/:id', wrap(deleter('tests')));
+
 
 app.listen(port, ()=> console.log(`Listening on port ${port} since ${new Date()}`));
-
