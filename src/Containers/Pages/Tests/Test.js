@@ -74,6 +74,7 @@ class Test extends Component {
       />
       );
     const obj = this.state.questions.find(q=>q.id === this.state.questionId);
+    if (!obj) return <div>Нет теста</div>;
     const question = {...obj, answers: undefined};
     const answers = obj.answers.map(a=>{
       const active = a.value === question.answer;

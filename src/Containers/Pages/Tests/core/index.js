@@ -1,13 +1,4 @@
 import _ from 'lodash';
-const validQuestionFields = (fieldData, obj, extra) => {
-  if (!extra || Object.keys(extra).length === 0) return fieldData;
-  return _.filter(fieldData, (datum) => {
-    if (datum.answerField) return true;
-    if (!(extra[datum.extraSource][obj[datum.name]])) return false;
-    return true;
-  })
-}
-
 const makeAnswers = (objs, rightId, questionField, extra) => {
   const key = questionField.extraSource;
   if (!extra || !key || !extra[key]) {
@@ -41,15 +32,25 @@ export const ObjectTest = (data, options = {}) => {
   const limit = options.limit || 20;
   let questions = [];
   _.range(limit).forEach ((id)=>{
-    const objs = _.sampleSize(data.objects, 4);
     const rightId = _.random(3);
-    const questionField = _.sample(
-      validQuestionFields(
-        data.questionFieldData,
-        objs[rightId],
-        data.extra
-      )
-    );
+    let questionField;
+    let objs;
+    let i;
+    const hasKey = key => o => o[key];
+    const hasntKey = key => o => !o[key];
+
+    for(i =0; i< 30; i++) {
+      questionField = _.sample(data.questionFieldData)
+      const key = questionField.answerField;
+      let j = 0;
+      for(; j < 30; j++) {
+        objs = _.sampleSize(data.objects, 4);
+        if (objs.find(hasntKey(key))) continue;
+        if ([...new Set(objs.map(hasKey(key)))].length === 4) break;
+      }
+      if (j < 30) break;
+    }
+    if (i === 30) return;
     questions.push(
       makeQuestion(id, objs, rightId, questionField, data.extra)
     )
