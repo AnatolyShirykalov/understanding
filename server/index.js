@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 const wrap = f => (req, res) => {
-  f(ret, res).catch(er => {
+  f(req, res).catch(er => {
     console.error(er.stack);
     res.status(500);
     res.json({error: er});
