@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {loadMoreTests} from '../../../store/actions';
 class Tests extends Component {
   componentDidMount() {
-    this.props.loadData();
+    if (this.props.data.length === 0)this.props.loadData();
   }
   render() {
     return (
