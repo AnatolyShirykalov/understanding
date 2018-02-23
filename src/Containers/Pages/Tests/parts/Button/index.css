@@ -7,7 +7,7 @@
   background: #ddd;
 }
 
-.active.right {
+.right {
   background: green;
   color: white;
 }
