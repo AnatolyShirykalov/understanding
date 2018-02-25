@@ -1,0 +1,13 @@
+.New {
+  display: inline-block;
+  height: 40px;
+  width: 60%;
+  font-size: 15px;
+  background-color: green;
+  padding: 11px;
+  box-sizing: border-box;
+  color: white;
+  border: 1px solid black;
+  margin-bottom: 25px;
+  box-shadow: 3px 3px 3px 0 black;
+}

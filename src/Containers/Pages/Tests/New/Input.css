@@ -1,0 +1,22 @@
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.Input {
+  display: inline-block;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.Select {
+  display: inline-block;
+  height: 40px;
+  min-width: 200px;
+  font-size: 16px;
+}
+
+.Option {
+  text-align: center;
+  font-size: 16px;
+}

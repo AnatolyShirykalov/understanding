@@ -1,0 +1,73 @@
+.Submit {
+  display: inline-block;
+  height: 50px;
+  width: 100px;
+  box-sizing: border-box;
+  background: #76f422;
+  font-size: 16px;
+  margin-bottom: 25px;
+  box-shadow: 2px 2px 2px 0 black;
+}
+
+.Global {
+  max-width: 700px;
+  display: inline-block;
+}
+.Global > div, .Left {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.Global label, .Global input {
+  display: inline-block;
+  box-sizing: border-box;
+}
+.Title input{
+  min-width: 54%;
+  height: 40px;
+}
+
+.Global input[type="file"] {
+  display: inline-block;
+  height: 40px;
+  font-size: 20px;
+}
+
+.Add {
+  display: inline-block;
+  height: 40px;
+  background-color: darkgreen;
+  color: white;
+  border: 0;
+  font-size: 16px;
+  box-shadow: 2px 2px 2px 0 black;
+  margin-bottom: 25px;
+}
+
+.Item {
+  margin-bottom: 25px;
+}
+
+.Left, .Right {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.Right button {
+  font-size: 30px;
+  height: 40px;
+  width: 50px;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  color: red;
+  border: 0;
+  box-shadow: 2px 2px 2px 0 black;
+  margin-left: 40px;
+}
+
+.ItemsWrap {
+  display: inline-block;
+}

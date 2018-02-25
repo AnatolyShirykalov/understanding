@@ -4,11 +4,14 @@ const {MongoClient, ObjectId} = require('mongodb');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const csv = require('csvtojson');
 
 const url = 'mongodb://localhost:27017';
 const app = express();
 const port = 4245;
 const perPage = 20;
+const upload = multer({dest: "uploads/"});
 
 app.use(cors({
   origin: '*',
@@ -70,9 +73,33 @@ const poster = (name, valid) => async (req, res) => {
   const {db, dbo} = await connect(name);
   try {
     if (valid && !valid(req.body)) throw new Error("ivalid data");
-    const r = await dbo.collection(name).insertOne(req.body)
+    if (req.header('Content-Type').match(/^multipart\/form-data/)) {
+      const file = req.files['file'][0];
+      const objects = [];
+      csv().fromFile(file.path).on('json', o=>objects.push(o))
+        .on('done', async()=>{
+          const {db, dbo} = await connect(name);
+          const obj = {
+            questionFieldData: JSON.parse(req.body.questionFieldData),
+            objects,
+            title: req.body.title,
+            extra: {},
+          }
+          try {
+            await dbo.collection(name).insertOne(obj);
+            db.close();
+          } catch (er) {
+            db.close();
+            console.error(er.stack);
+          }
+          console.log(obj);
+        });
+      console.log(file.path);
+    }
+    //const r = await dbo.collection(name).insertOne(req.body)
   } catch (er) {
     db.close();
+    console.error(er.stack);
     res.json({ok: false, error: er.message});
     return ;
   }
@@ -96,7 +123,8 @@ const deleter = name => async (req, res) => {
 
 app.get('/api/tests',         wrap(indexGetter('tests')));
 app.get('/api/tests?/:id',    wrap(showGetter('tests')));
-app.post('/api/tests?',       wrap(poster('tests')));
+const upl = upload.fields([{name: 'file', maxCount: 1}, {name: 'arch', maxCount: 1}]);
+app.post('/api/tests?',       upl, wrap(poster('tests')));
 app.delete('/api/tests?/:id', wrap(deleter('tests')));
 
 

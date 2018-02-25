@@ -1,3 +1,8 @@
+import * as actionTypes from './actionTypes';
+
+export const setCurrentError = error => ({type: actionTypes.SET_CURRENT_ERROR, error});
+export const removeCurrentError = error => ({type: actionTypes.REMOVE_CURRENT_ERROR});
+
 export {
   changeMathInput,
   changeMathExpression,
@@ -33,4 +38,5 @@ export {
   testStart,
   testNextQuestion,
   testAnswer,
+  sendNewTest,
 } from './tests';

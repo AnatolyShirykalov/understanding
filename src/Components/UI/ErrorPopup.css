@@ -1,0 +1,37 @@
+@keyframes change-red {
+  from {background-color: #f00;}
+  to   {background-color: #f50;}
+}
+
+.Popup {
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  background-color: red;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 30px;
+  max-width: 600px;
+  animation-name: change-red;
+  animation-duration: 500ms;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.Message, .Closer {
+  display: inline-block;
+}
+
+.Message {
+  margin-right: 40px;
+}
+
+.Closer {
+  color: black;
+  font-size: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}

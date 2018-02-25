@@ -54,6 +54,17 @@ const testStartError = er => ({
   message: er.message,
 });
 
-export const testNextQuestion = () => ({type: actionTypes.TEST_NEXT_QUESTION});
-export const testAnswer = answer =>   ({type: actionTypes.TEST_ANSWER});
+const sendNewTestStart = () => ({type: actionTypes.SEND_NEW_TEST_START});
+const sendNewTestSuccess = () => ({type: actionTypes.SEND_NEW_TEST_SUCCESS});
+const sendNewTestError = (e) => ({type: actionTypes.SEND_NEW_TEST_ERROR, error: e.message});
 
+export const sendNewTest = data => async (dispatch) => {
+  dispatch(sendNewTestStart());
+  try {
+    const resp = await axios.post(`${apiUrl}/api/tests`, data);
+    if (resp.error) throw new Error(resp.error);
+  dispatch(sendNewTestSuccess());
+  } catch (error) {
+    dispatch(sendNewTestError(error));
+  }
+}
