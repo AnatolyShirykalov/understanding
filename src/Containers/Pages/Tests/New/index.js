@@ -3,6 +3,7 @@ import classes from './index.css';
 import Input from './Input';
 import {connect} from 'react-redux';
 import * as actions from '../../../../store/actions';
+import Popup from '../../../../Components/UI/ErrorPopup';
 
 class New extends Component {
   state = {
@@ -66,6 +67,7 @@ class New extends Component {
   render() {
     return (
       <div>
+        <Popup message={this.props.error} close={this.props.closePopup} />
         <h1>Создать новый тест</h1>
         <form onSubmit={this.submit} className={classes.Form}>
           <button className={classes.Submit} type="submit">Сохранить</button>
@@ -108,9 +110,12 @@ class New extends Component {
   }
 }
 
+const mapStateToProps = ({error}) => ({error});
+
 const mapDispatchToProps = dispatch => ({
   send: data => dispatch(actions.sendNewTest(data)),
   setError: error => dispatch(actions.setCurrentError(error)),
+  closePopup: () => dispatch(actions.removeCurrentError()),
 })
 
-export default connect(null, mapDispatchToProps)(New);
+export default connect(mapStateToProps, mapDispatchToProps)(New);

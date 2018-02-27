@@ -6,6 +6,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const csv = require('csvtojson');
+const fs = require('fs');
 
 const url = 'mongodb://localhost:27017';
 const app = express();
@@ -69,32 +70,39 @@ const showGetter = name => async (req, res) => {
   res.json({data: obj});
 }
 
+const getObjects = path => new Promise((resolve, reject) => {
+  const objects = [];
+  csv().fromFile(path).on('json', o=>objects.push(o))
+                      .on('done', resolve(objects));
+});
+
+const extractImages = (path, dir) => {
+  const dn = '../build/img/'+dir;
+  fs.mkdirSync(dn);
+}
+
 const poster = (name, valid) => async (req, res) => {
   const {db, dbo} = await connect(name);
   try {
     if (valid && !valid(req.body)) throw new Error("ivalid data");
     if (req.header('Content-Type').match(/^multipart\/form-data/)) {
       const file = req.files['file'][0];
-      const objects = [];
-      csv().fromFile(file.path).on('json', o=>objects.push(o))
-        .on('done', async()=>{
-          const {db, dbo} = await connect(name);
-          const obj = {
-            questionFieldData: JSON.parse(req.body.questionFieldData),
-            objects,
-            title: req.body.title,
-            extra: {},
-          }
-          try {
-            await dbo.collection(name).insertOne(obj);
-            db.close();
-          } catch (er) {
-            db.close();
-            console.error(er.stack);
-          }
-          console.log(obj);
-        });
-      console.log(file.path);
+      const questionFieldData = JSON.parse(req.body.questionFieldData)
+      const iKs = questionFieldData.filter(d=>d.type === 'image');
+      const objects = await getObjects(file.path);
+      objects.forEach(obj=>{
+        iKs.forEach(k=>obj[k] = '/img/' + file.filename + '/' + obj[k].replace(/^\//,''));
+      });
+      const {db, dbo} = await connect(name);
+      const obj = {
+        questionFieldData,
+        objects,
+        title: req.body.title,
+        extra: {},
+      }
+      const arch = req.files["arch"];
+      if(arch) extractImages(arch.path, file.filename);
+      await dbo.collection(name).insertOne(obj);
     }
     //const r = await dbo.collection(name).insertOne(req.body)
   } catch (er) {

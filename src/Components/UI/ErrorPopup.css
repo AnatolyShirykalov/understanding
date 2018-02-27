@@ -35,3 +35,6 @@
   right: 0;
   cursor: pointer;
 }
+.Hide {
+  display: none;
+}

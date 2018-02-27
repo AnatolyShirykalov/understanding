@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
 import Toolbar from '../../Components/Toolbar/Toolbar'
-import Popup from '../../Components/UI/ErrorPopup';
+//import Popup from '../../Components/UI/ErrorPopup';
 import {connect} from 'react-redux';
-import {removeCurrentError} from '../../store/actions';
+//import {removeCurrentError} from '../../store/actions';
+import { withRouter } from 'react-router-dom'
 
 class Layout extends Component {
   render() {
     return (
       <div>
         <Toolbar/>
-        {this.props.error ?
-            <Popup message={this.props.error} close={this.props.closePopup}/>
-            : null}
         <main>
           {this.props.children}
         </main>
@@ -20,7 +18,13 @@ class Layout extends Component {
   }
 }
 
-const mapStateToProps = ({error}) => ({error});
-const mapDispatchToProps = dispatch => ({closePopup: ()=>dispatch(removeCurrentError())});
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {};
+  //return {error: state.error}
+};
+//const mapDispatchToProps = dispatch => ({closePopup: ()=>dispatch(removeCurrentError())});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+
+export default withRouter(connect(mapStateToProps)(Layout));
+//export default Layout;
