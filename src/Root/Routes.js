@@ -22,7 +22,7 @@ import Subexpr from '../Components/Demo/Set/Subexpr';
 import {TestRoutes} from '../Containers/Pages/Tests';
 
 const routes = (
-  <div>
+  <Switch>
     <Route path="/" exact component={Home} />
     <Route path="/examples/article" exact component={Article} />
     <Route path="/examples/task" exact component={Task} />
@@ -41,7 +41,8 @@ const routes = (
     <Route path="/lessons" component={Lessons} />
     <Route path="/trainers/subexpr" component={Subexpr} exact/>
     <Route path="/trainers" component={Trainers} />
-  </div>
+    <TestRoutes/>
+  </Switch>
 )
 
 export default routes;

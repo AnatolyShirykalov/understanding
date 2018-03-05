@@ -90,10 +90,11 @@ const poster = (name, valid) => async (req, res) => {
       const questionFieldData = JSON.parse(req.body.questionFieldData)
       const iKs = questionFieldData.filter(d=>d.type === 'image');
       const objects = await getObjects(file.path);
+      console.log(1, db);
       objects.forEach(obj=>{
         iKs.forEach(k=>obj[k] = '/img/' + file.filename + '/' + obj[k].replace(/^\//,''));
       });
-      const {db, dbo} = await connect(name);
+      //const {db, dbo} = await connect(name);
       const obj = {
         questionFieldData,
         objects,
@@ -111,6 +112,7 @@ const poster = (name, valid) => async (req, res) => {
     res.json({ok: false, error: er.message});
     return ;
   }
+  console.log(2, db);
   db.close();
   res.json({ok: true});
 };
