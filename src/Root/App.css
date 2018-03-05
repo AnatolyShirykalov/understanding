@@ -2,11 +2,11 @@
   text-align: center;
 }
 
-div[id="MathJax_Message"] {
-  left: 5vw !important;
-  top: 5vh !important;
-  width: 90vw !important;
-  height: 90vh;
-  padding: 40% !important;
-  box-sizing: border-box !important;
-}
+/*div[id="MathJax_Message"] {*/
+  /*left: 5vw !important;*/
+  /*top: 5vh !important;*/
+  /*width: 90vw !important;*/
+  /*height: 90vh;*/
+  /*padding: 40% !important;*/
+  /*box-sizing: border-box !important;*/
+/*}*/

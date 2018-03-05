@@ -28,6 +28,10 @@ const trainers = props => (
       to="/trainers/subexpr"
       title="Подвыражения"
     />
+    <LinkItem
+      to="/trainers/matrix-elementary"
+      title="Элементарные преобразования матриц"
+    />
   </div>
 )
 

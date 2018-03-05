@@ -1,9 +1,10 @@
 @keyframes change-red {
-  from {background-color: #f00;}
-  to   {background-color: #f50;}
+  from {background-color: rgba(255, 0, 0, 0.8);}
+  to   {background-color: rgba(255, 85, 0, 0.8);}
 }
 
 .Popup {
+  z-index: 1000;
   position: fixed;
   top: 10%;
   right: 10%;
@@ -32,7 +33,7 @@
   font-size: 40px;
   position: absolute;
   top: 0;
-  right: 0;
+  right: 7px;
   cursor: pointer;
 }
 .Hide {

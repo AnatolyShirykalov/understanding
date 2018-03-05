@@ -3,9 +3,9 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from '../store/store';
+import {hot} from 'react-hot-loader';
 
 const root = () => {
-  console.log(this, this.context)
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -15,4 +15,4 @@ const root = () => {
   );
 }
 
-export default root;
+export default hot(module)(root);

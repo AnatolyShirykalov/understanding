@@ -20,6 +20,7 @@ import Trainers from '../Containers/Pages/Trainers/Trainers';
 import Subexpr from '../Components/Demo/Set/Subexpr';
 
 import {TestRoutes} from '../Containers/Pages/Tests';
+import {MatrixRoutes} from '~/Containers/Pages/Math/Matrix';
 
 const routes = (
   <Switch>
@@ -40,7 +41,8 @@ const routes = (
     <Route path="/lessons/2" component={SetLesson} />
     <Route path="/lessons" component={Lessons} />
     <Route path="/trainers/subexpr" component={Subexpr} exact/>
-    <Route path="/trainers" component={Trainers} />
+    <Route path="/trainers" exact component={Trainers} />
+    <MatrixRoutes />
     <TestRoutes/>
   </Switch>
 )

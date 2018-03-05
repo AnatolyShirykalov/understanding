@@ -1,0 +1,13 @@
+.Hide {
+  display: none;
+}
+
+.Btn {
+  display: inline-block;
+  height: 30px;
+  border-radius: 15px;
+}
+
+.Btn:enabled {
+  cursor: pointer;
+}

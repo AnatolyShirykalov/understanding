@@ -1,0 +1,25 @@
+.Btn {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+  top: 0;
+  height: 30px;
+  border-radius: 50%;
+  z-index: 1;
+  background: transparent;
+}
+
+
+.Item {
+  min-height: 30px;
+  position: relative;
+  display: inline-block;
+  border: 1px solid black;
+  width: 90%;
+  box-shadow: 3px 3px 3px 0 black;
+  margin-bottom: 25px;
+}
+
+.Hide {
+  display: none;
+}

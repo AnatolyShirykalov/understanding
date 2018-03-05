@@ -1,0 +1,16 @@
+.MatrixPair {
+  position: relative;
+}
+
+.Matrix, .Mapsto {
+  display: inline-block;
+}
+
+.Mapsto {
+  position: absolute;
+  top: 40%;
+}
+
+.Matrix:last-child {
+  margin-left: 30px;
+}

@@ -43,6 +43,7 @@
     "react-debounce-input": "^3.1.0",
     "react-dev-utils": "^4.2.1",
     "react-dom": "^16.1.1",
+    "react-hot-loader": "^4.0.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -86,7 +87,8 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
     ],
     "moduleNameMapper": {
-      "^react-native$": "react-native-web"
+      "^react-native$": "react-native-web",
+      "~(.*)$": "<rootDir>/src/$1"
     },
     "moduleFileExtensions": [
       "web.js",

@@ -1,0 +1,33 @@
+.Input {
+  text-align: center;
+  display: inline-block;
+  height: 30px;
+  font-size: 14px;
+}
+
+.Item {
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 90%;
+  box-shadow: 3px 3px 3px black;
+  border: 1px solid black;
+}
+
+.Select{
+  background: white;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 14px;
+  padding-left: 10px;
+  box-shadow: 1px 1px 1px black;
+}
+
+.Option {
+  font-size: 20px;
+}
+
+.Operator {
+  margin: 0 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
