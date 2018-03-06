@@ -36,8 +36,9 @@ const connect = async (name) => {
   return {db, dbo};
 }
 
+let db, dbo;
+
 const indexGetter = name => async (req, res) => {
-  const {db, dbo} = await connect(name);
   let objs, count;
   try {
     const q = {};
@@ -46,28 +47,25 @@ const indexGetter = name => async (req, res) => {
     objs = await dbo.collection(name).find(q).sort(sort)
                                      .limit(perPage).skip(skip).toArray();
     count = await dbo.collection(name).find(q).count();
+    res.json({data: objs, count});
   } catch (er) {
     db.close();
     res.json({data: [], count: 0, error: er.message});
     return;
   }
-  db.close();
-  res.json({data: objs, count});
 }
 
 const showGetter = name => async (req, res) => {
   let obj;
-  const {db, dbo} = await connect(name);
   try {
     obj = await dbo.collection(name)
                    .findOne({_id: ObjectId(req.params.id)});
+    res.json({data: obj});
   } catch (er) {
     db.close();
     res.json({error: er.message});
     return ;
   }
-  db.close();
-  res.json({data: obj});
 }
 
 const getObjects = path => new Promise((resolve, reject) => {
@@ -82,7 +80,6 @@ const extractImages = (path, dir) => {
 }
 
 const poster = (name, valid) => async (req, res) => {
-  const {db, dbo} = await connect(name);
   try {
     if (valid && !valid(req.body)) throw new Error("ivalid data");
     if (req.header('Content-Type').match(/^multipart\/form-data/)) {
@@ -105,6 +102,7 @@ const poster = (name, valid) => async (req, res) => {
       if(arch) extractImages(arch.path, file.filename);
       await dbo.collection(name).insertOne(obj);
     }
+    res.json({ok: true});
     //const r = await dbo.collection(name).insertOne(req.body)
   } catch (er) {
     db.close();
@@ -112,23 +110,18 @@ const poster = (name, valid) => async (req, res) => {
     res.json({ok: false, error: er.message});
     return ;
   }
-  console.log(2, db);
-  db.close();
-  res.json({ok: true});
 };
 
 const deleter = name => async (req, res) => {
-  const {db, dbo} = await connect(name);
   try {
     const q = {_id: ObjectId(req.params.id)};
     await dbo.collection(name).deleteOne(q);
+    res.json({ok: true});
   } catch (er) {
     db.close();
     res.json({ok: false, error: er.message});
     return;
   }
-  db.close();
-  res.json({ok: true});
 };
 
 app.get('/api/tests',         wrap(indexGetter('tests')));
@@ -136,6 +129,11 @@ app.get('/api/tests?/:id',    wrap(showGetter('tests')));
 const upl = upload.fields([{name: 'file', maxCount: 1}, {name: 'arch', maxCount: 1}]);
 app.post('/api/tests?',       upl, wrap(poster('tests')));
 app.delete('/api/tests?/:id', wrap(deleter('tests')));
-
-
-app.listen(port, ()=> console.log(`Listening on port ${port} since ${new Date()}`));
+connect('tests').then(r=>{
+  db = r.db;
+  dbo = r.dbo;
+  app.listen(port, ()=> console.log(`Listening on port ${port} since ${new Date()}`));
+}).catch((e) => {
+  console.error(e.stack);
+  process.exit(1);
+});

@@ -4,6 +4,7 @@
 /node_modules
 server/node_modules
 server/uploads
+server/tmp
 
 # testing
 /coverage
