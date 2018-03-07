@@ -101,9 +101,10 @@ const poster = (name, valid) => async (req, res) => {
       const arch = req.files["arch"];
       if(arch) extractImages(arch.path, file.filename);
       await dbo.collection(name).insertOne(obj);
+    } else {
+      await dbo.collection(name).insertOne(req.body)
     }
     res.json({ok: true});
-    //const r = await dbo.collection(name).insertOne(req.body)
   } catch (er) {
     db.close();
     console.error(er.stack);
