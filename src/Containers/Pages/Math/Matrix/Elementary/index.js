@@ -12,6 +12,7 @@ const newTransforms = ar => ar.map((_, i)=>({multiplicator: 0, rowNumber: 0}));
 
 class Elementary extends Component{
   state = {
+    key: 1,
     chain: [],
     matrix: this.props.matrix,
     nextMatrix: this.props.matrix,
@@ -75,8 +76,12 @@ class Elementary extends Component{
 
   render() {
     return (
-      <div>
-        <MatrixPair matrices={[this.state.matrix, this.state.nextMatrix]} />
+      <div style={{position: 'relative'}}>
+        <button
+          onClick={() => this.setState({key: this.state.key+1})}
+          style={{fontSize: '20px', borderRadius: '50%', background: '#ffe', position: 'absolute', left: '10px', top: '30px', cursor: 'pointer', zIndex: 1000}}
+        >{"\u21bb"}</button>
+        <MatrixPair key={this.state.key} matrices={[this.state.matrix, this.state.nextMatrix]} />
         <ElementaryForm
           transforms={this.state.transforms}
           decorateLineNumber={this.decorateLineNumber}

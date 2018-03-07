@@ -9,6 +9,11 @@ class Item extends Component {
   toggle = () => {
     this.setState({expand: !this.state.expand});
   }
+  transforms() {
+    return this.props.item.transforms.filter(({multiplicator})=>
+      multiplicator && multiplicator !== '' && multiplicator !== '0'
+    );
+  }
   render() {
     const btnClass = classnames([
       classes.Btn, {
@@ -21,7 +26,7 @@ class Item extends Component {
         <button className={btnClass} onClick={this.toggle}>{btnText}</button>
         <div className={classnames({[classes.Hide]: !this.state.expand})}>
           <MatrixPair matrices={this.props.item.matrices} />
-          {this.props.item.transforms.map((t, i) =>(
+          {this.transforms().map((t, i) =>(
             <div key={i}>
               {this.props.prettyTransform(i, t)}
             </div>

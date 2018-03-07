@@ -41,7 +41,7 @@ class ElementaryHistory extends Component {
           </button>
         </div>
         <div className={classnames({[classes.Hide]: !this.state.expand})}>
-          {this.props.items.map((item, key)=>(
+          {this.props.items.reverse().map((item, key)=>(
             <Item item={item} key={key} prettyTransform={this.prettyTransform}/>
           ))}
         </div>
