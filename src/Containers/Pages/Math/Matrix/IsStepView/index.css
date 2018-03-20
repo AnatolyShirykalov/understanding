@@ -1,0 +1,19 @@
+.YesNo {
+}
+
+.YesNo button {
+  background: green;
+  color: white;
+  padding: 5px;
+  min-width: 100px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.YesNo button:first-child {
+  margin-right: 30px;
+}
+
+.YesNo button:hover {
+  background: lightgreen;
+}

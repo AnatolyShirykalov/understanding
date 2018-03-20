@@ -1,12 +1,48 @@
 import math from 'mathjs';
 import _ from 'lodash';
 
-export const genMatrix = ({square, M, N}={}) => {
+const randNonZero = (r=20) => {
+  let ret = 0;
+  while(ret === 0) {
+    ret = _.random(-r,r);
+  }
+  return ret;
+}
+
+const genStepMatrix = (m, n, r=20) => {
+  if (n < m) throw new Error("n>m is not implemented yet");
+  const fNZ = _.sampleSize(_.times(n, i=>i), m).sort();
+  return _.times(m, i => {
+    return [..._.times(fNZ[i], ()=>0), ..._.times(n-fNZ[i], ()=>randNonZero(r))];
+  });
+}
+
+const genAlmostStepMatrix = (m, n, r) => {
+  if (n < m) throw new Error("n>m is not implemented yet");
+  const fNZ = _.sampleSize(_.times(n, i=>i), m).sort();
+  const ret = _.times(m, i => {
+    return [..._.times(fNZ[i], ()=>0), ..._.times(n-fNZ[i], ()=>randNonZero(r))];
+  });
+  let j = _.random(1,3);
+  while(j>0) {
+    const i = _.random(0, m-1);
+    if (fNZ[i] === 0) {j+=1; continue;}
+    ret[i][fNZ[i]-1] = randNonZero(r);
+    j-=1;
+  }
+  return ret;
+}
+
+export const genMatrix = ({square, M, N, R, step}={}) => {
   const n = M || _.random(4, 7);
   const m = N || (square ? n :_.random(2, n));
-  if (m > n) throw new Error("Строк больше чем столбцов");
+  const r = R || 20;
+  if (typeof(step) === 'number') {
+    if (step > 0.5) return genStepMatrix(m, n, r);
+    return genAlmostStepMatrix(m, n, r);
+  }
   return _.times(m, () => {
-    return _.times(n, () => _.random(-20, 20))
+    return _.times(n, () => _.random(-r, r))
   })
 
 }
@@ -57,6 +93,16 @@ export class Matrix {
       if (m2.matrix.subset(math.index(...i)) !== v) ret = false;
     });
     return ret;
+  }
+  isStep() {
+    let first = -1;
+    for (let row of this.matrix._data) {
+      let ret;
+      for (ret = 0; ret < row.length  && row[ret] === 0; ret ++ ) ;
+      if(first >= ret) return false;
+      first = ret;
+    };
+    return true;
   }
 }
 
