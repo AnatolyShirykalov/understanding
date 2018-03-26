@@ -4,6 +4,7 @@ import Popup from '../../Components/UI/ErrorPopup';
 import {connect} from 'react-redux';
 import {removeCurrentError} from '../../store/actions';
 import { withRouter } from 'react-router-dom'
+import Footer from '~/Components/Footer';
 
 class Layout extends Component {
   render() {
@@ -14,6 +15,7 @@ class Layout extends Component {
         <main>
           {this.props.children}
         </main>
+        <Footer/>
       </div>
     )
   }

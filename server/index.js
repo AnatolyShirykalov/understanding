@@ -70,8 +70,9 @@ const showGetter = name => async (req, res) => {
 
 const getObjects = path => new Promise((resolve, reject) => {
   const objects = [];
-  csv().fromFile(path).on('json', o=>objects.push(o))
-                      .on('done', resolve(objects));
+  csv().fromFile(path).on('json', o=>{
+    objects.push(o);
+  }).on('done', ()=>resolve(objects));
 });
 
 const extractImages = (path, dir) => {
@@ -87,11 +88,9 @@ const poster = (name, valid) => async (req, res) => {
       const questionFieldData = JSON.parse(req.body.questionFieldData)
       const iKs = questionFieldData.filter(d=>d.type === 'image');
       const objects = await getObjects(file.path);
-      console.log(1, db);
       objects.forEach(obj=>{
         iKs.forEach(k=>obj[k] = '/img/' + file.filename + '/' + obj[k].replace(/^\//,''));
       });
-      //const {db, dbo} = await connect(name);
       const obj = {
         questionFieldData,
         objects,
