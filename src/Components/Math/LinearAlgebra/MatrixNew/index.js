@@ -13,6 +13,15 @@ class MatrixNew extends Component {
     this.props.set(matrix);
   };
   render() {
+    if (!this.props.set) {
+      return (
+        <div>
+          <button onClick={this.props.gen} className={classes.NewBtn}>
+            Сгенерировать другую
+          </button>
+        </div>
+      );
+    }
     return (
       <div>
         <button onClick={this.props.gen} className={classes.NewBtn}>
