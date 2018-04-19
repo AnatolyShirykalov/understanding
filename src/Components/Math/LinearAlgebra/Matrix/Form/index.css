@@ -1,3 +1,7 @@
+.Wrap {
+  display: block;
+}
+
 .Form {
   display: inline-block;
   margin: auto;

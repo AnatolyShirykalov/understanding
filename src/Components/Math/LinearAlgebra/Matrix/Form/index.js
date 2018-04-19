@@ -39,43 +39,77 @@ export default class MatrixForm extends Component {
       matrix: this.state.matrix.map(r => r.slice(0, -1))
     });
   };
+
+  focus = (i, j) => {
+    if (+this.state.matrix[i][j] !== 0) return;
+    this.setState({
+      matrix: this.state.matrix.map((r, I) => {
+        if (I !== i) return r;
+        return r.map((c, J) => {
+          if (j !== J) return c;
+          return "";
+        });
+      })
+    });
+  };
+
+  blur = (i, j) => {
+    if (this.state.matrix[i][j] !== "") return;
+    this.setState({
+      matrix: this.state.matrix.map((r, I) => {
+        if (I !== i) return r;
+        return r.map((c, J) => {
+          if (j !== J) return c;
+          return 0;
+        });
+      })
+    });
+  };
+
   render() {
     return (
-      <div className={classes.Form}>
-        <button onClick={this.addRow}>m++</button>
-        <button onClick={this.addColumn}>n++</button>
-        <button
-          onClick={this.removeRow}
-          disabled={this.state.matrix.length === 1}
-        >
-          m--
-        </button>
-        <button
-          onClick={this.removeColumn}
-          disabled={this.state.matrix[0].length === 1}
-        >
-          n--
-        </button>
-        <table>
-          <tbody>
-            {this.state.matrix.map((row, i) => (
-              <tr key={i}>
-                {row.map((cell, j) => (
-                  <td key={j}>
-                    <input value={cell} onChange={e => this.set(i, j, e)} />
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button
-          className={classes.Submit}
-          onClick={() => this.props.onSubmit(this.state.matrix)}
-        >
-          Сохранить
-        </button>
-        <Matrix matrix={this.state.matrix} />
+      <div className={classes.Wrap}>
+        <div className={classes.Form}>
+          <button onClick={this.addRow}>m++</button>
+          <button onClick={this.addColumn}>n++</button>
+          <button
+            onClick={this.removeRow}
+            disabled={this.state.matrix.length === 1}
+          >
+            m--
+          </button>
+          <button
+            onClick={this.removeColumn}
+            disabled={this.state.matrix[0].length === 1}
+          >
+            n--
+          </button>
+          <table>
+            <tbody>
+              {this.state.matrix.map((row, i) => (
+                <tr key={i}>
+                  {row.map((cell, j) => (
+                    <td key={j}>
+                      <input
+                        value={cell}
+                        onChange={e => this.set(i, j, e)}
+                        onFocus={() => this.focus(i, j)}
+                        onBlur={() => this.blur(i, j)}
+                      />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button
+            className={classes.Submit}
+            onClick={() => this.props.onSubmit(this.state.matrix)}
+          >
+            Сохранить
+          </button>
+          <Matrix matrix={this.state.matrix} />
+        </div>
       </div>
     );
   }
