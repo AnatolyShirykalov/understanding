@@ -99,6 +99,14 @@ class Elementary extends Component {
     }, 0);
   };
 
+  undoTo = key => {
+    this.setState({
+      chain: this.state.chain.slice(0, key + 1),
+      matrix: this.state.chain[key].matrices[0],
+      nextMatrix: this.state.chain[key].matrices[1]
+    });
+  };
+
   render() {
     return (
       <div style={{ position: "relative" }}>
@@ -132,6 +140,7 @@ class Elementary extends Component {
         </div>
         <div>
           <ElementaryHistory
+            undoTo={this.undoTo}
             items={this.state.chain}
             decorateLineNumber={this.decorateLineNumber}
           />

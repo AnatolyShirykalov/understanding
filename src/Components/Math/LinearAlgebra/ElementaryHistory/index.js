@@ -56,6 +56,7 @@ class ElementaryHistory extends Component {
               <Item
                 item={item}
                 key={key}
+                onClick={() => this.props.undoTo(key)}
                 prettyTransform={this.prettyTransform}
               />
             ))}

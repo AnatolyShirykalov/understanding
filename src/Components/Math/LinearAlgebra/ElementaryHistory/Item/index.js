@@ -30,6 +30,12 @@ class Item extends Component {
         <button className={btnClass} onClick={this.toggle}>
           {btnText}
         </button>
+        <button
+          className={classnames(classes.Undo)}
+          onClick={this.props.onClick}
+        >
+          Откатиться
+        </button>
         <div className={classnames({ [classes.Hide]: !this.state.expand })}>
           <MatrixPair matrices={this.props.item.matrices} />
           {this.transforms().map((t, i) => (
