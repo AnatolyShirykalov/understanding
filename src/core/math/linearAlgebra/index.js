@@ -56,6 +56,18 @@ export const genMatrix = ({ square, M, N, R, step } = {}) => {
   });
 };
 
+export class Scalar {
+  constructor(v) {
+    this.value = nerdamer(v);
+  }
+  data() {
+    return this.value.text();
+  }
+  latex() {
+    return this.value.latex();
+  }
+}
+
 class AbstractMatrix {
   e1s(transforms) {
     const changed = {};

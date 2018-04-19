@@ -9,7 +9,6 @@
   background: transparent;
 }
 
-
 .Item {
   min-height: 30px;
   position: relative;
@@ -22,4 +21,10 @@
 
 .Hide {
   display: none;
+}
+
+.Latex {
+  position: relative;
+  max-width: 90%;
+  display: inline-block;
 }
