@@ -15,6 +15,12 @@ export default class MatrixSelect extends Component {
     if (!raw) return;
     this.setState({ matrices: JSON.parse(raw) });
   }
+
+  deleteMatrix = i => {
+    const matrices = this.state.matrices.filter((m, I) => I !== i);
+    localStorage.setItem("matrixSelectData", JSON.stringify(matrices));
+    this.setState({ matrices });
+  };
   render() {
     return (
       <div>
@@ -25,6 +31,12 @@ export default class MatrixSelect extends Component {
               onClick={() => this.props.onSelect(matrix)}
             >
               Выбрать
+            </button>
+            <button
+              className={classes.Btn}
+              onClick={() => this.deleteMatrix(i)}
+            >
+              Удалить
             </button>
             <Matrix matrix={matrix} />
           </div>
