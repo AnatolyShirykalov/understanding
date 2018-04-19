@@ -1,0 +1,14 @@
+.Even {
+  background-color: #eef;
+}
+
+.Odd {
+  background-color: #fee;
+}
+
+.Btn {
+  background-color: green;
+  padding: 5px;
+  color: white;
+  font-size: 15pt;
+}

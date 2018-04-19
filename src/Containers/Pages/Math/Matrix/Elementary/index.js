@@ -83,6 +83,22 @@ class Elementary extends Component {
     );
   };
 
+  saveCurrentMatrixToStorage = () => {
+    if (this.state.savingMatrixToStorage) return;
+    setTimeout(() => {
+      this.setState({ savingMatrixToStorage: true });
+      const raw = localStorage.getItem("matrixSelectData");
+      let matrices = [];
+      if (raw) {
+        matrices = [...JSON.parse(raw), this.state.matrix];
+      } else {
+        matrices = [this.state.matrix];
+      }
+      localStorage.setItem("matrixSelectData", JSON.stringify(matrices));
+      this.setState({ savingMatrixToStorage: false });
+    }, 0);
+  };
+
   render() {
     return (
       <div style={{ position: "relative" }}>
@@ -103,6 +119,15 @@ class Elementary extends Component {
             disabled={this.shouldNotSave()}
           >
             Сохранить состояние
+          </button>
+        </div>
+        <div>
+          <button
+            className={classes.Btn}
+            onClick={this.saveCurrentMatrixToStorage}
+            disabled={this.state.savingMatrixToStorage}
+          >
+            Сохранить матрицу
           </button>
         </div>
         <div>

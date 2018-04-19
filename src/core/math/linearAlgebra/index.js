@@ -137,7 +137,7 @@ export class NerdMatrix extends AbstractMatrix {
     let first = -1;
     for (let row of this.data()) {
       let ret;
-      for (ret = 0; ret < row.length && row[ret] === 0; ret++);
+      for (ret = 0; ret < row.length && +row[ret] === 0; ret++);
       if (first >= ret) return false;
       first = ret;
     }
