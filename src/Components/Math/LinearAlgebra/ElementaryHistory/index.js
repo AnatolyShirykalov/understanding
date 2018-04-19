@@ -4,8 +4,8 @@ import classnames from "classnames";
 import Item from "./Item";
 import { Scalar } from "~/core/math/linearAlgebra";
 
-const mapsto = "\u27fc";
-const times = "\u00d7";
+const mapsto = "\\mapsto";
+const times = "\\times";
 
 class ElementaryHistory extends Component {
   state = {

@@ -33,9 +33,11 @@ class Item extends Component {
         <div className={classnames({ [classes.Hide]: !this.state.expand })}>
           <MatrixPair matrices={this.props.item.matrices} />
           {this.transforms().map((t, i) => (
-            <LaTeX className={classes.Latex} key={i}>
-              {this.props.prettyTransform(i, t)}
-            </LaTeX>
+            <div key={i}>
+              <LaTeX className={classes.Latex} key={i}>
+                {this.props.prettyTransform(i, t)}
+              </LaTeX>
+            </div>
           ))}
         </div>
       </div>
