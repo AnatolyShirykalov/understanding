@@ -1,36 +1,36 @@
-import React, {Component} from 'react';
-import MatrixNew from '~/Components/Math/LinearAlgebra/MatrixNew';
-import * as Structures from '~/core/math/linearAlgebra';
-import Matrix from '~/Components/Math/LinearAlgebra/Matrix';
-import classes from './index.css';
+import React, { Component } from "react";
+import MatrixNew from "~/Components/Math/LinearAlgebra/MatrixNew";
+import * as Structures from "~/core/math/linearAlgebra";
+import Matrix from "~/Components/Math/LinearAlgebra/Matrix";
+import classes from "./index.css";
 
 class IsStepView extends Component {
-  constructor(){
-    super()
-    const matrix = Structures.genMatrix({step: Math.random()});
+  constructor() {
+    super();
+    const matrix = Structures.genMatrix({ step: Math.random() });
     this.state = {
-      matrix,
+      matrix
     };
   }
 
   gen = () => {
-    const matrix = Structures.genMatrix({step: Math.random()});
-    this.setState({matrix, answer: undefined})
-  }
+    const matrix = Structures.genMatrix({ step: Math.random() });
+    this.setState({ matrix, answer: undefined });
+  };
 
   yes = () => {
-    this.setState({answer: true});
-  }
+    this.setState({ answer: true });
+  };
 
   no = () => {
-    this.setState({answer: false});
-  }
+    this.setState({ answer: false });
+  };
 
   buttons() {
     if (this.state.answer !== undefined) {
-      const matrix = new Structures.Matrix(this.state.matrix);
+      const matrix = new Structures.NerdMatrix(this.state.matrix);
       let text = "Спасибо, два";
-      if(this.state.answer === matrix.isStep()) {
+      if (this.state.answer === matrix.isStep()) {
         text = "Действительно";
       }
       return (
@@ -42,10 +42,8 @@ class IsStepView extends Component {
     }
     return (
       <div className={classes.YesNo}>
-        <button onClick={this.yes}
-        >Да</button>
-        <button onClick={this.no}
-        >Нет</button>
+        <button onClick={this.yes}>Да</button>
+        <button onClick={this.no}>Нет</button>
       </div>
     );
   }

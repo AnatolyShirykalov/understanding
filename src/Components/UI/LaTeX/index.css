@@ -1,0 +1,10 @@
+.Refresh {
+  font-size: 20px;
+  border-radius: 50%;
+  background: #ffe;
+  position: absolute;
+  left: -20px;
+  top: 10px;
+  cursor: pointer;
+  z-index: 1000;
+}

@@ -1,4 +1,5 @@
-.InputWrap, .Preview {
+.InputWrap,
+.Preview {
   display: inline-block;
   width: 40%;
   height: 35px;
@@ -13,4 +14,8 @@
   margin: 5px auto;
   border: 1px dashed #ddd;
   padding-bottom: 15px;
+}
+
+.Preview {
+  position: relative;
 }

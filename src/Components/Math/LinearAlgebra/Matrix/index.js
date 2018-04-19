@@ -1,17 +1,10 @@
-import React from 'react';
-import classes from './index.css';
-import MathJax from '~/vendor/react-mathjax/src';
+import React from "react";
+import classes from "./index.css";
+import { NerdMatrix } from "~/core/math/linearAlgebra";
+import LaTeX from "~/Components/UI/LaTeX";
 
-const Matrix = ({matrix}) => (
-  <MathJax.Context>
-    <div className={classes.Matrix}>
-      <MathJax.Node>
-      {`\\begin{pmatrix}
-        ${matrix.map(line=>line.join('&')).join('\\\\')}
-        \\end{pmatrix}`}
-      </MathJax.Node>:
-    </div>
-  </MathJax.Context>
+const Matrix = ({ matrix }) => (
+  <LaTeX className={classes.Matrix}>{new NerdMatrix(matrix).latex()}</LaTeX>
 );
 
 export default Matrix;
