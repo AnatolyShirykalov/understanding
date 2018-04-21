@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import * as Structures from "~/core/math/linearAlgebra";
 import Elementary from "../Elementary";
-import MatrixNew from "~/Components/Math/LinearAlgebra/MatrixNew";
+import NewExample from "~/Components/UI/NewExample";
+import MatrixForm from "~/Components/Math/LinearAlgebra/Matrix/Form";
+import MatrixSelect from "~/Components/Math/LinearAlgebra/Matrix/Select";
 import { connect } from "react-redux";
 import { setCurrentError } from "~/store/actions";
 class StepView extends Component {
@@ -31,7 +33,12 @@ class StepView extends Component {
           Приведите матрицу к ступенчатому виду элементарными преобразованиями
           вида 1
         </h2>
-        <MatrixNew gen={this.gen} set={this.set} />
+        <NewExample
+          gen={this.gen}
+          set={this.set}
+          selectComponent={MatrixSelect}
+          formComponent={MatrixForm}
+        />
         <Elementary matrix={this.state.matrix} />
       </div>
     );

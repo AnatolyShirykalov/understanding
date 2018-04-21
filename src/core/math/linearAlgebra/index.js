@@ -10,6 +10,14 @@ const randNonZero = (r = 20) => {
   return ret;
 };
 
+export const genVector = ({ length } = {}) => {
+  const r = 20;
+  const maxL = 8;
+  const minL = 2;
+  const l = length || _.random(minL, maxL);
+  return _.times(l, () => _.random(-r, r));
+};
+
 const genStepMatrix = (m, n, r = 20) => {
   if (n < m) throw new Error("n>m is not implemented yet");
   const fNZ = _.sampleSize(_.times(n, i => i), m).sort();
@@ -58,6 +66,10 @@ export const genMatrix = ({ square, M, N, R, step } = {}) => {
 
 export class Scalar {
   constructor(v) {
+    if (v instanceof nerdamer.getCore().Expression) {
+      this.value = v;
+      return;
+    }
     this.value = nerdamer(v);
   }
   data() {
@@ -65,6 +77,24 @@ export class Scalar {
   }
   latex() {
     return this.value.latex();
+  }
+  subtract(v) {
+    return new Scalar(this.value.subtract(v.value));
+  }
+}
+
+export class Vector {
+  constructor(v) {
+    this.vector = nerdamer.vector(...v);
+  }
+  data() {
+    return this.vector.text();
+  }
+  latex() {
+    return this.vector.latex();
+  }
+  dot(v) {
+    return new Scalar(nerdamer.dot(this.vector, v.vector));
   }
 }
 

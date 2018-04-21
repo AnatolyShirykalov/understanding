@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MatrixNew from "~/Components/Math/LinearAlgebra/MatrixNew";
+import NewExample from "~/Components/UI/NewExample";
 import * as Structures from "~/core/math/linearAlgebra";
 import Matrix from "~/Components/Math/LinearAlgebra/Matrix";
 import classes from "./index.css";
@@ -36,7 +36,7 @@ class IsStepView extends Component {
       return (
         <div>
           <div>{text}</div>
-          <MatrixNew gen={this.gen} />
+          <NewExample gen={this.gen} />
         </div>
       );
     }
@@ -51,7 +51,7 @@ class IsStepView extends Component {
   render() {
     return (
       <div>
-        <MatrixNew gen={this.gen} />
+        <NewExample gen={this.gen} />
         <h2>Имеет ли данная матрица ступечатый вид</h2>
         <Matrix matrix={this.state.matrix} />
         {this.buttons()}

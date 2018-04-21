@@ -26,6 +26,8 @@ import { TestRoutes } from "../Containers/Pages/Tests";
 import StepView from "~/Containers/Pages/Math/Matrix/StepView";
 import IsStepView from "~/Containers/Pages/Math/Matrix/IsStepView";
 import NewMatrix from "~/Containers/Pages/Math/Matrix/New";
+import ScalarProduct from "~/Containers/Pages/Math/Vector/ScalarProduct";
+import MatrixDotPage from "~/Containers/Pages/Math/Matrix/MatrixDot";
 
 const routes = (
   <Switch>
@@ -51,6 +53,8 @@ const routes = (
     <Route path="/trainers/matrix" exact component={MatrixMenu} />
     <Route path="/trainers/matrix-elementary" exact component={StepView} />
     <Route path="/trainers/is-step-view" exact component={IsStepView} />
+    <Route path="/trainers/scalar-product" exact component={ScalarProduct} />
+    <Route path="/trainers/matrix-dot" exact component={MatrixDotPage} />
     <Route path="/objects/matrix/new" exact component={NewMatrix} />
     <TestRoutes />
   </Switch>

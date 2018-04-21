@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import classes from "./index.css";
-import MatrixForm from "../Matrix/Form";
-import MatrixSelect from "../Matrix/Select";
 
-class MatrixNew extends Component {
+export default class NewExample extends Component {
   state = {
     showForm: false,
     showSelect: false
   };
-  set = matrix => {
+  set = object => {
     this.setState({ showForm: false });
-    this.props.set(matrix);
+    this.props.set(object);
   };
   render() {
     if (!this.props.set) {
@@ -25,7 +23,7 @@ class MatrixNew extends Component {
     return (
       <div>
         <button onClick={this.props.gen} className={classes.NewBtn}>
-          Сгенерировать другую
+          Сгенерировать
         </button>
         <button
           onClick={() => this.setState({ showForm: !this.state.showForm })}
@@ -39,11 +37,17 @@ class MatrixNew extends Component {
         >
           Сохранённые
         </button>
-        {this.state.showSelect ? <MatrixSelect onSelect={this.set} /> : null}
-        {this.state.showForm ? <MatrixForm onSubmit={this.set} /> : null}
+        {this.state.showSelect && this.props.selectComponent
+          ? React.createElement(this.props.selectComponent, {
+              onSelect: this.set
+            })
+          : null}
+        {this.state.showForm && this.props.formComponent
+          ? React.createElement(this.props.formComponent, {
+              onSubmit: this.set
+            })
+          : null}
       </div>
     );
   }
 }
-
-export default MatrixNew;

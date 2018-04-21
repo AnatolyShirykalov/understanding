@@ -51,6 +51,7 @@ class ElementaryHistory extends Component {
         </div>
         <div className={classnames({ [classes.Hide]: !this.state.expand })}>
           {this.props.items
+            .slice()
             .reverse()
             .map((item, key) => (
               <Item
