@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import classes from "./index.css";
+import classNames from "classnames/bind";
 import Matrix from "../";
+
+const cx = classNames.bind(classes);
 
 export default class MatrixForm extends Component {
   state = {
@@ -66,7 +69,17 @@ export default class MatrixForm extends Component {
     });
   };
 
+  shouldRed = (i, j) => {
+    if (!this.props.hightlight) return false;
+    try {
+      return this.props.hightlight[i][j] !== "0";
+    } catch (er) {
+      return true;
+    }
+  };
+
   render() {
+    const buttonText = this.props.buttonText || "Сохранить";
     return (
       <div className={classes.Wrap}>
         <div className={classes.Form}>
@@ -91,6 +104,7 @@ export default class MatrixForm extends Component {
                   {row.map((cell, j) => (
                     <td key={j}>
                       <input
+                        className={cx({ Red: this.shouldRed(i, j) })}
                         value={cell}
                         onChange={e => this.set(i, j, e)}
                         onFocus={() => this.focus(i, j)}
@@ -106,7 +120,7 @@ export default class MatrixForm extends Component {
             className={classes.Submit}
             onClick={() => this.props.onSubmit(this.state.matrix)}
           >
-            Сохранить
+            {buttonText}
           </button>
           <Matrix matrix={this.state.matrix} />
         </div>

@@ -10,3 +10,7 @@
 .Submit {
   display: inline-block;
 }
+
+.Red {
+  background-color: red;
+}

@@ -3,46 +3,72 @@ import { connect } from "react-redux";
 import { setCurrentError, removeCurrentError } from "~/store/actions";
 import { NerdMatrix } from "~/core/math/linearAlgebra";
 import LaTeX from "~/Components/UI/LaTeX";
-import Variables from "~/Components/Math/LinearAlgebra/Variables";
+import MatrixForm from "~/Components/Math/LinearAlgebra/Matrix/Form";
+import Matrix from "~/Components/Math/LinearAlgebra/Matrix";
+import PropTypes from "prop-types";
+import classes from "./index.css";
 
 class MatrixDot extends Component {
-  state = {
-    variables: {
-      m1: {
-        removable: false,
-        type: "NerdMatrix",
-        value: new NerdMatrix(this.props.m1)
-      },
-      m2: {
-        removable: false,
-        type: "NerdMatrix",
-        value: new NerdMatrix(this.props.m2)
-      }
+  state = {};
+  checkAnswer = matrix => {
+    if (
+      this.props.m1.length !== matrix.length ||
+      this.props.m2[0].length !== matrix[0].length
+    )
+      return this.setState({ dim: true });
+    const { m1, m2 } = this.m1m2();
+    const m = new NerdMatrix(matrix);
+    const right = m1.dot(m2);
+    if (right.isEqual(m)) {
+      this.setState({ right: right.data(), dim: undefined });
+    } else {
+      const m1 = new NerdMatrix(right.matrix.subtract(m.matrix));
+      this.setState({ matrix: m1.data(), dim: undefined });
     }
   };
 
-  deleteVariable = name => {
-    const variables = { ...this.state.variables };
-    delete variables[name];
-    this.setState({ variables });
-  };
+  componentWillReceiveProps(props) {
+    this.setState({ right: undefined, matrix: undefined, dim: undefined });
+  }
+
+  m1m2() {
+    const m1 = new NerdMatrix(this.props.m1);
+    const m2 = new NerdMatrix(this.props.m2);
+    return { m1, m2 };
+  }
 
   render() {
-    const { m1, m2 } = this.state.variables;
-    const tex = `${m1.value.latex()}\\cdot ${m2.value.latex()}= ?`;
+    const { m1, m2 } = this.m1m2();
+    const tex = `${m1.latex()}\\cdot ${m2.latex()}= ?`;
     return (
-      <div>
+      <div className={classes.Wrap}>
         <h2>Умножение матриц</h2>
-        <LaTeX>{tex}</LaTeX>
-        <Variables
-          variables={this.state.variables}
-          delete={this.deleteVariable}
-          use={this.useVariable}
-        />
+        <LaTeX className={classes.LaTeX}>{tex}</LaTeX>
+        {this.state.right ? (
+          <div>
+            <p>"Верно"</p>
+            <Matrix matrix={this.state.right} />
+          </div>
+        ) : (
+          <div>
+            {this.state.dim ? <div>Неверный размер матрицы</div> : null}
+            <MatrixForm
+              onSubmit={this.checkAnswer}
+              hightlight={this.state.matrix}
+              buttonText={"Проверить"}
+            />
+          </div>
+        )}
       </div>
     );
   }
 }
+
+MatrixDot.PropTypes = {
+  m1: PropTypes.arrayOf(PropTypes.array),
+  m2: PropTypes.arrayOf(PropTypes.array)
+};
+
 const mapDispatchToProps = dispatch => ({
   setError: er => dispatch(setCurrentError(er)),
   removeError: () => dispatch(removeCurrentError())

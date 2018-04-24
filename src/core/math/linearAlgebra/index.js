@@ -51,9 +51,13 @@ const genAlmostStepMatrix = (m, n, r) => {
   return ret;
 };
 
-export const genMatrix = ({ square, M, N, R, step } = {}) => {
-  const n = M || _.random(4, 7);
-  const m = N || (square ? n : _.random(2, n));
+export const genMatrix = ({ square, M, N, R, step, minM, maxM, minN, maxN } = {}) => {
+  const minn = minN || 4;
+  const minm = minM || 2;
+  const maxn = maxM || 7;
+  const n = N || _.random(minn, maxn);
+  const maxm = maxN || n;
+  const m = M || (square ? n : _.random(minm, maxm));
   const r = R || 20;
   if (typeof step === "number") {
     if (step > 0.5) return genStepMatrix(m, n, r);
@@ -160,6 +164,7 @@ export class NerdMatrix extends AbstractMatrix {
     let ret = true;
     this.matrix.subtract(m2.matrix).each(v => {
       if (v.text() !== "0") ret = false;
+      return v;
     });
     return ret;
   }
@@ -175,6 +180,29 @@ export class NerdMatrix extends AbstractMatrix {
   }
   latex() {
     return this.matrix.latex().replace(/vmatrix/g, "pmatrix");
+  }
+  dot(matrix) {
+    // хотелось бы
+    //return new NerdMatrix(nerdamer.matrix(this.matrix, matrix.matrix));
+    const m = this.matrix.symbol.elements.length;
+    const n = matrix.matrix.symbol.elements[0].length;
+    let mat = nerdamer.matrix(...new Array(m).fill(0).map(()=>new Array(n).fill(0)));
+    for (let i = 0; i < m; i++ ) {
+      for (let j = 0; j < n; j++ ) {
+        const v1 = nerdamer.vector(...this.data()[i]);
+        const v2 = nerdamer.vector(...matrix.data().map(r=>r[j]));
+        mat = nerdamer.matset(mat, i, j, nerdamer.dot(v1, v2));
+      }
+    }
+    return new NerdMatrix(mat);
+  }
+  compare(matrix) {
+    let ret = true;
+    this.matrix.subtract(matrix.matrix).each(e=>{
+      ret &= e.text() === "0";
+      return e;
+    })
+    return ret;
   }
 }
 

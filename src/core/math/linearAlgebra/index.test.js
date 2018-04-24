@@ -53,6 +53,22 @@ describe("Structures", () => {
         ["6", "6", "-i+6"]
       ]);
     });
+    it("should implement dot", ()=> {
+      // 2 1  -2 1   -4 3
+      // 1 0  0  1   -2 1
+      const m1 = new Structures.NerdMatrix([[2,1], [1,0]]);
+      const m2 = new Structures.NerdMatrix([[-2, 1], [0, 1]]);
+      expect(m1.dot(m2).data()).toEqual([
+        ["-4", "3"], ["-2", "1"]
+      ]);
+    });
+    it("should implement isEqual", ()=> {
+      const m1 = new Structures.NerdMatrix([[1,1],[1,1]]);
+      const m2 = new Structures.NerdMatrix([[1,1],[1,1]]);
+      const m3 = new Structures.NerdMatrix([[1,1],[1,3]]);
+      expect(m1.isEqual(m2)).toBe(true)
+      expect(m1.isEqual(m3)).toBe(false)
+    })
   });
   describe("genMatrix", () => {
     it("should gen matrix", () => {
