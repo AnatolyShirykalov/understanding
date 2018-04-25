@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import MathJax from '../../../vendor/react-mathjax/src';
+import LaTeX from '~/Components/UI/LaTeX';
 import classes from './Task.css';
 import {example} from '../../../core/example';
 import Dialog from './Dialog';
@@ -47,23 +47,21 @@ class Example extends Component {
       />
     );
     return (
-      <MathJax.Context>
         <div className={classes.Task}>
           <h2>Демонстрационная версия конструктора</h2>
           <p>Доступны только преобразования «по определению»</p>
           {dialog}
           <div className={classes.Current} onClick={this.toggleDialog}>
-            <MathJax.Node>{this.state.expression.text()}</MathJax.Node>
+            <LaTeX>{this.state.expression.text()}</LaTeX>
           </div>
           <div>
             {this.state.children.map((child, i)=>(
               <div key={i}>
-                <MathJax.Node>{child.text()}</MathJax.Node>
+                <LaTeX>{child.text()}</LaTeX>
               </div>
             ))}
           </div>
         </div>
-      </MathJax.Context>
     );
   }
 }

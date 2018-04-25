@@ -15,7 +15,7 @@ export default class NewExample extends Component {
       return (
         <div>
           <button onClick={this.props.gen} className={classes.NewBtn}>
-            Сгенерировать другую
+              Сгенерировать другую
           </button>
         </div>
       );

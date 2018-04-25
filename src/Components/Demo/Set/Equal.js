@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import ToDo from '../ToDo';
 import Subexpr from './Subexpr';
 import Congs from '../Calculus/Diff/Components/Congs/Congs';
-//import MathJax from '../../../vendor/react-mathjax/src';
 import {schemas, boolMethods, subst, toTeX, subExp, definition, transformSub} from '../../../core/set/';
-import MathJax from '../../../vendor/react-mathjax/src';
 import classes from './Equal.css';
+import LaTeX from '~/Components/UI/LaTeX';
 
 class Equal extends Component {
   state = {
@@ -87,7 +86,6 @@ class Equal extends Component {
 
   render(){
     return (
-      <MathJax.Context>
         <div className={classes.Equal}>
           {this.props.cancel ?
               <button onClick={this.props.cancel}>
@@ -134,7 +132,7 @@ class Equal extends Component {
                       onClick={()=>this.implement(i, method)}
                     >
                       <span>{method.name}</span>
-                      <MathJax.Node inline>{method.texPostfix}</MathJax.Node>
+                      <LaTeX inline>{method.texPostfix}</LaTeX>
                     </button>
                   ))}
                   <button
@@ -149,7 +147,6 @@ class Equal extends Component {
             ))}
             {this.canShowCongs() ? <Congs /> : null}
         </div>
-      </MathJax.Context>
     );
   }
 }

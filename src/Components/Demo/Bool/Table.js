@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions';
 import Base, {withTIC, mDTP, baseMSTP} from '../Base';
-import MathJax from '../../../vendor/react-mathjax/src';
 import ToDo from '../ToDo';
 import {Congs, GenTask} from '../Calculus/Diff/Components';
 import BoolInput from './Input';
@@ -85,7 +84,6 @@ class Table extends Base {
 
   render (){
     return (
-      <MathJax.Context>
         <div>
           <GenTask
             levels={['Тренироваться']}
@@ -108,7 +106,6 @@ class Table extends Base {
             </div>
           : null}
         </div>
-      </MathJax.Context>
     );
   }
 }

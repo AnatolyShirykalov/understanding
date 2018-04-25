@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import * as actions from '../../../store/actions';
 import Base, {withTIC, baseMSTP, mDTP} from '../Base';
 import {GenTask, Congs} from '../Calculus/Diff/Components';
-import MathJax from '../../../vendor/react-mathjax/src';
 import ToDo from '../ToDo';
 import BoolInput from './Input';
 import {evaluate, toTeX} from '../../../core/bool/mjs';
@@ -43,7 +42,6 @@ class Eval extends Base {
 
   render (){
     return (
-      <MathJax.Context>
         <div className={classes.Base}>
           <GenTask
             levels={['Тренироваться']}
@@ -63,7 +61,6 @@ class Eval extends Base {
             </div>
           : null}
         </div>
-      </MathJax.Context>
     );
   }
 }

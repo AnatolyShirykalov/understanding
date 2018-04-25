@@ -1,6 +1,5 @@
 import React from 'react';
 import {ToDo, GenTask, Congs, Step} from './Components';
-import MathJax from '../../../../vendor/react-mathjax/src';
 import classes from './Base.css';
 import nerdamer from 'nerdamer';
 import * as actions from '../../../../store/actions';
@@ -114,7 +113,6 @@ class Base extends DemoBase {
   render() {
     const params = this.params();
     return (
-      <MathJax.Context>
         <div className={classes.Diff}>
           <h2>{params.title}</h2>
           <GenTask
@@ -143,7 +141,6 @@ class Base extends DemoBase {
                 : null}
           </div> : null}
         </div>
-      </MathJax.Context>
     );
   }
 }

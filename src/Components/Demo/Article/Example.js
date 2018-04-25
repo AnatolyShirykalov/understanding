@@ -1,9 +1,8 @@
 import React from 'react';
-import MathJax from '../../../vendor/react-mathjax/src';
 import classes from './Article.css';
+import LaTeX from '~/Components/UI/LaTeX';
 
 const article = props => (
-  <MathJax.Context>
     <div className={classes.Article}>
       <h2>Множества и операции над множествами</h2>
       <h3>Чёрный ящик отвечает на вопросы</h3>
@@ -15,16 +14,15 @@ const article = props => (
       <p>Множество — это совокупность (набор, семейство) некоторых агентов (объектов — элементов множества).</p>
       <p>Основное действие по множеству и элементу: проверить, принадлежит ли этот объект этому множеству.</p>
 
-      <p>Обозначения того, что элемент <MathJax.Node inline>a</MathJax.Node> принадлежит  множеству <MathJax.Node inline>A</MathJax.Node> или, что равносильно, <MathJax.Node inline>A</MathJax.Node> содержит <MathJax.Node inline>a</MathJax.Node>: <MathJax.Node inline>a\in A\Leftrightarrow A \ni a</MathJax.Node>.
-        И не принадлежит и не содержит: <MathJax.Node inline>a\notin  A\Leftrightarrow A \not\ni a</MathJax.Node>.</p>
+      <p>Обозначения того, что элемент <LaTeX inline>a</LaTeX> принадлежит  множеству <LaTeX inline>A</LaTeX> или, что равносильно, <LaTeX inline>A</LaTeX> содержит <LaTeX inline>a</LaTeX>: <LaTeX inline>a\in A\Leftrightarrow A \ni a</LaTeX>.
+        И не принадлежит и не содержит: <LaTeX inline>a\notin  A\Leftrightarrow A \not\ni a</LaTeX>.</p>
 
       <h4>Способы задать множество</h4>
       <ol>
-        <li>Перечислить все элементы: <MathJax.Node inline>{'\\{0,1,2\\} = \\{0,1,2,0\\}'}</MathJax.Node> — обратим внимание на то, что множество — это некий чёрный ящик, который отвечает на вопросы «есть ли в тебе такой элемент?», поэтому перечисление одного элемента дважды, трижды, миллионажды никак не влияет на множество;</li>
-        <li>Задать характеристическим свойством элементов множества. Например, <MathJax.Node inline>{'\\{\\text{Люди}\\colon \\text{рост}>175\\text{см}\\}'}</MathJax.Node>. Иногда вместо «:» ставят «|». Оба варианта читаются «такой что», «для которых», «удовлетворяющие условию»</li>
+        <li>Перечислить все элементы: <LaTeX inline>{'\\{0,1,2\\} = \\{0,1,2,0\\}'}</LaTeX> — обратим внимание на то, что множество — это некий чёрный ящик, который отвечает на вопросы «есть ли в тебе такой элемент?», поэтому перечисление одного элемента дважды, трижды, миллионажды никак не влияет на множество;</li>
+        <li>Задать характеристическим свойством элементов множества. Например, <LaTeX inline>{'\\{\\text{Люди}\\colon \\text{рост}>175\\text{см}\\}'}</LaTeX>. Иногда вместо «:» ставят «|». Оба варианта читаются «такой что», «для которых», «удовлетворяющие условию»</li>
       </ol>
     </div>
-  </MathJax.Context>
 );
 
 export default article;

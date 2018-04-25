@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import * as actions from "../../../../../store/actions";
 import nerdamer from "nerdamer";
 import "nerdamer/all";
-import MathJax from "../../../../../vendor/react-mathjax/src";
 import { table } from "../../../../../core/calculus/examples";
 import C from "../../../../../core/calculus";
 import Base, { mDTP, mSTP, withTIC } from "../Base";
 import classes from "./Table.css";
 import { ToDo, MathPairs } from "../Components";
+import LaTeX from '~/Components/UI/LaTeX';
 
 class Table extends Base {
   isDegree = () => {
@@ -40,7 +40,6 @@ class Table extends Base {
 
   render() {
     return (
-      <MathJax.Context>
         <div>
           <h3>Таблица производных</h3>
           {this.validExpression() ? (
@@ -59,24 +58,23 @@ class Table extends Base {
                 className={classes.TableItem}
                 onClick={this.props.selectTableItem(this.taskId(), fun)}
               >
-                <MathJax.Node>
+                <LaTeX>
                   {`\\left(${nerdamer(fun).toTeX()}\\right)' = ${nerdamer(
                     diff
                   ).toTeX()}`}
-                </MathJax.Node>
+                </LaTeX>
               </div>
             ))}
           </div>
           {this.isDegree() ? (
             <div>
               <h4>
-                Укажите нужный параметр <MathJax.Node inline>a</MathJax.Node>
+                Укажите нужный параметр <LaTeX inline>a</LaTeX>
               </h4>
               <MathPairs keys={["a"]} taskId={this.taskId()} />
             </div>
           ) : null}
         </div>
-      </MathJax.Context>
     );
   }
 }

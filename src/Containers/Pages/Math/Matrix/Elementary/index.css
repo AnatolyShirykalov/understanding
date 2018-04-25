@@ -1,10 +1,10 @@
 .Btn {
+  background: lightblue;
+  box-shadow: 1px 1px 1px black;
   display: inline-block;
   height: 30px;
-  background: lightblue;
-  boxShadow: 1px 1px 1px black;
 }
 
-.Btn:enabled{
+.Btn:enabled {
   cursor: pointer;
 }

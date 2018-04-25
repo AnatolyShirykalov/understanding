@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import Base, {mDTP, mSTP, withTIC} from './Base';
 import {ToDo, GenTask, Congs} from './Components';
 import classes from './Common.css';
-import MathJax from '../../../../vendor/react-mathjax/src';
 import * as actions from '../../../../store/actions';
 
 class Common extends Base {
@@ -13,7 +12,6 @@ class Common extends Base {
 
   render() {
     return (
-      <MathJax.Context>
         <div className={classes.Common}>
           <h2>Задачник по дифференцированию</h2>
           <GenTask
@@ -32,7 +30,6 @@ class Common extends Base {
           }
           { this.diffed('expression', 'answer') ? <Congs /> : null}
         </div>
-      </MathJax.Context>
     );
   }
 }

@@ -3,7 +3,6 @@ import Base, {baseMSTP, mDTP, withTIC} from '../Base';
 import * as actions from '../../../store/actions';
 import {connect} from 'react-redux';
 import {pairs, toTeX} from '../../../core/bool/mjs';
-import MathJax from '../../../vendor/react-mathjax/src';
 import Step from '../Bool/Step';
 import classes from '../Base.css';
 
@@ -20,7 +19,6 @@ class Lesson extends Base {
 
   render(){
     return (
-      <MathJax.Context>
         <div className={classes.Base}>
           {pairs.map((pair, key)=>(
             <Step
@@ -34,7 +32,7 @@ class Lesson extends Base {
             />
           ))}
         </div>
-      </MathJax.Context>);
+    );
   }
 }
 

@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions';
 import classes from './Inverse.css';
-import MathJax from '../../../../vendor/react-mathjax/src';
 import Base, {mDTP, mSTP, withTIC} from './Base';
 import C from '../../../../core/calculus';
 import {INV, CLEAR_INV, trigConnections} from '../../../../core/calculus/examples';
 import scrollToComponent from 'react-scroll-to-component';
+import LaTeX from '~/Components/UI/LaTeX';
 
 const params = {
   kind: 'inverse',
@@ -84,7 +84,7 @@ class Inverse extends Base {
     let inner = "Что-то можно сократить";
     if (con.length > 0) inner = [
       <span key={0}>Верно! Но упростите выражение в последней ячейке. Можно использовать для первой и третьей ячейки следующие формулы</span>,
-      con.map(c=><MathJax.Node key={c}>{c}</MathJax.Node>)
+      con.map(c=><LaTeX key={c}>{c}</LaTeX>)
     ];
     return <div className={classes.Hint} ref={e=>this.Hint=e}>{inner}</div>;
   }

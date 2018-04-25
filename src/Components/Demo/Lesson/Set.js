@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {ubd, toTeX} from '../../../core/set/';
-import MathJax from '../../../vendor/react-mathjax/src';
 import Equal from '../Set/Equal';
 import classes from './Set.css';
 import {setDoneEqual} from '../../../store/actions';
+import LaTeX from '~/Components/UI/LaTeX';
 
 class SetLesson extends Component {
   state = {
@@ -30,13 +30,12 @@ class SetLesson extends Component {
 
   render() {
     return (
-      <MathJax.Context>
         <div>
           {this.state.tasks.map((task, key)=>(
             <div key={key} className={classes.Task}>
-              <MathJax.Node>
+              <LaTeX>
                 {task.exs.map(toTeX).join(' = ')}
-              </MathJax.Node>
+              </LaTeX>
               {task.done ? <div>Сделано</div> :
                   task.inProcess ?
                     <Equal
@@ -54,7 +53,6 @@ class SetLesson extends Component {
             </div>
           ))}
         </div>
-      </MathJax.Context>
     );
   }
 }
