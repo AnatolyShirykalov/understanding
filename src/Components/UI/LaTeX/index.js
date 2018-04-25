@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import MathJax from "~/vendor/react-mathjax/src";
+import classNames from "classnames";
+import classes from "./index.css";
 
 export default class LaTeX extends Component {
   state = {
@@ -38,7 +40,11 @@ export default class LaTeX extends Component {
 
   render() {
     return (
-      <div className={this.props.className}>
+      <div
+        className={classNames(this.props.className, {
+          [classes.Inline]: this.props.inline
+        })}
+      >
         <MathJax.Context inline={this.props.inline}>
           <MathJax.Node onRender={this.latexOnRender}>
             {this.state.children}
