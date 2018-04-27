@@ -9,6 +9,7 @@ const MatrixMenu = props => (
       title="Элементарные преобразования матриц"
     />
     <LinkItem to="/trainers/matrix-dot" title="Умножение матриц" />
+    <LinkItem to="/trainers/matrix-det" title="Определитель матрицы" />
   </div>
 );
 

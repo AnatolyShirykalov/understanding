@@ -7,6 +7,7 @@ import MatrixForm from "~/Components/Math/LinearAlgebra/Matrix/Form";
 import Matrix from "~/Components/Math/LinearAlgebra/Matrix";
 import PropTypes from "prop-types";
 import classes from "./index.css";
+import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
 
 class MatrixDot extends Component {
   state = {};
@@ -43,11 +44,16 @@ class MatrixDot extends Component {
     return (
       <div className={classes.Wrap}>
         <h2>Умножение матриц</h2>
+        <div>
+          <SaveMatrix matrix={this.props.m1} value="Сохранить левую матрицу" />
+          <SaveMatrix matrix={this.props.m2} value="Сохранить правую матрицу" />
+        </div>
         <LaTeX className={classes.LaTeX}>{tex}</LaTeX>
         {this.state.right ? (
           <div>
             <p>"Верно"</p>
             <Matrix matrix={this.state.right} />
+            <SaveMatrix matrix={this.state.right} value="Сохранить результат" />
           </div>
         ) : (
           <div>

@@ -1,0 +1,45 @@
+import React, { Component } from "react";
+import { NerdMatrix } from "~/core/math/linearAlgebra";
+import LaTeX from "~/Components/UI/LaTeX";
+import Elementary from "~/Containers/Pages/Math/Matrix/Elementary";
+import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
+
+export default class MatrixDotView extends Component {
+  state = {
+    value: "",
+    elementary: false
+  };
+  toggle = () => {
+    this.setState({ elementary: !this.state.elementary });
+  };
+  change = e => {
+    this.setState({ value: e.target.value });
+  };
+  submit = () => {
+    if (!this.props.submit) return;
+    this.props.submit(this.state.value);
+  };
+  render() {
+    const tex = new NerdMatrix(this.props.matrix).latex();
+    return (
+      <div>
+        <LaTeX>{`\\det ${tex} = ?`}</LaTeX>
+        <div>
+          <input value={this.state.value} onChange={this.change} />
+        </div>
+        <div>
+          <button onCLick={this.submit} disabled={this.state.value === ""}>
+            Проверить
+          </button>
+          <SaveMatrix matrix={this.props.matrix} />
+        </div>
+        <div>
+          <button onClick={this.toggle}>Элементарные преобразования</button>
+          {this.state.elementary ? (
+            <Elementary matrix={this.props.matrix} />
+          ) : null}
+        </div>
+      </div>
+    );
+  }
+}

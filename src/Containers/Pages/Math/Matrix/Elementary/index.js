@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setCurrentError, removeCurrentError } from "~/store/actions";
 import classes from "./index.css";
+import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
 
 const newTransforms = ar =>
   ar.map((_, i) => ({ multiplicator: 0, rowNumber: 0 }));
@@ -130,13 +131,7 @@ class Elementary extends Component {
           </button>
         </div>
         <div>
-          <button
-            className={classes.Btn}
-            onClick={this.saveCurrentMatrixToStorage}
-            disabled={this.state.savingMatrixToStorage}
-          >
-            Сохранить матрицу
-          </button>
+          <SaveMatrix matrix={this.state.matrix} value="Сохранить матрицу" />
         </div>
         <div>
           <ElementaryHistory

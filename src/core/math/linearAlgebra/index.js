@@ -85,6 +85,9 @@ export class Scalar {
   subtract(v) {
     return new Scalar(this.value.subtract(v.value));
   }
+  isEqual(s2){
+    return this.subtract(s2).data() === '0'
+  }
 }
 
 export class Vector {
@@ -195,6 +198,9 @@ export class NerdMatrix extends AbstractMatrix {
       }
     }
     return new NerdMatrix(mat);
+  }
+  det(){
+    return new Scalar(nerdamer.determinant(this.matrix));
   }
   compare(matrix) {
     let ret = true;

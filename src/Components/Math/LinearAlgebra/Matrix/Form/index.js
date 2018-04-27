@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import classes from "./index.css";
 import classNames from "classnames/bind";
 import Matrix from "../";
+import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
 
 const cx = classNames.bind(classes);
 
@@ -123,6 +124,10 @@ export default class MatrixForm extends Component {
             {buttonText}
           </button>
           <Matrix matrix={this.state.matrix} />
+          <SaveMatrix
+            matrix={this.state.matrix}
+            value="Сохранить текущую матрицу"
+          />
         </div>
       </div>
     );
