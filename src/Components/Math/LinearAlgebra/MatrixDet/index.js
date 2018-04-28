@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { NerdMatrix } from "~/core/math/linearAlgebra";
+import { Scalar, NerdMatrix } from "~/core/math/linearAlgebra";
 import LaTeX from "~/Components/UI/LaTeX";
 import Elementary from "~/Containers/Pages/Math/Matrix/Elementary";
 import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
-
 export default class MatrixDotView extends Component {
   state = {
     value: "",
@@ -19,6 +18,13 @@ export default class MatrixDotView extends Component {
     if (!this.props.submit) return;
     this.props.submit(this.state.value);
   };
+  preview = () => {
+    try {
+      return new Scalar(this.state.value).latex();
+    } catch (err) {
+      return err.message;
+    }
+  };
   render() {
     const tex = new NerdMatrix(this.props.matrix).latex();
     return (
@@ -26,11 +32,16 @@ export default class MatrixDotView extends Component {
         <LaTeX>{`\\det ${tex} = ?`}</LaTeX>
         <div>
           <input value={this.state.value} onChange={this.change} />
+          <LaTeX>{this.preview()}</LaTeX>
         </div>
         <div>
-          <button onCLick={this.submit} disabled={this.state.value === ""}>
-            Проверить
-          </button>
+          {this.props.right ? (
+            <span>Верно</span>
+          ) : (
+            <button onClick={this.submit} disabled={this.state.value === ""}>
+              Проверить
+            </button>
+          )}
           <SaveMatrix matrix={this.props.matrix} />
         </div>
         <div>

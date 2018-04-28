@@ -3,7 +3,7 @@ import MatrixDetView from "~/Components/Math/LinearAlgebra/MatrixDet";
 import NewExample from "~/Components/UI/NewExample";
 import MatrixForm from "~/Components/Math/LinearAlgebra/Matrix/Form";
 import MatrixSelect from "~/Components/Math/LinearAlgebra/Matrix/Select";
-import { genMatrix, NerdMatrix } from "~/core/math/linearAlgebra";
+import { genMatrix, NerdMatrix, Scalar } from "~/core/math/linearAlgebra";
 
 export default class MatrixDet extends Component {
   state = {
@@ -16,7 +16,7 @@ export default class MatrixDet extends Component {
     this.setState({ matrix: genMatrix({ square: true }), right: false });
   };
   check = ans => {
-    if (new NerdMatrix(this.state.matrix).isEqual(new NerdMatrix(ans))) {
+    if (new NerdMatrix(this.state.matrix).det().isEqual(new Scalar(ans))) {
       this.setState({ right: true });
     }
   };
