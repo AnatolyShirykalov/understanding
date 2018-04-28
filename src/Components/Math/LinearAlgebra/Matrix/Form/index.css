@@ -8,9 +8,30 @@
 }
 
 .Submit {
+  background: green;
+  box-shadow: 3px 3px 3px 0 black;
+  color: white;
+  cursor: pointer;
   display: inline-block;
+  font-size: 16pt;
+  margin: 10px;
+  padding: 10px;
 }
 
 .Red {
   background-color: red;
+}
+
+.Btn {
+  background: #dea;
+  box-shadow: 2px 2px 2px 0 black;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 10px;
+  padding: 10px;
+}
+
+.Input {
+  font-size: 12pt;
+  padding: 5px 2px;
 }

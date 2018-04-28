@@ -4,6 +4,7 @@ import MatrixSelect from "~/Components/Math/LinearAlgebra/Matrix/Select";
 import NewExample from "~/Components/UI/NewExample";
 import Matrix from "~/Components/Math/LinearAlgebra/Matrix";
 import * as Structures from "~/core/math/linearAlgebra";
+import classes from "./index.css";
 
 export default class MathDotGenerator extends Component {
   state = {};
@@ -33,7 +34,7 @@ export default class MathDotGenerator extends Component {
         {this.state.m1 ? (
           <div>
             <Matrix matrix={this.state.m1} />
-            <button onClick={this.remove}>Удалить</button>
+            <button className={classes.Delete} onClick={this.remove}>Удалить</button>
           </div>
         ) : null}
         <NewExample

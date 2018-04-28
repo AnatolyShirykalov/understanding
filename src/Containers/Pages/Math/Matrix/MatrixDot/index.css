@@ -1,0 +1,8 @@
+.Btn {
+  margin: 15px;
+  padding: 15px;
+  font-size: 14pt;
+  background: #3f7;
+  box-shadow: 3px 3px 3px 0 black;
+  cursor: pointer;
+}

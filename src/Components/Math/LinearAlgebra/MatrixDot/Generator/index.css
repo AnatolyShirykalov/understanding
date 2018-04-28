@@ -1,0 +1,9 @@
+.Delete {
+  background: red;
+  box-shadow: 2px 2px 2px 0 black;
+  color: white;
+  cursor: pointer;
+  font-size: 12pt;
+  margin: 10px;
+  padding: 10px;
+}

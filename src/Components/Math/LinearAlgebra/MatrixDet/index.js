@@ -3,6 +3,7 @@ import { Scalar, NerdMatrix } from "~/core/math/linearAlgebra";
 import LaTeX from "~/Components/UI/LaTeX";
 import Elementary from "~/Containers/Pages/Math/Matrix/Elementary";
 import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
+import classes from "./index.css";
 export default class MatrixDotView extends Component {
   state = {
     value: "",
@@ -30,22 +31,28 @@ export default class MatrixDotView extends Component {
     return (
       <div>
         <LaTeX>{`\\det ${tex} = ?`}</LaTeX>
-        <div>
+        <div className={classes.Pair}>
           <input value={this.state.value} onChange={this.change} />
-          <LaTeX>{this.preview()}</LaTeX>
+          <LaTeX className={classes.Preview}>{this.preview()}</LaTeX>
         </div>
         <div>
           {this.props.right ? (
             <span>Верно</span>
           ) : (
-            <button onClick={this.submit} disabled={this.state.value === ""}>
+            <button
+              className={classes.Submit}
+              onClick={this.submit}
+              disabled={this.state.value === ""}
+            >
               Проверить
             </button>
           )}
           <SaveMatrix matrix={this.props.matrix} />
         </div>
         <div>
-          <button onClick={this.toggle}>Элементарные преобразования</button>
+          <button className={classes.Elementary} onClick={this.toggle}>
+            Элементарные преобразования
+          </button>
           {this.state.elementary ? (
             <Elementary matrix={this.props.matrix} />
           ) : null}

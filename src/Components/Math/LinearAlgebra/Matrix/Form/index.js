@@ -84,15 +84,21 @@ export default class MatrixForm extends Component {
     return (
       <div className={classes.Wrap}>
         <div className={classes.Form}>
-          <button onClick={this.addRow}>m++</button>
-          <button onClick={this.addColumn}>n++</button>
+          <button className={classes.Btn} onClick={this.addRow}>
+            m++
+          </button>
+          <button className={classes.Btn} onClick={this.addColumn}>
+            n++
+          </button>
           <button
+            className={classes.Btn}
             onClick={this.removeRow}
             disabled={this.state.matrix.length === 1}
           >
             m--
           </button>
           <button
+            className={classes.Btn}
             onClick={this.removeColumn}
             disabled={this.state.matrix[0].length === 1}
           >
@@ -105,7 +111,7 @@ export default class MatrixForm extends Component {
                   {row.map((cell, j) => (
                     <td key={j}>
                       <input
-                        className={cx({ Red: this.shouldRed(i, j) })}
+                        className={cx({ Red: this.shouldRed(i, j) }, "Input")}
                         value={cell}
                         onChange={e => this.set(i, j, e)}
                         onFocus={() => this.focus(i, j)}

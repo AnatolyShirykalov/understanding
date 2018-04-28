@@ -5,8 +5,9 @@ import LaTeX from "~/Components/UI/LaTeX";
 
 const Matrix = ({ matrix }) => {
   try {
+    const m = matrix.map(row => row.map(c => (c === "" ? 0 : c)));
     return (
-      <LaTeX className={classes.Matrix}>{new NerdMatrix(matrix).latex()}</LaTeX>
+      <LaTeX className={classes.Matrix}>{new NerdMatrix(m).latex()}</LaTeX>
     );
   } catch (error) {
     return <div>{error.message}</div>;
