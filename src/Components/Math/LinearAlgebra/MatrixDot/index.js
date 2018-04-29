@@ -39,8 +39,6 @@ class MatrixDot extends Component {
   }
 
   render() {
-    const { m1, m2 } = this.m1m2();
-    const tex = `${m1.latex()}\\cdot ${m2.latex()}= ?`;
     return (
       <div className={classes.Wrap}>
         <h2>Умножение матриц</h2>
@@ -48,7 +46,12 @@ class MatrixDot extends Component {
           <SaveMatrix matrix={this.props.m1} value="Сохранить левую матрицу" />
           <SaveMatrix matrix={this.props.m2} value="Сохранить правую матрицу" />
         </div>
-        <LaTeX className={classes.LaTeX}>{tex}</LaTeX>
+        <div>
+          <Matrix matrix={this.props.m1} inline />
+          <LaTeX inline>{"\\cdot"}</LaTeX>
+          <Matrix matrix={this.props.m2} inline />
+          <LaTeX inline>{"\\ =\\ ?"}</LaTeX>
+        </div>
         {this.state.right ? (
           <div>
             <p>"Верно"</p>
@@ -70,7 +73,7 @@ class MatrixDot extends Component {
   }
 }
 
-MatrixDot.PropTypes = {
+MatrixDot.propTypes = {
   m1: PropTypes.arrayOf(PropTypes.array),
   m2: PropTypes.arrayOf(PropTypes.array)
 };

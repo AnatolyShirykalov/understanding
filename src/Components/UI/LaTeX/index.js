@@ -26,6 +26,16 @@ export default class LaTeX extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps === this.props && nextState === this.state) return false;
+    return true;
+  }
+
+  componentDidUpdate() {
+    if (this.state.rendering) return;
+    if (this.props.onDidUpdate) this.props.onDidUpdate(this.wrap);
+  }
+
   latexOnRender = () => {
     if (this.state.nextChildren) {
       this.setState({
@@ -41,6 +51,7 @@ export default class LaTeX extends Component {
   render() {
     return (
       <div
+        ref={c => (this.wrap = c)}
         className={classNames(this.props.className, {
           [classes.Inline]: this.props.inline
         })}

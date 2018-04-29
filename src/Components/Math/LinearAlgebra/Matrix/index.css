@@ -1,5 +1,10 @@
 .Matrix {
-  position: relative;
-  max-width: 90vw;
+  cursor: crosshair;
   margin: auto;
+  max-width: 90vw;
+  position: relative;
+}
+
+.Inline {
+  display: inline-block;
 }

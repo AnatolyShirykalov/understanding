@@ -34,7 +34,9 @@ export default class MathDotGenerator extends Component {
         {this.state.m1 ? (
           <div>
             <Matrix matrix={this.state.m1} />
-            <button className={classes.Delete} onClick={this.remove}>Удалить</button>
+            <button className={classes.Delete} onClick={this.remove}>
+              Удалить
+            </button>
           </div>
         ) : null}
         <NewExample

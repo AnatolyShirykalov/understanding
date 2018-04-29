@@ -2408,6 +2408,10 @@ execa@^0.7.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+exenv@^1.2.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
+
 expand-brackets@^0.1.4:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/expand-brackets/-/expand-brackets-0.1.5.tgz#df07284e342a807cd733ac5af72411e581d1177b"
@@ -3158,9 +3162,15 @@ https-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
 
-iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@~0.4.13:
+iconv-lite@0.4.19, iconv-lite@^0.4.17:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
+
+iconv-lite@~0.4.13:
+  version "0.4.21"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.21.tgz#c47f8733d02171189ebc4a400f3218d348094798"
+  dependencies:
+    safer-buffer "^2.1.0"
 
 icss-replace-symbols@^1.1.0:
   version "1.1.0"
@@ -5291,6 +5301,19 @@ react-hot-loader@^4.0.0:
     prop-types "^15.6.0"
     shallowequal "^1.0.2"
 
+react-lifecycles-compat@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.2.tgz#7279047275bd727a912e25f734c0559527e84eff"
+
+react-modal@^3.4.4:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.4.4.tgz#e9dde25e9e85a59c76831f2a2b468712a546aded"
+  dependencies:
+    exenv "^1.2.0"
+    prop-types "^15.5.10"
+    react-lifecycles-compat "^3.0.0"
+    warning "^3.0.0"
+
 react-redux@^5.0.6:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.6.tgz#23ed3a4f986359d68b5212eaaa681e60d6574946"
@@ -5331,6 +5354,10 @@ react-scroll-to-component@^1.0.2:
   dependencies:
     scroll-to "0.0.2"
 
+react-selectable@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-selectable/-/react-selectable-2.0.1.tgz#c8e4d0c94a644274797f9f678c96b07648b8a0ab"
+
 react-tabs@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-2.1.1.tgz#fd806fe78a990b59f1daf02609aded546fe7016c"
@@ -5339,8 +5366,8 @@ react-tabs@^2.1.1:
     prop-types "^15.5.0"
 
 react@^16.1.1:
-  version "16.1.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.1.1.tgz#d5c4ef795507e3012282dd51261ff9c0e824fe1f"
+  version "16.3.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.3.2.tgz#fdc8420398533a1e58872f59091b272ce2f91ea9"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -5704,6 +5731,10 @@ rx-lite@*, rx-lite@^4.0.8:
 safe-buffer@5.1.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
+
+safer-buffer@^2.1.0:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
 
 sane@~1.6.0:
   version "1.6.0"
@@ -6643,9 +6674,13 @@ whatwg-encoding@^1.0.1:
   dependencies:
     iconv-lite "0.4.19"
 
-whatwg-fetch@2.0.3, whatwg-fetch@>=0.10.0:
+whatwg-fetch@2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
+
+whatwg-fetch@>=0.10.0:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
 whatwg-url@^4.3.0:
   version "4.8.0"
