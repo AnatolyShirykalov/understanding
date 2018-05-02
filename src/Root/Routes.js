@@ -21,6 +21,7 @@ import Subexpr from "../Components/Demo/Set/Subexpr";
 
 import DiffMenu from "~/Containers/Pages/Trainers/Diff";
 import MatrixMenu from "~/Containers/Pages/Trainers/Matrix";
+import Trees from "~/Containers/Pages/Trees";
 
 import { TestRoutes } from "../Containers/Pages/Tests";
 import StepView from "~/Containers/Pages/Math/Matrix/StepView";
@@ -50,6 +51,7 @@ const routes = (
     <Route path="/lessons" component={Lessons} />
     <Route path="/trainers/subexpr" component={Subexpr} exact />
     <Route path="/trainers" exact component={Trainers} />
+    <Route path="/trees" exact component={Trees} />
     <Route path="/trainers/diff" exact component={DiffMenu} />
     <Route path="/trainers/matrix" exact component={MatrixMenu} />
     <Route path="/trainers/matrix-elementary" exact component={StepView} />

@@ -1,0 +1,19 @@
+.Wrap {
+  display: grid;
+}
+
+.Wrap > div:first-child {
+  grid-column-start: 1;
+}
+
+.Wrap > div:nth-child(2) {
+  grid-column-start: 2;
+}
+
+.Wrap > div:nth-child(3) {
+  grid-column-start: 3;
+}
+
+.Selects > table {
+  line-height: 40px;
+}

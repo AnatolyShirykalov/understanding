@@ -50,6 +50,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scroll-to-component": "^1.0.2",
+    "react-select": "^1.2.1",
     "react-selectable": "^2.0.1",
     "react-tabs": "^2.2.2",
     "redux": "^4.0.0",
