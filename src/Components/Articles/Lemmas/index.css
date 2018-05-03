@@ -1,0 +1,14 @@
+.Between {
+  background: white;
+}
+
+.Target {
+  border: 2px solid #edf;
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px;
+}
+
+.Target.Active {
+  background: #edf;
+}
