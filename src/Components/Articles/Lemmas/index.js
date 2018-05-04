@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import ChangableFormula from "~/Components/UI/ChangableFormula";
 import { toOffsets, offsetsBuilder } from "~/core/lemmas";
 import LaTeX from "~/Components/UI/LaTeX";
+import { omit } from "lodash";
 
 const cx = classNames.bind(classes);
 
@@ -41,6 +42,12 @@ export default class Lemmas extends Component {
           name: this.state.currentName
         })
       ]
+    });
+  };
+  removeLemma = name => () => {
+    this.setState({
+      lemmas: omit(this.state.lemmas, name),
+      offsets: this.state.offsets.filter(off => off.name !== name)
     });
   };
   textWithLemma() {
@@ -82,7 +89,7 @@ export default class Lemmas extends Component {
                   <LaTeX inline>{this.state.lemmas[key]}</LaTeX>
                 </td>
                 <td>
-                  <button>Удалить</button>
+                  <button onClick={this.removeLemma(key)}>Удалить</button>
                 </td>
               </tr>
             ))}
