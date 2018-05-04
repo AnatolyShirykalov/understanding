@@ -2,40 +2,10 @@ import React, { Component } from "react";
 import classes from "./index.css";
 import classNames from "classnames/bind";
 import ChangableFormula from "~/Components/UI/ChangableFormula";
+import { toOffsets, offsetsBuilder } from "~/core/lemmas";
+import LaTeX from "~/Components/UI/LaTeX";
 
 const cx = classNames.bind(classes);
-
-const toOffsets = (text, ptrn, blacklist, obj = {}) => {
-  const pt = new RegExp(ptrn, "g");
-  const ret = [];
-  let i = 0;
-  let match;
-  while ((match = pt.exec(text))) {
-    i += 1;
-    if (i > 1000000) throw new Error("iteration limit exceed");
-    if (blacklist[i]) continue;
-    ret.push({
-      ...obj,
-      start_offset: match.index,
-      end_offset: match.index + ptrn.length
-    });
-  }
-  return ret;
-};
-
-const offsetsBuilder = (text, offsets) => args => {
-  console.log(offsets);
-  return offsets.reduce((ret, offset) => {
-    let m = args[offset.name];
-    console.log(args);
-    if (offset.arg_names) {
-      m = m(...offset.arg_names.map(n => args[n]));
-    }
-    return (
-      ret.substr(0, offset.start_offset) + m + ret.substr(offset.end_offset)
-    );
-  }, text.slice());
-};
 
 export default class Lemmas extends Component {
   state = {
@@ -59,6 +29,8 @@ export default class Lemmas extends Component {
   };
   ok = () => {
     this.setState({
+      current: null,
+      currentName: "",
       lemmas: {
         ...this.state.lemmas,
         [this.state.currentName]: this.state.current
@@ -101,6 +73,21 @@ export default class Lemmas extends Component {
         <h2>Лемматизация</h2>
         <button onClick={this.addLemma}>Искать</button>
         <textarea value={this.state.text} onChange={this.change} />
+        <table>
+          <tbody>
+            {Object.keys(this.state.lemmas).map(key => (
+              <tr key={key}>
+                <td>{key}</td>
+                <td>
+                  <LaTeX inline>{this.state.lemmas[key]}</LaTeX>
+                </td>
+                <td>
+                  <button>Удалить</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         <div>{this.textWithLemma()}</div>
         <input
           value={this.state.currentName}
