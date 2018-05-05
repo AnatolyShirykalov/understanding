@@ -13,7 +13,10 @@ export default class MatrixDet extends Component {
     this.setState({ matrix, right: false });
   };
   gen = () => {
-    this.setState({ matrix: genMatrix({ square: true }), right: false });
+    this.setState({
+      matrix: genMatrix({ square: true, maxN: 5, minN: 2 }),
+      right: false
+    });
   };
   check = ans => {
     if (new NerdMatrix(this.state.matrix).det().isEqual(new Scalar(ans))) {

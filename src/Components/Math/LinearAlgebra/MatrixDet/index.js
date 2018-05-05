@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Scalar, NerdMatrix } from "~/core/math/linearAlgebra";
+import { Scalar } from "~/core/math/linearAlgebra";
 import LaTeX from "~/Components/UI/LaTeX";
 import Elementary from "~/Containers/Pages/Math/Matrix/Elementary";
 import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
 import classes from "./index.css";
+import Matrix from "~/Components/Math/LinearAlgebra/Matrix";
 export default class MatrixDotView extends Component {
   state = {
     value: "",
@@ -27,10 +28,11 @@ export default class MatrixDotView extends Component {
     }
   };
   render() {
-    const tex = new NerdMatrix(this.props.matrix).latex();
     return (
       <div>
-        <LaTeX>{`\\det ${tex} = ?`}</LaTeX>
+        <LaTeX inline>{"\\det"}</LaTeX>
+        <Matrix matrix={this.props.matrix} inline />
+        <LaTeX inline>{"=?"}</LaTeX>
         <div className={classes.Pair}>
           <input value={this.state.value} onChange={this.change} />
           <LaTeX className={classes.Preview}>{this.preview()}</LaTeX>
