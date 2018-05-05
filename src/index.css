@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+button:disabled {
+  cursor: not-allowed;
+}
+
 /*span[class="MathJax_Preview"]{
   display: none;
 }

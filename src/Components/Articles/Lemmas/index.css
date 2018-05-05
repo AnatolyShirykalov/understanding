@@ -12,3 +12,62 @@
 .Target.Active {
   background: #edf;
 }
+
+.Wrap {
+  display: grid;
+}
+
+.TextArea {
+  grid-column-start: 1;
+}
+
+.TableWrap {
+  grid-column-start: 2;
+}
+
+.FormWrap {
+  grid-column-start: 3;
+}
+
+.Preview {
+  grid-column-start: 4;
+}
+
+.Btn {
+  cursor: pointer;
+  background: lightblue;
+  box-shadow: 2px 2px 2px 0 black;
+  font-size: 14pt;
+  margin: 10px;
+  padding: 10px;
+}
+
+.RemoveBtn {
+  cursor: pointer;
+  background: orange;
+  color: white;
+  padding: 5px;
+  margin: 10px;
+  font-size: 12pt;
+  box-shadow: 2px 2px 2px 0 black;
+}
+
+.OkBtn {
+  cursor: pointer;
+  background: lightgreen;
+  font-size: 12pt;
+  font-weight: bold;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 50%;
+  box-shadow: 3px 3px 3px 0 black;
+}
+
+.NameLabelWrap {
+  margin: 10px;
+}
+
+.NameInput {
+  display: inline-block;
+  height: 20pt;
+}

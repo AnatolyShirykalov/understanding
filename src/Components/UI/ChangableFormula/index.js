@@ -3,6 +3,7 @@ import LaTeX from "~/Components/UI/LaTeX";
 import Modal from "react-modal";
 import { DebounceInput } from "react-debounce-input";
 import classes from "./index.css";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 class Eqer {
   constructor(defaultProps, latex) {
     this.props = defaultProps;
@@ -54,17 +55,25 @@ export default class ChangableFormula extends Component {
 
   render() {
     const eq = new Eqer(this.props.params, this.props.builder);
+    const ps = this.cleanParams();
+    let latex = eq.latex(ps);
     return (
       <div>
-        <LaTeX inline>{eq.latex(this.cleanParams())}</LaTeX>
-        <button onClick={this.showModal}>Обозначения</button>
+        <LaTeX>{eq.latex(this.cleanParams())}</LaTeX>
+        <div>
+          <button className={classes.NotationBtn} onClick={this.showModal}>
+            Обозначения
+          </button>
+        </div>
         <Modal
           isOpen={this.state.showModal}
           onRequestClose={this.closeModal}
           contentLabel="Изменить обозначения"
           ariaHideApp={false}
         >
-          <button onClick={this.closeModal}>Закрыть</button>
+          <button className={classes.CloseBtn} onClick={this.closeModal}>
+            Закрыть
+          </button>
           <h3>Изменить обозначения</h3>
           <div className={classes.Wrap}>
             <div className={classes.Vars}>
@@ -115,9 +124,12 @@ export default class ChangableFormula extends Component {
                 </table>
               </div>
             ) : null}
-            <LaTeX className={classes.Formula}>
-              {eq.latex(this.cleanParams())}
-            </LaTeX>
+            <LaTeX className={classes.Formula}>{latex}</LaTeX>
+          </div>
+          <div>
+            <CopyToClipboard text={latex}>
+              <button className={classes.CopyTexBtn}>Скопировать TeX</button>
+            </CopyToClipboard>
           </div>
         </Modal>
       </div>

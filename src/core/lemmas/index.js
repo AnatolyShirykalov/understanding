@@ -17,23 +17,42 @@ export const toOffsets = (text, ptrn, blacklist, obj = {}) => {
   return ret;
 };
 
+const resolveName = (offset, all_offsets, args) => {
+  const offsets = sortBy(
+    all_offsets.filter(off => {
+      return (
+        off.start_offset >= offset.start_offset &&
+        off.end_offset <= offset.end_offset
+      );
+    }),
+    "start_offset"
+  );
+  let m = args[offset.name];
+  if (offset.arg_names) {
+    const arg_offsets = offsets.filter(off =>
+      offset.arg_names.find(n => n === off.name)
+    );
+    m = m(...arg_offsets.map(off => resolveName(off, offsets, args)));
+  }
+  return m;
+};
+
 export const offsetsBuilder = (text, offsets) => args => {
   try {
     let ret = "";
-    sortBy(offsets, "start_offset").forEach((offset, i, sorted) => {
-      let m = args[offset.name];
-      if (offset.arg_names) {
-        m = m(...offset.arg_names.map(n => args[n]));
+    sortBy(offsets.filter(offset => !offset.ignore), "start_offset").forEach(
+      (offset, i, sorted) => {
+        const m = resolveName(offset, offsets, args);
+        const prefix = text.slice(
+          i === 0 ? 0 : sorted[i - 1].end_offset,
+          offset.start_offset
+        );
+        ret += prefix + m;
+        if (i + 1 < sorted.length) return;
+        ret += text.slice(offset.end_offset);
       }
-      const prefix = text.slice(
-        i === 0 ? 0 : sorted[i - 1].end_offset,
-        offset.start_offset
-      );
-      ret += prefix + m;
-      if (i + 1 < sorted.length) return;
-      ret += text.slice(offset.end_offset);
-    });
-    return ret;
+    );
+    return ret === "" ? text : ret;
   } catch (error) {
     console.log(text, offsets, args);
     console.error(error);

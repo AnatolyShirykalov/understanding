@@ -17,3 +17,30 @@
 .Selects > table {
   line-height: 40px;
 }
+
+.NotationBtn {
+  background: lightblue;
+  cursor: pointer;
+  font-size: 12pt;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 2px 2px 2px 0 black;
+}
+
+.CloseBtn {
+  cursor: pointer;
+  background: black;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  margin: 10px;
+  box-shadow: 2px 2px 2px 0 black;
+}
+
+.CopyTexBtn {
+  cursor: pointer;
+  background: pink;
+  padding: 5px;
+  margin: 10px;
+  box-shadow: 2px 2px 2px 0 black;
+}
