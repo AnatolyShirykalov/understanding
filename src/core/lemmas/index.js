@@ -18,19 +18,47 @@ export const toOffsets = (text, ptrn, blacklist, obj = {}) => {
 };
 
 export const offsetsBuilder = (text, offsets) => args => {
-  let ret = "";
-  sortBy(offsets, "start_offset").forEach((offset, i, sorted) => {
-    let m = args[offset.name];
-    if (offset.arg_names) {
-      m = m(...offset.arg_names.map(n => args[n]));
+  try {
+    let ret = "";
+    sortBy(offsets, "start_offset").forEach((offset, i, sorted) => {
+      let m = args[offset.name];
+      if (offset.arg_names) {
+        m = m(...offset.arg_names.map(n => args[n]));
+      }
+      const prefix = text.slice(
+        i === 0 ? 0 : sorted[i - 1].end_offset,
+        offset.start_offset
+      );
+      ret += prefix + m;
+      if (i + 1 < sorted.length) return;
+      ret += text.slice(offset.end_offset);
+    });
+    return ret;
+  } catch (error) {
+    console.log(text, offsets, args);
+    console.error(error);
+  }
+};
+
+export const selects = {
+  vector: [
+    { name: "overline", func: arg => `\\overline{${arg}}` },
+    { name: "vec", func: arg => `\\vec{${arg}}` },
+    { name: "boldsymbol", func: arg => `\\boldsymbol{${arg}}` }
+  ],
+  diff: [
+    { name: "italic frac", func: (f, x) => `\\frac{d ${f}}{ d ${x}}` },
+    {
+      name: "roman frac",
+      func: (f, x) => `\\frac{\\mathrm{d} ${f}}{\\mathrm{d} ${x}}`
+    },
+    {
+      name: "partial subscript",
+      func: (f, x) => `\\partial_{${x}} ${f}`
+    },
+    {
+      name: "comma",
+      func: (f, x) => `${f}{}_{,${x}}`
     }
-    const prefix = text.slice(
-      i === 0 ? 0 : sorted[i - 1].end_offset,
-      offset.start_offset
-    );
-    ret += prefix + m;
-    if (i + 1 < sorted.length) return;
-    ret += text.slice(offset.end_offset);
-  });
-  return ret;
+  ]
 };

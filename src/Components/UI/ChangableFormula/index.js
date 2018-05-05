@@ -36,18 +36,19 @@ export default class ChangableFormula extends Component {
   };
   cleanParams() {
     const obj = {};
-    for (let key in this.state.params) {
+    Object.keys(this.state.params || {}).forEach(key => {
       const v = this.state.params[key];
-      if (!v || v === "") continue;
+      if (!v || v === "") return;
       obj[key] = v;
-    }
-    for (let key in this.state.selected) {
+    });
+    Object.keys(this.props.select || {}).forEach(key => {
       const s = this.state.selected[key];
       if (s) {
         obj[key] = this.props.select[key][+s].func;
-        continue;
+        return;
       }
-    }
+      obj[key] = this.props.select[key][0].func;
+    });
     return obj;
   }
 

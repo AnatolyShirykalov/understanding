@@ -1,28 +1,6 @@
 import React, { Component } from "react";
 import ChangableFormula from "~/Components/UI/ChangableFormula";
-
-const selects = {
-  vector: [
-    { name: "overline", func: arg => `\\overline{${arg}}` },
-    { name: "vec", func: arg => `\\vec{${arg}}` },
-    { name: "boldsymbol", func: arg => `\\boldsymbol{${arg}}` }
-  ],
-  diff: [
-    { name: "italic frac", func: (f, x) => `\\frac{d ${f}}{ d ${x}}` },
-    {
-      name: "roman frac",
-      func: (f, x) => `\\frac{\\mathrm{d} ${f}}{\\mathrm{d} ${x}}`
-    },
-    {
-      name: "partial subscript",
-      func: (f, x) => `\\partial_{${x}} ${f}`
-    },
-    {
-      name: "comma",
-      func: (f, x) => `${f}{}_{,${x}}`
-    }
-  ]
-};
+import { selects } from "~/core/lemmas";
 
 const f1 = {
   params: {

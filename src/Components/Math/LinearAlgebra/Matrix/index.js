@@ -6,41 +6,9 @@ import Selectable from "~/Components/UI/Selectable";
 import Modal from "react-modal";
 import SaveMatrixBtn from "~/Components/UI/Buttons/SaveMatrix";
 import classNames from "classnames/bind";
+import { intersectHalf } from "~/core/collisions";
 
 const cx = classNames.bind(classes);
-
-const intersectRect = (r1, r2) => {
-  return !(
-    r2.left > r1.right ||
-    r2.right < r1.left ||
-    r2.top > r1.bottom ||
-    r2.bottom < r1.top
-  );
-};
-
-const containRect = (r1, r2) => {
-  return !(
-    r2.left < r1.left ||
-    r2.right > r1.right ||
-    r2.top < r1.top ||
-    r2.bottom > r1.bottom
-  );
-};
-
-const intersectHalf = (r1, r2) => {
-  if (!intersectRect(r1, r2)) return false;
-  if (containRect(r1, r2)) return true;
-  const area = (r2.right - r2.left) * (r2.bottom - r2.top);
-  const section = {
-    left: Math.max(r1.left, r2.left),
-    right: Math.min(r1.right, r2.right),
-    top: Math.max(r1.top, r2.top),
-    bottom: Math.max(r1.bottom, r2.bottom)
-  };
-  return (
-    (section.right - section.left) * (section.bottom - section.top) / area > 0.5
-  );
-};
 
 export default class Matrix extends Component {
   state = {
