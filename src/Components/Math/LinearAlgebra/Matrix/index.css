@@ -8,3 +8,7 @@
 .Inline {
   display: inline-block;
 }
+
+.Minor {
+  cursor: grab;
+}

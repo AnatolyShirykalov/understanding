@@ -1,3 +1,8 @@
+
+export const pointInRect = (point, rect) => {
+  return point.x >= rect.left && point.x <=rect.right && point.y >= rect.top && point.y <=rect.bottom;
+}
+
 export const intersectRect = (r1, r2) => {
   return !(
     r2.left > r1.right ||

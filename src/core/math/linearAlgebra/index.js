@@ -96,6 +96,7 @@ export class Scalar {
     return new Scalar(this.value.subtract(v.value));
   }
   isEqual(s2) {
+    console.log("should be 0", this.subtract(s2).data());
     return this.subtract(s2).data() === "0";
   }
 }

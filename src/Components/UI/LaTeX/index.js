@@ -55,6 +55,7 @@ export default class LaTeX extends Component {
         className={classNames(this.props.className, {
           [classes.Inline]: this.props.inline
         })}
+        onClick={this.props.onClick}
       >
         <MathJax.Context inline={this.props.inline}>
           <MathJax.Node onRender={this.latexOnRender}>

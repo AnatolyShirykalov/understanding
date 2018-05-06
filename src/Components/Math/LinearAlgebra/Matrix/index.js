@@ -6,7 +6,8 @@ import Selectable from "~/Components/UI/Selectable";
 import Modal from "react-modal";
 import SaveMatrixBtn from "~/Components/UI/Buttons/SaveMatrix";
 import classNames from "classnames/bind";
-import { intersectHalf } from "~/core/collisions";
+import { intersectHalf, pointInRect } from "~/core/collisions";
+import KeyHandler, { KEYDOWN, KEYUP } from "react-key-handler";
 
 const cx = classNames.bind(classes);
 
@@ -92,10 +93,42 @@ export default class Matrix extends Component {
   closeModal = () => {
     this.setState({ submatrixTex: null });
   };
+  click = event => {
+    if (!(event instanceof MouseEvent)) return;
+    if (!event.ctrlKey) return;
+    let I, J;
+    this.geometry.forEach((row, i) => {
+      row.forEach((cell, j) => {
+        if (pointInRect({ x: event.pageX, y: event.pageY }, cell)) {
+          I = i;
+          J = j;
+        }
+      });
+    });
+    console.log("click", I, J);
+    if (I === undefined || J === undefined) return;
+    const submatrix = this.props.matrix
+      .filter((_, i) => i !== I)
+      .map(row => row.filter((_, j) => j !== J));
+    this.setState({
+      submatrix,
+      submatrixTex: new NerdMatrix(submatrix).latex()
+    });
+  };
   render() {
     try {
       return (
         <div className={cx({ Inline: this.props.inline })}>
+          <KeyHandler
+            keyEventName={KEYDOWN}
+            keyCode={17}
+            onKeyHandle={() => this.setState({ minor: true })}
+          />
+          <KeyHandler
+            keyEventName={KEYUP}
+            keyCode={17}
+            onKeyHandle={() => this.setState({ minor: false })}
+          />
           <Modal
             isOpen={this.state.submatrixTex ? true : false}
             onRequestClose={this.closeModal}
@@ -111,12 +144,14 @@ export default class Matrix extends Component {
           </Modal>
           <Selectable
             onSelection={this.selection}
+            onClick={this.click}
             Component={this.props.inline ? <span /> : <div />}
           >
             <LaTeX
-              className={classes.Matrix}
+              className={cx(classes.Matrix, { Minor: this.state.minor })}
               onDidUpdate={this.refreshGeometry}
               inline={this.props.inline}
+              onClick={this.click}
             >
               {this.state.latex}
             </LaTeX>
