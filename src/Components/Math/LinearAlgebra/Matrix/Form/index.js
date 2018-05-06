@@ -3,6 +3,7 @@ import classes from "./index.css";
 import classNames from "classnames/bind";
 import Matrix from "../";
 import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
+import { genMatrix } from "~/core/math/linearAlgebra";
 
 const cx = classNames.bind(classes);
 
@@ -29,13 +30,15 @@ export default class MatrixForm extends Component {
     });
   };
   addRow = () => {
+    const matrix = [...this.state.matrix, this.state.matrix[0].map(() => 0)];
     this.setState({
-      matrix: [...this.state.matrix, this.state.matrix[0].map(() => 0)]
+      matrix: this.props.square ? matrix.map(row => [...row, 0]) : matrix
     });
   };
   removeRow = () => {
+    const matrix = this.state.matrix.slice(0, -1);
     this.setState({
-      matrix: this.state.matrix.slice(0, -1)
+      matrix: this.props.square ? matrix.map(r => r.slice(0, -1)) : matrix
     });
   };
   removeColumn = () => {
@@ -79,6 +82,15 @@ export default class MatrixForm extends Component {
     }
   };
 
+  fill = () => {
+    this.setState({
+      matrix: genMatrix({
+        N: this.state.matrix[0].length,
+        M: this.state.matrix.length
+      })
+    });
+  };
+
   render() {
     const buttonText = this.props.buttonText || "Сохранить";
     return (
@@ -87,9 +99,6 @@ export default class MatrixForm extends Component {
           <button className={classes.Btn} onClick={this.addRow}>
             m++
           </button>
-          <button className={classes.Btn} onClick={this.addColumn}>
-            n++
-          </button>
           <button
             className={classes.Btn}
             onClick={this.removeRow}
@@ -97,12 +106,22 @@ export default class MatrixForm extends Component {
           >
             m--
           </button>
-          <button
-            className={classes.Btn}
-            onClick={this.removeColumn}
-            disabled={this.state.matrix[0].length === 1}
-          >
-            n--
+          {!this.props.square ? (
+            <button className={classes.Btn} onClick={this.addColumn}>
+              n++
+            </button>
+          ) : null}
+          {!this.props.square ? (
+            <button
+              className={classes.Btn}
+              onClick={this.removeColumn}
+              disabled={this.state.matrix[0].length === 1}
+            >
+              n--
+            </button>
+          ) : null}
+          <button className={classes.Btn} onClick={this.fill}>
+            Заполнить
           </button>
           <table>
             <tbody>

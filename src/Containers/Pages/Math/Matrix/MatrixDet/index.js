@@ -21,6 +21,8 @@ export default class MatrixDet extends Component {
   check = ans => {
     if (new NerdMatrix(this.state.matrix).det().isEqual(new Scalar(ans))) {
       this.setState({ right: true });
+    } else {
+      this.setState({ right: false });
     }
   };
   render() {
@@ -31,7 +33,7 @@ export default class MatrixDet extends Component {
           gen={this.gen}
           set={this.set}
           selectComponent={MatrixSelect}
-          formComponent={MatrixForm}
+          formComponent={props => <MatrixForm {...props} square />}
         />
         <MatrixDetView
           matrix={this.state.matrix}
