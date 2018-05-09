@@ -258,6 +258,7 @@ export default class Lemmas extends Component {
                 >
                   <option value="vector">Вектор</option>
                   <option value="diff">Производная</option>
+                  <option value="func">Функция</option>
                 </select>
               </div>
             ) : null}
