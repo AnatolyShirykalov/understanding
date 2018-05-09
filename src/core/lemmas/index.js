@@ -79,5 +79,19 @@ export const selects = {
       name: "comma",
       func: (f, x) => `${f}{}_{,${x}}`
     }
+  ],
+  func: [
+    {
+      name: "parentheses",
+      func: (f, ...args) => `${f}\\left(${args.join(",")}\\right)`
+    },
+    {
+      name: "top indeces",
+      func: (f, ...args) => `${f}{}^{${args.join(" ")}}`
+    },
+    {
+      name: "bottom indeces",
+      func: (f, ...args) => `${f}{}_{${args.join(" ")}}`
+    }
   ]
 };

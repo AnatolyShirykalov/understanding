@@ -9,6 +9,8 @@ const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin");
 const WatchMissingNodeModulesPlugin = require("react-dev-utils/WatchMissingNodeModulesPlugin");
 //const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 //.BundleAnalyzerPlugin;
+
+const { UnusedFilesWebpackPlugin } = require("unused-files-webpack-plugin");
 const eslintFormatter = require("react-dev-utils/eslintFormatter");
 const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 const getClientEnvironment = require("./env");
@@ -245,8 +247,19 @@ module.exports = {
     // solution that requires the user to opt into importing specific locales.
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-    //new BundleAnalyzerPlugin()
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    //new BundleAnalyzerPlugin(),
+    new UnusedFilesWebpackPlugin({
+      patterns: ["src/**/*.*", "public/**/*.*"],
+      globOptions: {
+        ignore: [
+          `public/manifest.json`,
+          "public/favicon.ico",
+          "src/**/*.test.js",
+          "src/**/README.md"
+        ]
+      }
+    })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
