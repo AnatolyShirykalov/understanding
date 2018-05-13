@@ -115,6 +115,35 @@ export default class Matrix extends Component {
       submatrixTex: new NerdMatrix(submatrix).latex()
     });
   };
+  highlightStyle() {
+    const ret = {};
+    if (typeof this.props.highlight !== "string") return ret;
+    if (!this.geometry) return ret;
+    switch (this.props.highlight[0]) {
+      case "c":
+        const J = +this.props.highlight.slice(1);
+        const { top, left } = this.geometry[0][J];
+        const { right, bottom } = this.geometry[this.geometry.length - 1][J];
+        return {
+          top: `${top}px`,
+          left: `${left}px`,
+          width: `${right - left}px`,
+          height: `${bottom - top}px`
+        };
+      case "r":
+        const I = +this.props.highlight.slice(1);
+        const first = this.geometry[I][0];
+        const last = this.geometry[I][this.geometry[I].length - 1];
+        return {
+          top: `${first.top}px`,
+          left: `${first.left}px`,
+          width: `${last.right - first.left}px`,
+          height: `${last.bottom - first.top}px`
+        };
+      default:
+        return ret;
+    }
+  }
   render() {
     try {
       return (
@@ -142,6 +171,9 @@ export default class Matrix extends Component {
               </div>
             ) : null}
           </Modal>
+          {this.props.highlight ? (
+            <div className={classes.Rect} style={this.highlightStyle()} />
+          ) : null}
           <Selectable
             onSelection={this.selection}
             onClick={this.click}

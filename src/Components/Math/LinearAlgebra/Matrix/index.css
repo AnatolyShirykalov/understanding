@@ -12,3 +12,8 @@
 .Minor {
   cursor: grab;
 }
+
+.Rect {
+  position: absolute;
+  background: #ddd;
+}

@@ -58,6 +58,7 @@ export default class MatrixForm extends Component {
         });
       })
     });
+    if (this.props.onFocus) setTimeout(() => this.props.onFocus(i, j), 0);
   };
 
   blur = (i, j) => {
@@ -71,6 +72,7 @@ export default class MatrixForm extends Component {
         });
       })
     });
+    if (this.props.onBlur) setTimeout(() => this.props.onBlur(i, j), 0);
   };
 
   shouldRed = (i, j) => {

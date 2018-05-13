@@ -10,7 +10,7 @@ import classes from "./index.css";
 import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
 
 class MatrixDot extends Component {
-  state = {};
+  state = { hightlight: {} };
   checkAnswer = matrix => {
     if (
       this.props.m1.length !== matrix.length ||
@@ -38,6 +38,14 @@ class MatrixDot extends Component {
     return { m1, m2 };
   }
 
+  focus = (i, j) => {
+    this.setState({ hightlight: { col: `c${j}`, row: `r${i}` } });
+  };
+
+  blur() {
+    this.setState({ hightlight: {} });
+  }
+
   render() {
     return (
       <div className={classes.Wrap}>
@@ -47,9 +55,17 @@ class MatrixDot extends Component {
           <SaveMatrix matrix={this.props.m2} value="Сохранить правую матрицу" />
         </div>
         <div>
-          <Matrix matrix={this.props.m1} inline />
+          <Matrix
+            matrix={this.props.m1}
+            inline
+            highlight={this.state.hightlight.row}
+          />
           <LaTeX inline>{"\\cdot"}</LaTeX>
-          <Matrix matrix={this.props.m2} inline />
+          <Matrix
+            matrix={this.props.m2}
+            inline
+            highlight={this.state.hightlight.col}
+          />
           <LaTeX inline>{"\\ =\\ ?"}</LaTeX>
         </div>
         {this.state.right ? (
@@ -63,6 +79,8 @@ class MatrixDot extends Component {
             {this.state.dim ? <div>Неверный размер матрицы</div> : null}
             <MatrixForm
               onSubmit={this.checkAnswer}
+              onFocus={this.focus}
+              onBlur={this.blur.bind(this)}
               hightlight={this.state.matrix}
               buttonText={"Проверить"}
             />
