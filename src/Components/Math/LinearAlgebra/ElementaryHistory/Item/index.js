@@ -11,10 +11,12 @@ class Item extends Component {
     this.setState({ expand: !this.state.expand });
   };
   transforms() {
-    return this.props.item.transforms.filter(
-      ({ multiplicator }) =>
-        multiplicator && multiplicator !== "" && multiplicator !== "0"
-    );
+    return this.props.item.transforms
+      .map((t, i) => ({ ...t, i }))
+      .filter(
+        ({ multiplicator }) =>
+          multiplicator && multiplicator !== "" && multiplicator !== "0"
+      );
   }
   render() {
     const btnClass = classnames([
@@ -41,9 +43,12 @@ class Item extends Component {
           {this.transforms().map((t, i) => (
             <div key={i}>
               <LaTeX className={classes.Latex} key={i}>
-                {this.props.prettyTransform(i, t)}
+                {this.props.prettyTransform(t.i, t)}
               </LaTeX>
             </div>
+          ))}
+          {this.transforms().map((t, i) => (
+            <div key={i}>{this.props.expandedTransform(t.i, t)}</div>
           ))}
         </div>
       </div>

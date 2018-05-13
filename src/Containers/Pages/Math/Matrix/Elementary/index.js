@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { setCurrentError, removeCurrentError } from "~/store/actions";
 import classes from "./index.css";
 import SaveMatrix from "~/Components/UI/Buttons/SaveMatrix";
+import romanize from "romanize";
 
 const newTransforms = ar =>
   ar.map((_, i) => ({ multiplicator: 0, rowNumber: 0 }));
@@ -30,7 +31,7 @@ class Elementary extends Component {
     });
   }
   decorateLineNumber = i => {
-    return `(${i + 1})`;
+    return `(${romanize(i + 1)})`;
   };
 
   change = (field, i) => ({ target: { value } }) => {

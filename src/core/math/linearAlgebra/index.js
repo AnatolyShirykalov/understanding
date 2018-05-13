@@ -168,7 +168,7 @@ export class NerdMatrix extends AbstractMatrix {
     const matrix = new NerdMatrix(mData);
     if (multiplicator === 0 || !multiplicator || multiplicator === "")
       return matrix;
-    if (multiplicator !== -1 && changedRowNumber === rowNumber)
+    if (+multiplicator === -1 && changedRowNumber === rowNumber)
       throw new Error("Нельзя вычитать из строки ту же строку");
     const row = matrix.getRow(rowNumber).matrix.multiply(multiplicator);
     const sum = new NerdMatrix(matrix.getRow(changedRowNumber).matrix.add(row));

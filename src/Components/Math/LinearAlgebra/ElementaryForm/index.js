@@ -1,23 +1,23 @@
-import React from 'react';
-import classes from './index.css';
+import React from "react";
+import classes from "./index.css";
+import EInput from "./Input";
 
-const elementaryForm = ({transforms, decorateLineNumber, inputWidth, change}) => (
+const elementaryForm = ({
+  transforms,
+  decorateLineNumber,
+  inputWidth,
+  change
+}) => (
   <div>
     {transforms.map((t, i) => (
       <div key={i} className={classes.Item}>
-        <span>
-          {decorateLineNumber(i)}
-        </span>
-        <span className={classes.Operator}>
-          {"\u27fc"}
-        </span>
-        <span>
-          {decorateLineNumber(i)}
-        </span>
+        <span>{decorateLineNumber(i)}</span>
+        <span className={classes.Operator}>{"\u27fc"}</span>
+        <span>{decorateLineNumber(i)}</span>
         <span className={classes.Operator}>+</span>
-        <input
+        <EInput
           className={classes.Input}
-          style={{width: inputWidth}}
+          style={{ width: inputWidth }}
           value={t.multiplicator}
           onChange={change("multiplicator", i)}
         />
@@ -27,7 +27,7 @@ const elementaryForm = ({transforms, decorateLineNumber, inputWidth, change}) =>
           value={t.rowNumber}
           className={classes.Select}
         >
-          {transforms.map((_, j) =>(
+          {transforms.map((_, j) => (
             <option key={j} value={j} className={classes.Option}>
               {decorateLineNumber(j)}
             </option>

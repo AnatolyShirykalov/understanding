@@ -92,6 +92,10 @@ export const selects = {
     {
       name: "bottom indeces",
       func: (f, ...args) => `${f}{}_{${args.join(" ")}}`
+    },
+    {
+      name: "omit",
+      func: f => f
     }
   ]
 };

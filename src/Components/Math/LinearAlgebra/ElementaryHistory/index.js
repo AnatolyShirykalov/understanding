@@ -3,6 +3,7 @@ import classes from "./index.css";
 import classnames from "classnames";
 import Item from "./Item";
 import { Scalar } from "~/core/math/linearAlgebra";
+import LaTeX from "~/Components/UI/LaTeX";
 
 const mapsto = "\\mapsto";
 const times = "\\times";
@@ -35,6 +36,20 @@ class ElementaryHistory extends Component {
     ).latex()})${times}${this.decorate(rowNumber)}`;
   };
 
+  expandedTransform = (i, { rowNumber, multiplicator }) => {
+    return (
+      <div>
+        <span>
+          {`К ${this.decorate(i)}-й строке прибавили ${this.decorate(
+            rowNumber
+          )}-ю, умноженную на `}
+        </span>
+        <LaTeX inline>{new Scalar(multiplicator).latex()}</LaTeX>
+        <span>;</span>
+      </div>
+    );
+  };
+
   render() {
     return (
       <div>
@@ -59,6 +74,7 @@ class ElementaryHistory extends Component {
                 key={key}
                 onClick={() => this.props.undoTo(key)}
                 prettyTransform={this.prettyTransform}
+                expandedTransform={this.expandedTransform}
               />
             ))}
         </div>
