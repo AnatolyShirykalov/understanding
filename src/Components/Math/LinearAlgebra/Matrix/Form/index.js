@@ -48,30 +48,32 @@ export default class MatrixForm extends Component {
   };
 
   focus = (i, j) => {
-    if (+this.state.matrix[i][j] !== 0) return;
-    this.setState({
-      matrix: this.state.matrix.map((r, I) => {
-        if (I !== i) return r;
-        return r.map((c, J) => {
-          if (j !== J) return c;
-          return "";
-        });
-      })
-    });
+    if (+this.state.matrix[i][j] === 0) {
+      this.setState({
+        matrix: this.state.matrix.map((r, I) => {
+          if (I !== i) return r;
+          return r.map((c, J) => {
+            if (j !== J) return c;
+            return "";
+          });
+        })
+      });
+    }
     if (this.props.onFocus) setTimeout(() => this.props.onFocus(i, j), 0);
   };
 
   blur = (i, j) => {
-    if (this.state.matrix[i][j] !== "") return;
-    this.setState({
-      matrix: this.state.matrix.map((r, I) => {
-        if (I !== i) return r;
-        return r.map((c, J) => {
-          if (j !== J) return c;
-          return 0;
-        });
-      })
-    });
+    if (this.state.matrix[i][j] === "") {
+      this.setState({
+        matrix: this.state.matrix.map((r, I) => {
+          if (I !== i) return r;
+          return r.map((c, J) => {
+            if (j !== J) return c;
+            return 0;
+          });
+        })
+      });
+    }
     if (this.props.onBlur) setTimeout(() => this.props.onBlur(i, j), 0);
   };
 
