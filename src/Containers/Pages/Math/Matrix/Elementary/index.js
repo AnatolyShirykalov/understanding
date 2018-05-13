@@ -103,9 +103,10 @@ class Elementary extends Component {
 
   undoTo = key => {
     this.setState({
-      chain: this.state.chain.slice(0, key + 1),
+      chain: this.state.chain.slice(0, key),
       matrix: this.state.chain[key].matrices[0],
-      nextMatrix: this.state.chain[key].matrices[1]
+      nextMatrix: this.state.chain[key].matrices[1],
+      transforms: this.state.chain[key].transforms
     });
   };
 
