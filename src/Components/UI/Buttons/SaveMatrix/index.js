@@ -15,7 +15,7 @@ class SaveMatrix extends Component {
       if (raw) {
         matrices = [...JSON.parse(raw), this.props.matrix];
       } else {
-        matrices = [this.prpos.matrix];
+        matrices = [this.props.matrix];
       }
       localStorage.setItem(this.props.storageKey, JSON.stringify(matrices));
       this.setState({ saving: false, same: true });
