@@ -1,0 +1,10 @@
+.Btn {
+  padding: 10px 20px;
+  font-size: 16pt;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 10px;
+  background: green;
+  color: white;
+  box-shadow: 3px 3px 3px 0 black;
+}

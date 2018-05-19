@@ -31,6 +31,7 @@ import ScalarProduct from "~/Containers/Pages/Math/Vector/ScalarProduct";
 import MatrixDotPage from "~/Containers/Pages/Math/Matrix/MatrixDot";
 import MatrixDetPage from "~/Containers/Pages/Math/Matrix/MatrixDet";
 import LemmasPage from "~/Containers/Pages/Lemmas";
+import PolynomPrime from "~/Containers/Pages/Math/Polynom/Prime";
 
 const routes = (
   <Switch>
@@ -60,6 +61,7 @@ const routes = (
     <Route path="/trainers/scalar-product" exact component={ScalarProduct} />
     <Route path="/trainers/matrix-dot" exact component={MatrixDotPage} />
     <Route path="/trainers/matrix-det" exact component={MatrixDetPage} />
+    <Route path="/trainers/polynom-prime" exact component={PolynomPrime} />
     <Route path="/objects/matrix/new" exact component={NewMatrix} />
     <Route path="/lemmas" exact component={LemmasPage} />
     <TestRoutes />
