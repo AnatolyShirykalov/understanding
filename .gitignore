@@ -5,6 +5,7 @@
 server/node_modules
 server/uploads
 server/tmp
+backend
 
 # testing
 /coverage

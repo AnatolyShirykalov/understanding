@@ -33,10 +33,23 @@ export default class Gornor extends Component {
   blur = () => {
     this.setState({ highlight: false });
   };
+  submit = () => {
+    if (!this.props.onSubmit) return;
+    this.props.onSubmit(this.state.coeffs);
+  };
   render() {
     const n = this.props.coeffs.length;
+    const p = new Polynom({ coeffs: this.props.coeffs });
+    let denom;
+    if (this.props.expectedRoot)
+      denom = new Polynom({ roots: [this.props.expectedRoot] });
     return (
       <div>
+        {this.props.expectedRoot ? (
+          <div>
+            <LaTeX>{`\\frac{${p.latex()}}{${denom.latex()}}=\\,?`}</LaTeX>
+          </div>
+        ) : null}
         <table className={classes.Table}>
           <tbody>
             <tr>
@@ -88,6 +101,7 @@ export default class Gornor extends Component {
           }).latex()}
         </LaTeX>
         <SavePolynom matrix={{ coeffs: this.state.coeffs }} />
+        <button onClick={this.submit}>Ответить</button>
       </div>
     );
   }
