@@ -15,7 +15,7 @@
     "chalk": "^2.4.0",
     "classnames": "^2.2.5",
     "create-react-class": "^15.6.2",
-    "css-loader": "^0.28.7",
+    "css-loader": "^1.0.0",
     "dotenv": "^4.0.0",
     "eslint": "^4.19.0",
     "eslint-config-react-app": "^2.1.0",
