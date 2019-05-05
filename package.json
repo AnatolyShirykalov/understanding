@@ -66,12 +66,15 @@
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "^2.11.0",
     "webpack-manifest-plugin": "^2.0.0",
-    "whatwg-fetch": "^2.0.4"
+    "whatwg-fetch": "^2.0.4",
+    "snyk": "^1.161.1"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -118,5 +121,6 @@
   },
   "devDependencies": {
     "prettier": "^1.12.1"
-  }
+  },
+  "snyk": true
 }
